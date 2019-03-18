@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+
+    <form class="form-inline my-2 my-lg-0"  method="request" action="{{ path('search_congelateur') }} ">
+        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Chercher">
+        <button class="btn btn-secondary my-2 my-sm-0"  type="submit">Chercher</button>
+    </form>
+    <br>
+    <br>
+    <br>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='/congelateur/createCong'">Nouveau Congelateur</button>
+
+    <br>
+    <br>
+    <br>
+    <section class="articles">
+            
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Type</th>
+                        <th scope="col">Numéro de congélateur</th>
+                        <th scope="col">Capacité</th>
+                        <th scope="col">Date de création </th>
+                        <th scope="col">Actions</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    
+                    {% for congelateur in congelateurs %}
+                        <tr>
+                            <th scope="row">{{ congelateur.type }}</th>
+                            <td>{{ congelateur.numCong }}</td>
+                            <td>{{ congelateur.capacite }}</td>
+                            <td>{{ congelateur.dateCtCong|date ('d/m/y à H:i')  }}</td>
+                            <td><button type="button" class="btn btn-secondary" onclick="window.location.href='/congelateur/{{ congelateur.id }}/edit'">Modifier</button></td>
+                            <td><button type="button" class="btn btn-primary" onclick="window.location.href='/congelateur/{{ congelateur.id }}/delete'">Supprimer</button></td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>  
+      
+    </section>
+{% endblock %}

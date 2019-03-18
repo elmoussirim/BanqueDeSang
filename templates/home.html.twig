@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Bienvenue</h1> 
+    {% if app.user  %}
+        <h2> {{ app.user.username }} !! </h2>
+        <h2> {{ app.user.poste }} !! </h2>
+    {% endif %}     
+
+{% endblock %}

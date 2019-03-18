@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <form class="form-inline my-2 my-lg-0"  method="request" action="{{ path('search_user') }} ">
+        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Chercher">
+        <button class="btn btn-secondary my-2 my-sm-0"  type="submit">Chercher</button>
+    </form>
+    <br>
+    <br>
+    <br>
+
+    <button type="button" class="btn btn-primary" onclick="window.location.href='/user/create'">Nouveau Utilisateur</button>
+
+    <br>
+    <br>
+    <br>
+
+    <section class="user">
+            
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Nom & prenom</th>
+                        <th scope="col">N°cin</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Poste</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for user in users %}
+
+                    <tr>
+                        <th scope="row">{{ user.NUMCIN }}</th>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.Email }}</td>
+                        <td>{{ user.Poste }}</td>
+                        <td><button type="button" class="btn btn-secondary" onclick="window.location.href='/user/{{ user.id }}/delete'">Supprimer</button></td>
+                    </tr>
+
+                   {% endfor %}
+
+                </tbody>
+            </table>  
+      
+    </section>
+{% endblock %}

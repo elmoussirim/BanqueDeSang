@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    <form class="form-inline my-2 my-lg-0"  method="request" action="{{ path('search_service') }} ">
+        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Chercher">
+        <button class="btn btn-secondary my-2 my-sm-0"  type="submit">Chercher</button>
+    </form>
+    <br>
+    <br>
+    <br>
+
+    <button type="button" class="btn btn-primary" onclick="window.location.href='/service/createSer'">Nouveau Service</button>
+
+    <br>
+    <br>
+    <br>
+
+    <section class="articles">
+            
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Service</th>
+                        <th scope="col">Chef de service</th>
+                        <th scope="col">Capacité</th>
+                        <th scope="col">Date de création </th>
+                        <th scope="col">Actions</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for service in services %}
+
+                        <tr>
+                            <th scope="row">{{ service.NomService }}</th>
+                            <td>{{ service.ChService }}</td>
+                            <td>{{ service.Capacite }}</td>
+                            <td>{{ service.dateCtSer|date ('d/m/y à H:i') }}</td>
+                            <td><button type="button" class="btn btn-secondary" onclick="window.location.href='/service/{{ service.id }}/edit'">Modifier</button></td>
+                            <td><button type="button" class="btn btn-primary" onclick="window.location.href='/service/{{ service.id }}/delete'">Supprimer</button></td>
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+            </table>  
+      
+    </section>
+{% endblock %}

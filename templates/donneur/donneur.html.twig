@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<br>
+<br>
+    <form class="form-inline my-2 my-lg-0"  method="request" action="{{ path('search_donneur') }} ">
+        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Chercher">
+        <button class="btn btn-secondary my-2 my-sm-0"  type="submit">Chercher</button>
+    </form>
+    <br>
+    <br>
+    <br>
+
+    <br>
+    <br>
+    <br>
+
+    <section class="donneur">
+              <h1> liste des donneurs : </h1>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">N° CIN</th>
+                        <th scope="col">Nom </th>
+                        <th scope="col">Prénom</th>
+                        <th scope="col">Dernier don à: </th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for donneur in donneurs %}
+
+                    <tr>
+                        <th scope="row">{{ donneur.NUMCIN }}</th>
+                        <td scope="col">{{ donneur.nom }}</td>
+                        <td  scope="col">{{ donneur.prenom }}</td>
+                        <td scope="col">{{ donneur.DateDuDernierDon|date ('d/m/y à H:i')  }}</td>
+                        <td><button type="button" class="btn btn-secondary" onclick="window.location.href='/donneur/{{ donneur.id }}/edit'">Modifier </button></td>
+
+                       
+                    </tr>
+
+                   {% endfor %}
+
+                </tbody>
+            </table>  
+      
+    </section>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h2>Fiche medicale</h2>
+    <h3>N° fiche:{{ fiche.id }}</h3>
+
+<table class="table table-hover">
+  <tbody>
+    <tr>
+      <th scope="col">Nom & prénom du donneur:{{ fiche.nom }} {{  fiche.prenom }}</th>
+      <th scope="col">ApteInapte: {{ fiche.ApteInapte }}</th>      
+    </tr>
+    
+    <tr> 
+      <th scope="col">Numéro carte CIN: {{ fiche.NumeroCIN }}</th>
+      <th scope="col">date de naissance: {{ fiche.DateDeNaissance|date ('d/m/y') }}</th>
+    </tr>
+    <tr>
+      <th scope="col">taille: {{ fiche.taille }}</th>
+      <th scope="col">poids: {{ fiche.poids }}</th>
+    </tr>
+    <tr> 
+      <th scope="col">Le groupe: {{ fiche.groupe }}</th>
+      <th scope="col">DRAA: {{ fiche.RAA }}</th>
+    </tr>
+    <tr>
+      <th scope="col">Paludisme: {{ fiche.Paludisme }}</th>
+      <th scope="col">Maladie pulmonaire: {{ fiche.Maladiepulmonaire }}</th>
+    </tr>
+    <tr> 
+      <th scope="col">Ictere: {{ fiche.Ictere }}</th>
+      <th scope="col">Diabete: {{ fiche.Diabete }}</th>
+    </tr>
+    <tr> 
+      <th scope="col">Autre: {{ fiche.Autre }}</th>
+      <th scope="col">T_A: {{ fiche.TA }}</th>
+    </tr>    
+    <tr> 
+      <th scope="col">Coeur: {{ fiche.Coeur }}</th>
+      <th scope="col">Appariel Respiratoire: {{ fiche.ApparielRespiratoire }}</th>
+    </tr>    <tr> 
+      <th scope="col">Foie: {{ fiche.Foie }}</th>
+      <th scope="col">Rate: {{ fiche.Rate }}</th>
+    </tr>
+    <tr> 
+      <th scope="col">Systeme nerveux: {{ fiche.SystemeNerveux }}</th>
+      <th scope="col">Observations: {{ fiche.Observations }}</th>
+    </tr>
+    <tr> 
+      <th scope="col">Nom & prenom du medecin: {{ user.username }}</th>
+      <th scope="col">Cin du Medecin: {{ user.NUMCIN }}</th>
+    </tr>
+  </tbody>
+</table>
+ {% endblock %}

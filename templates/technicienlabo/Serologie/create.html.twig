@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% form_theme formserologie 'bootstrap_4_layout.html.twig'%}
+
+
+ 
+{% block body %}
+
+    <br>
+    <br>
+    <br>
+
+<div class="jumbotron">
+    <h1 class="display-3">Don numéro: {{ tube.NOrdre }} </h1>
+
+    <p class="lead">Nom du donneur: {{ tube.NomDonneur }}</p>
+    <p class="lead">Prénom du donneur:{{ tube.PrenomDonneur }}</p>
+    <p class="lead">N°cin du donneur:{{ tube.CinDonneur }}</p>
+</div>
+
+<h1> création d'un teste de serologie   ! </h1>
+{{ form_start(formserologie)}}
+{{form_row(formserologie.A_utiliser_avant )}}
+{{form_row(formserologie.groupe_sanguins )}}
+{{form_row(formserologie.AGHBR)}}
+{{form_row(formserologie.ACHCV)}}
+{{form_row(formserologie.TPHA)}}
+{{form_row(formserologie.HIV)}}
+{{form_row(formserologie.Resultat_Serologie)}}
+
+<button type = "submit" class="btn btn-secondary btn-lg btn-block"> Enregistrer  </buttton>
+{{form_end(formserologie)}}
+ {% endblock %}

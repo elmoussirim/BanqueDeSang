@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <form class="form-inline my-2 my-lg-0"  method="request" action="{{ path('search_serologie') }} ">
+        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Chercher">
+        <button class="btn btn-secondary my-2 my-sm-0"  type="submit">Chercher</button>
+    </form>
+    <br>
+    <br>
+    <br>
+
+    <button type="button" class="btn btn-primary" onclick="window.location.href='/tubes/a/tester'">Nouvelle sérologie</button>
+
+    <br>
+    <br>
+    <br>
+
+                                    <!--Tableau des sérologies Avec Modifier -->
+
+    
+    <section class="donneur">
+            <h1> liste des sérologies : </h1>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">N° ordre</th>
+                        <th scope="col">A utiliser avant</th>
+                        <th scope="col">N°cin donneur </th>
+                        <th scope="col">Nom & Prenom donneur</th>
+                        <th scope="col">GS</th>
+                        <th scope="col">Résultat</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for serologie in serologies %}
+                            {% if (serologie.statut == 1) %}
+                                <tr class="text-danger">
+                            {% else %}
+                                <tr class = "text-success">
+                            {% endif %}                                
+                                <td scope="col">{{ serologie.DateDeJour|date ('d/m/y à H:i')  }}</td>
+                                <td scope="row">{{ serologie.NOrdre }}</td>
+                                <td scope="row">{{ serologie.AUtiliserAvant|date ('d/m/y à H:i') }}</td>
+
+                                <td scope="row">{{ serologie.CinDonneur }}</td>
+                                <th scope="row">{{ serologie.NomDonneur }} {{ serologie.PrenomDonneur }}</td>
+
+                                <td  scope="col">{{ serologie.GroupeSanguins }}</td>
+                                <td  scope="col">{{ serologie.ResultatSerologie }}</td>
+                                <td><button type="button" class="btn btn-primary" onclick="window.location.href='/serologie/show/{{ serologie.id }}'">Afficher</button></td>
+                                <td><button type="button" class="btn btn-secondary" onclick="window.location.href='/serologie/termnier/{{ serologie.id }}'">Terminer</button></td>
+                                {% if serologie.ResultatSerologie == " " %}
+                                <td><button type="button" class="btn btn-primary" onclick="window.location.href='/serologie/{{ serologie.id }}/edit'">Modifier </button></td>
+                                {% endif %}
+                            </tr>
+                   {% endfor %}
+
+                </tbody>
+            </table>  
+      
+    </section>
+{% endblock %}

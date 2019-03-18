@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% form_theme formCong 'bootstrap_4_layout.html.twig'%}
+
+{% block body %}
+
+    <h1>Création d'un congélateur !</h1>
+
+    {{ form_start(formCong) }}
+
+        {{ form_row(formCong.type ,{'attr':{'placeholder':"Type de congélateur"}} )}}
+        {{ form_row(formCong.numCong ,{'attr':{'placeholder':"le numéro de congélateur"}} )}}
+
+        {{ form_row(formCong.capacite,{'attr':{'placeholder':"la capacité de congélateur"}} )}}
+
+        <button type="submit" class="btn btn-secondary btn-lg btn-block">
+            {% if editMode %}
+                Enregisrer les modifications
+            {% else %}    
+                Ajouter Congélateur
+            {% endif %}
+            
+        </button>
+
+    {{ form_end(formCong)}}   
+
+{% endblock %}

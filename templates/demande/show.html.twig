@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<div class="jumbotron">
+  <h1 class="display-3">N°demande: {{ demande.id }}</h1>
+  <p class="lead">Date de création: {{ demande.DateDemande|date ('d/m/y à H:i')  }} </p>
+  <p class="lead">Pour le: {{ demande.DateUtilisation|date ('d/m/y à H:i') }}</p>
+  <p class="lead">Nombres des poches: {{ demande.NombrePoche }}</p>
+  <p class="lead">Type des poches: {{ demande.Type }}</p>
+  <p class="lead">Groupe sanguin : {{ demande.GS }}</p>
+  <p class="lead">Sérum: {{ demande.serum }} </p>
+  <p class="lead">Cin: Nom & prénom malade: {{ demande.CinMalade }}: {{ demande.NomMalade }} {{ demande.PrenomMalade }}</p>
+{% for service in services %}
+    {% if service.id == demande.service.id %}
+          <p class="lead">Service: {{ service.NomService }}</p>
+    {% endif %}
+{% endfor %}
+  {% for user in users %}
+    {% if user.id == demande.IdUser1 %}
+        <p class="lead">Cin: Nom & prénom Inférmiere de service: {{ user.NUMCIN }} : {{ user.Username }}</p>
+    {% elseif user.id == demande.IdUser2 %}
+        <p class="lead">Cin: Nom & prénom médecin de service: {{ user.NUMCIN }} : {{ user.Username }}</p>
+    {% endif %}
+  {% endfor %}
+  <h1 class="display-3">Réponse:</h1>
+        {% if not pochesreservees %}
+            <p class="lead">Pas de sang</p>
+        {% else %}
+            {% for poche in pochesreservees %}
+
+                <p class="lead">Poche: {{ poche.NOrdre }}</p>
+                <p class="lead">Réponse envoyeé à: {{ poche.Date|date ('d/m/y à H:i')  }}</p>
+                {% for user in users %}
+                    {% if user.id == demande.IdUser1 %}
+                    <p class="lead">Réponse envoyeé par: {{ user.NUMCIN }} : {{ user.Username }}</p>
+                    {% endif %}
+                {% endfor %}
+                <p class="lead">D'aprés le test de compatibilité n° : {{ poche.TestDeCompatibilite }}</p>
+          {% endfor %}
+        {% endif %}
+  
+ 
+{% endblock %}

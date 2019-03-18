@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% form_theme formDonneur 'bootstrap_4_layout.html.twig'%}
+
+
+
+{% block body %}
+
+<h1> Fiche de renseignement de donneur! </h1>
+{{ form_start(formDonneur)}}
+
+{{form_row(formDonneur.nom, {'attr' : {'placeholder' :"Nom du donneur..."}} )}}
+{{form_row(formDonneur.prenom, {'attr' : {'placeholder' :"prenom du donneur..."}} )}}
+{{form_row(formDonneur.sexe)}}
+{{form_row(formDonneur.prenom_pere, {'attr' : {'placeholder' :"Nom et prénom du pére"}} )}}
+{{form_row(formDonneur.prenom_mere, {'attr' : {'placeholder' :"Nom et prénom du mére"}} )}}
+{{form_row(formDonneur.date_de_naissance)}}
+
+{{form_row(formDonneur.etat_civil)}}
+{{form_row(formDonneur.NUM_CIN, {'attr' : {'placeholder' :"Numéro carte CIN "}} )}}
+{{form_row(formDonneur.Adresse_complete, {'attr' : {'placeholder' :"Adresse compléte.... "}} )}}
+{{form_row(formDonneur.numero_telephone, {'attr' : {'placeholder' :"Numéro du téléphone....."}} )}}
+{{form_row(formDonneur.profession, {'attr' : {'placeholder' :"Profession...."}} )}}
+{{form_row(formDonneur.origine, {'attr' : {'placeholder' :"L'origine du donneur ..."}} )}}
+{{form_row(formDonneur.Dons_anterieurs )}}
+{{form_row(formDonneur.Dons_anterieurs_volontaires, {'attr' : {'placeholder' :"Nombre de Dons antérieur volontaire"}} )}}
+{{form_row(formDonneur.Dons_anterieurs_familiaux, {'attr' : {'placeholder' :"Nombre de Dons antérieur Familiaux"}} )}}
+{{form_row(formDonneur.donneur_convocable)}} </br>
+{{form_row(formDonneur.DateDuDernierDon)}}</br>
+
+
+    <button type="submit" class="btn btn-secondary btn-lg btn-block">
+                {% if editMode %}
+                    Enregisrer les modifications
+                {% else %}    
+                    Ajouter le Donneur
+                {% endif %}
+    </button>
+{{form_end(formDonneur)}}
+
+ {% endblock %}
+

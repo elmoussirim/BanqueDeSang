@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<h1>{{ donneur.nom }} {{  donneur.prenom }}</h1>
+
+<table class="table table-hover">
+  <tbody>
+    <tr>
+      <th scope="col">Nom & prénom du donneur:{{ donneur.nom }} {{  donneur.prenom }}</th>
+      <th scope="col">Sexe :{{ donneur.sexe }}</th>
+
+    </tr>
+    <tr> 
+      <th scope="col">Nom & prénom du pére: {{ donneur.PrenomPere }}</th>
+      <th scope="col">Nom & prénom du mére: {{ donneur.PrenomMere }}</th>
+    </tr>
+    <tr>
+      <th scope="col">Date de naissance: {{ donneur.DateDeNaissance|date ('d/m/y') }}</th>
+      <th scope="col">Etat civil : {{ donneur.EtatCivil }}</th>
+    </tr>
+
+    <tr> 
+      <th scope="col">Numéro carte CIN: {{ donneur.NUMCIN }}</th>
+      <th scope="col">Adresse compléte: {{ donneur.AdresseComplete }}</th>
+    </tr>
+    <tr>
+      <th scope="col">Numéro du téléphone: {{ donneur.NumeroTelephone }}</th>
+      <th scope="col">Profession: {{ donneur.Profession }}</th>
+    </tr>
+    <tr> 
+      <th scope="col">L'origine du donneur: {{ donneur.Origine }}</th>
+      <th scope="col">Dons anterieurs: {{ donneur.DonsAnterieurs }}</th>
+    </tr>
+    <tr>
+      <th scope="col">Nombre de Dons antérieur volontaire: {{ donneur.DonsAnterieursVolontaires }}</th>
+      <th scope="col">Nombre de Dons antérieur Familiaux: {{ donneur.DonsAnterieursFamiliaux }}</th>
+    </tr>
+    <tr> 
+      <th scope="col">Donneur convocable: {{ donneur.DonneurConvocable }}</th>
+      <th scope="col">Dernier don à: {{ donneur.DateDuDernierDon|date ('d/m/y à H:i')  }}</th>
+    </tr>
+    <tr> 
+      <th scope="col">Donneur enregistré par: {{ user.username }}</th>
+      <th scope="col">Cin d'agent d'acceuil: {{ user.NUMCIN }}</th>
+    </tr>
+  </tbody>
+</table>
+
+  <hr class="my-4">
+
+    <em>Résultat de don: {{ donneur.Donvalide }}</em>
+
+  <p class="lead">
+   <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="window.location.href='/donneur/{{ donneur.id }}/edit'">Modifier les informations</button>
+  </p>
+
+{% endblock %}

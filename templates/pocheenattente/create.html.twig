@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formPocheEnAttente 'bootstrap_4_layout.html.twig'%}
+
+ 
+{% block body %}
+    
+     <form class="form-inline my-2 my-lg-0"  method="request" action="{{ path('search_inf_don') }} ">
+        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Informations de don">
+        <button class="btn btn-secondary my-2 my-sm-0"  type="submit">Chercher</button>
+    </form>
+    <br>
+    <br>
+    <br>
+
+{% if tube %}
+<div class="jumbotron">
+    <h1 class="display-3">Don numéro: {{ tube.NOrdre }} </h1>
+
+    <p class="lead">Nom du donneur: {{ tube.NomDonneur }}</p>
+    <p class="lead">Prénom du donneur:{{ tube.PrenomDonneur }}</p>
+    <p class="lead">N°cin du donneur:{{ tube.CinDonneur }}</p>
+</div>
+
+{% endif %}
+<h1> création d'une poche séparée  ! </h1>
+    {{ form_start(formPocheEnAttente)}}
+    {{form_row(formPocheEnAttente.Type)}}
+<button type = "submit" class="btn btn-secondary btn-lg btn-block"> Enregistrer  </buttton>
+{{form_end(formPocheEnAttente)}}
+ {% endblock %}

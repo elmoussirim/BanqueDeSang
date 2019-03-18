@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
+
+        {% block stylesheets %}{% endblock %}
+     
+    </head>
+    <script type="text/javascript">
+            window.history.forward();
+            function noBack()
+            {
+                window.history.forward();
+            }
+    </script>
+    <body onLoad="noBack();"  onpageshow="if (event.persisted) noBack();" onUnload="" >
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="http://www.annugeo.com/254-institut-orthopedique-mohamed-kassab.html">institut Mohamed Kassab</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    {% if not app.user  %}
+                  
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/"> Accueil <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path ('security_login') }}">Connexion </a>
+                        </li>
+
+                    {% else %}
+
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/"> Accueil <span class="sr-only">(current)</span></a>
+                        </li>
+  
+                    {% if is_granted('ROLE_ADMIN') %}
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path ('blog_user') }}"> Les utilisateurs </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path ('blog_service') }}"> Les services </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path ('blog_congelateur') }}"> Les congélateurs</a>
+                        </li>
+                    
+                        
+                    {% elseif is_granted('ROLE_AGACC')  %}
+                        
+                         <li class="nav-item">
+                            <a class="nav-link" href="{{path('don_donneur')}}"> Liste des donneurs </a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link" href="{{path('donneur_create')}}"> Nouveau donneur </a>
+                        </li>
+                    
+                    {% elseif is_granted('ROLE_MEDPRE')  %}
+                         <li class="nav-item">
+                            <a class="nav-link" href="{{path('fichemedical_create')}}"> Nouveau patient </a>
+                        </li>
+                    {% elseif is_granted('ROLE_INFPRE')  %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path('PocheEnAttente_new')}}"> Nouvelle poche séparée</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path('tube_new')}}"> Nouveaux tubes</a>
+                        </li>
+
+                   
+                    {% elseif is_granted('ROLE_INFSER') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path('demandes')}}"> Les demandes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path('demande_new')}}"> Nouvelle demande</a>
+                        </li>
+                        
+                    {% elseif app.user.poste == "Médecin de service" %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path('demandes')}}"> Les demandes</a>
+                        </li>
+                    {% elseif app.user.poste == "Technicien de laboratoire" %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path('serologies_donneur')}}">Les sérologies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path('demandes')}}"> Les demandes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path('poches_en_attentes')}}"> Les poches en attentes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path('poches_entrees')}}"> Les poches en stock</a>
+                        </li>
+
+                    {% endif %}     
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path ('security_logout') }}">Déconnexion <span class="sr-only">(current)</span></a>
+                        </li>
+                    {% endif %}     
+                </ul>
+
+            </div>
+        </nav>
+
+        <div class="container">
+            <br>
+            <br>
+            <br>
+            {% block body %}{% endblock %}
+        </div>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% form_theme formfichemedical 'bootstrap_4_layout.html.twig'%}
+
+ 
+{% block body %}
+
+
+<h1> création d'une fiche médicale  ! </h1>
+{{ form_start(formfichemedical)}}
+{{form_row(formfichemedical.NUMERO_CIN, {'attr' : {'placeholder' :"N°cin du donneur"}}) }}
+{{form_row(formfichemedical.nom, {'attr' : {'placeholder' :"Nom du donneur"}} )}}
+
+{{form_row(formfichemedical.prenom, {'attr' : {'placeholder' :"Prenom du donneur"}} )}}
+{{form_row(formfichemedical.date_de_naissance)}}
+{{form_row(formfichemedical.taille)}}
+{{form_row(formfichemedical.poids)}}
+{{form_row(formfichemedical.groupe, {'attr' : {'placeholder' :"Groupe sanguin "}} )}}
+{{form_row(formfichemedical.RAA)}}
+{{form_row(formfichemedical.Paludisme)}}
+{{form_row(formfichemedical.Maladie_pulmonaire)}}
+{{form_row(formfichemedical.Ictere)}}
+{{form_row(formfichemedical.Diabete)}}
+{{form_row(formfichemedical.Autre)}}
+{{form_row(formfichemedical.T_A, {'attr' : {'placeholder' :""}} )}}
+{{form_row(formfichemedical.Coeur, {'attr' : {'placeholder' :""}} )}}
+
+{{form_row(formfichemedical.Appariel_Respiratoire, {'attr' : {'placeholder' :""}} )}}
+
+{{form_row(formfichemedical.Foie, {'attr' : {'placeholder' :""}} )}} </br>
+{{form_row(formfichemedical.Rate, {'attr' : {'placeholder' :""}} )}} </br>
+{{form_row(formfichemedical.Systeme_nerveux, {'attr' : {'placeholder' :""}} )}} </br>
+{{form_row(formfichemedical.ApteInapte)}} </br>
+{{form_row(formfichemedical.Observations, {'attr' : {'placeholder' :""}} )}} </br>
+<button type = "submit" class="btn btn-secondary"> Enregistrer  </buttton>
+{{form_end(formfichemedical)}}
+ {% endblock %}

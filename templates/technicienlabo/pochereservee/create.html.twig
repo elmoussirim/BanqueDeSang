@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% form_theme FormPocheReservee 'bootstrap_4_layout.html.twig'%}
+
+{% block body %}
+
+    <h1>Création d'une demande de poche !</h1>
+    
+    {{ form_start(FormPocheReservee) }}
+        {{ form_row(FormPocheReservee.n_ordre ,{'label':'Numéro de poche: ','attr':{'placeholder':'Numéro de poche ....'}} )}}
+        {{ form_row(FormPocheReservee.test_de_compatibilite ,{'label':'Numéro de test: ','attr':{'placeholder':'Numéro de test de compatibilité sanguine qui valide cette réservation ....'}} )}}
+        
+    <button type="submit" class="btn btn-secondary btn-lg btn-block">Enregistrer !</button>
+
+    {{ form_end(FormPocheReservee)}}   
+ 
+{% endblock %}

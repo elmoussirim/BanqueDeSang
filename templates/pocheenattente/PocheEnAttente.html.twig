@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<br>
+<br>
+    <form class="form-inline my-2 my-lg-0"  method="request" action="{{ path('search_pochesenattente') }} ">
+        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Chercher">
+        <button class="btn btn-secondary my-2 my-sm-0"  type="submit">Chercher</button>
+    </form>
+    <br>
+    <br>
+    <br>
+
+    <br>
+    <br>
+    <br>
+
+    <section class="donneur">
+            <h1> liste des poches : </h1>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">N° ordre</th>
+                        <th scope="col">N°cin donneur </th>
+                        <th scope="col">Nom & Prenom donneur</th>
+                        <th scope="col">Type de poche</th>
+                        <th scope="col">Nom et prénom du préleveur</th>
+                        <th scope="col">Cin du préleveur</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for PocheEnAttente in PochesEnAttentes %}
+                        {% for user in users %}
+
+                            {% if user.id == PocheEnAttente.IdUser and PocheEnAttente.statut == 1%}
+                                <tr>
+                                    <td scope="col">{{ PocheEnAttente.Date|date ('d/m/y à H:i')  }}</td>
+                                    <th scope="row">{{ PocheEnAttente.NOrdre }}</th>
+                                    <th scope="row">{{ PocheEnAttente.CinDonneur }}</th>
+                                    <td scope="col">{{ PocheEnAttente.NomDonneur }} {{ PocheEnAttente.PrenomDonneur}}</td>
+                                    <td  scope="col">{{ PocheEnAttente.Type }}</td>
+                                    <td  scope="col">{{ user.username }}</td>
+                                    <td  scope="col">{{ user.NUMCIN}}</td>
+                                    <td><button type="button" class="btn btn-primary" onclick="">Invalide</button></td>
+                                    <td><button type="button" class="btn btn-secondary" onclick="window.location.href='/poche/en/stock/{{ PocheEnAttente.id }}'">Valide</button></td>
+                                </tr>
+                            {% endif %}    
+                        {% endfor %}
+                   {% endfor %}
+
+                </tbody>
+            </table>  
+      
+    </section>
+{% endblock %}

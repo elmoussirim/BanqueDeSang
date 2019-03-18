@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% form_theme formServ 'bootstrap_4_layout.html.twig'%}
+
+{% block body %}
+
+    <h1>Création d'un service !</h1>
+
+    {{ form_start(formServ) }}
+
+        {{ form_row(formServ.nom_service ,{'attr':{'placeholder':"le nom de service"}} )}}
+        {{ form_row(formServ.ChService ,{'attr':{'placeholder':"le nom de Che service"}} )}}
+
+        {{ form_row(formServ.capacite,{'attr':{'placeholder':"la capacité de sercive"}} )}}
+
+        <button type="submit" class="btn btn-secondary btn-lg btn-block">
+            {% if editMode %}
+                Enregisrer les modifications
+            {% else %}    
+                Ajouter le service
+            {% endif %}
+            
+        </button>
+
+    {{ form_end(formServ)}}   
+
+{% endblock %}

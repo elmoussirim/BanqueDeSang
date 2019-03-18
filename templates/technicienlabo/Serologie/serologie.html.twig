@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<!-- Affichage de sérologie avec Modifier, enregistre ou supprimer-->
+
+<div class="jumbotron">
+  <h1 class="display-3"></h1>
+
+  <p class="lead">Date: {{ serologie.DateDeJour|date ('d/m/y à H:i')  }} </p>
+  <p class="lead">N° ordre: {{ serologie.NOrdre }}</p>
+  {% if serologie.AUtiliserAvant != null %}
+   <p class="lead">A utiliser avant: {{ serologie.AUtiliserAvant|date ('d/m/y à H:i') }}</p>
+  {% endif %}
+  <p class="lead">N°cin du donneur: {{ serologie.CinDonneur }}</p>
+  <p class="lead">Nom & Prenom donneur: {{ serologie.NomDonneur }} {{ serologie.PrenomDonneur }}</p>
+  <p class="lead">GS: {{ serologie.GroupeSanguins }}</p>
+  <p class="lead">AGHBR: {{ serologie.AGHBR }} </p>
+  <p class="lead">ACHCV: {{ serologie.ACHCV }} </p>
+  <p class="lead">TPHA: {{ serologie.TPHA }}</p>
+  <p class="lead">HIV: {{ serologie.HIV }}</p>
+  <p class="lead">Resultat Serologie: {{ serologie.ResultatSerologie }}</p>
+{% for user in users %}
+  {% if user.id == serologie.IdUser1 %}
+    <p class="lead">Technicien 1: {{ user.NUMCIN }} : {{ user.Username }}</p>
+  {% elseif user.id == serologie.IdUser2 %}
+   <p class="lead">Technicien 2: {{ user.NUMCIN }} : {{ user.Username }}</p>
+  {% endif %}
+{% endfor %}
+  <hr class="my-4">
+    <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="window.location.href='/serologie/termnier/{{ serologie.id }}'">Terminier sérologie</button>
+
+    <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="window.location.href='/serologie/{{ serologie.id }}/edit'">Modifier les informations</button>
+</div>
+
+{% endblock %}

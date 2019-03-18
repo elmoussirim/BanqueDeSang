@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% form_theme formficheedit 'bootstrap_4_layout.html.twig'%}
+
+ 
+{% block body %}
+
+
+<h1> création d'une fiche médicale  ! </h1>
+{{ form_start(formficheedit)}}
+{{form_row(formficheedit.NUMERO_CIN)}}
+{{form_row(formficheedit.nom)}}
+
+{{form_row(formficheedit.prenom)}}
+{{form_row(formficheedit.date_de_naissance)}}
+{{form_row(formficheedit.taille)}}
+{{form_row(formficheedit.poids)}}
+{{form_row(formficheedit.groupe)}}
+{{form_row(formficheedit.RAA)}}
+{{form_row(formficheedit.Paludisme)}}
+{{form_row(formficheedit.Maladie_pulmonaire)}}
+{{form_row(formficheedit.Ictere)}}
+{{form_row(formficheedit.Diabete)}}
+{{form_row(formficheedit.Autre)}}
+{{form_row(formficheedit.T_A)}}
+{{form_row(formficheedit.Coeur)}}
+
+{{form_row(formficheedit.Appariel_Respiratoire)}}
+
+{{form_row(formficheedit.Foie)}} </br>
+{{form_row(formficheedit.Rate)}} </br>
+{{form_row(formficheedit.Systeme_nerveux)}} </br>
+{{form_row(formficheedit.ApteInapte)}} </br>
+{{form_row(formficheedit.Observations)}} </br>
+{{form_row(formficheedit.N_ordre, {'attr' : {'placeholder' :"N° d'ordre"}} )}} </br>
+
+<button type = "submit" class="btn btn-secondary"> Enregistrer  </buttton>
+{{form_end(formficheedit)}}
+ {% endblock %}

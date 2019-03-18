@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% form_theme formtube 'bootstrap_4_layout.html.twig'%}
+
+ 
+{% block body %}
+
+<br>
+<br>
+    <form class="form-inline my-2 my-lg-0"  method="request" action="{{ path('fiche_search') }} ">
+        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Chercher">
+        <button class="btn btn-secondary my-2 my-sm-0"  type="submit">Chercher</button>
+    </form>
+    <br>
+    <br>
+    <br>
+
+    <br>
+    <br>
+    <br>
+<h1> création d'une poche séparée  ! </h1>
+{{ form_start(formtube)}}
+
+{{form_row(formtube.N_ordre, {'attr' : {'placeholder' :"N°ordre"}} )}}
+{{form_row(formtube.NomDonneur, {'attr' : {'placeholder' :"Nom du donneur"}} )}}
+{{form_row(formtube.PrenomDonneur, {'attr' : {'placeholder' :"Prenom du donneur"}} )}}
+{{form_row(formtube.CinDonneur, {'attr' : {'placeholder' :"N°cin du donneur"}} )}}
+
+<button type = "submit" class="btn btn-secondary btn-lg btn-block"> Enregistrer  </buttton>
+{{form_end(formtube)}}
+ {% endblock %}

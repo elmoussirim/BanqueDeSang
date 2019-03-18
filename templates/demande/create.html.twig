@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% form_theme formDemande 'bootstrap_4_layout.html.twig'%}
+
+{% block body %}
+    {% if editMode %}
+        <h1>Modification d'une demande de poche !</h1>
+    {% else %}
+        <h1>Création d'une demande de poche !</h1>
+    {% endif %}
+    
+    {{ form_start(formDemande) }}
+        {{ form_row(formDemande.date_utilisation ,{'label':'Date d\'utilisation: '} )}}
+        {{ form_row(formDemande.type ,{'label':'Type de poche: ','attr':{'placeholder':'Type de poche ....'}} )}}
+        {{ form_row(formDemande.nombre_poche ,{'label':'Nombre de poche: ','attr':{'placeholder':'Nombre de poche....'}} )}}
+        {{ form_row(formDemande.G_S ,{'label':'Groupe sanguin: ','attr':{'placeholder':'Groupe sanguin ! '}} )}}
+
+        {{ form_row(formDemande.serum ,{'label':'Numéro Tupe de sérum: ','attr':{'placeholder':'Numéro Tupe de sérum ! '}} )}}
+        {{ form_row(formDemande.cin_malade ,{'label':'N°Cin malade: ','attr':{'placeholder':'N°Cin malade'}} )}}
+        {{ form_row(formDemande.nom_malade ,{'label':'nom malade: ','attr':{'placeholder':'nom malade'}} )}}
+        {{ form_row(formDemande.prenom_malade ,{'label':'prénom malade: ','attr':{'placeholder':'prénom malade'}} )}}
+        {{ form_row(formDemande.service ,{'label':'Service: ','attr':{'placeholder':'Service'}} )}}
+
+        
+
+    <button type="submit" class="btn btn-secondary btn-lg btn-block">Enregistrer !</button>
+
+    {{ form_end(formDemande)}}   
+ 
+{% endblock %}
