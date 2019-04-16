@@ -45,7 +45,7 @@ class User implements UserInterface
     public  $confirm_password;
     /**
      * @ORM\Column(type="integer")
-     * @Assert\Length(min="8",max="8",minMessage="N° CIN doit etre égale à 8 chiffres")
+     * @Assert\Length(min="7",minMessage="N° CIN doit etre égale à 8 chiffres")
      */
     private $NUM_CIN;
 

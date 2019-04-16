@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formDemande 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+
+
+{% if not app.user %}
+<p>Connectez-vous pour effectuer cette opération</p>
+{% elseif app.user.poste == "Technicien de laboratoire" %}
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">Réponse</h5>
+                                <div class="card-body">
+                        {{ form_start(formDemande) }}
+                         
+                            {{form_row(formDemande.reponse)}}
+                            
+                                        <div class="col-sm-6 pl-0">
+                                                <p class="text-right">
+                                                    <button type="reset" value="Reset" class="btn btn-secondary">Vider</button>
+                                                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                                                </p>
+                                        </div>  
+                                    {{form_end(formDemande)}} 
+                                </div>
+                            </div>
+                        </div>
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,203 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% if not poche %}
+  <div class="section-top-border">
+    <h3 class="mb-30 title_color">Attention</h3>
+    <div class="row">
+      <div class="col-lg-12">
+        <blockquote class="generic-blockquote">
+          <p>Cette poche n'est existe pas</p>
+          <p>Vérifiez le numéro de poche ou leur type.</p>
+          
+        </blockquote>
+      </div>
+    </div>
+  </div>
+{% else %}
+
+
+    <div class="row">
+        {% if donneur %}
+                        <!-- NEWS WIDGET -->
+                        <div class="col-md-4">
+
+                            <div class="panel panel-default">                            
+                                <div class="panel-body panel-body-image">
+                                    <img src="{{ asset('assets/images/bs_8.jpg')}}" alt="Ocean">
+                                    <a href="#" class="panel-body-inform">
+                                        <span ></span>
+                                    </a>
+                                </div>
+                                <div class="panel-body">
+                                    <h3>Donneur de poche {{ donneur.Nom }} {{  donneur.Prenom }}</h3>
+                                    {% for user in users%}
+                                                {% if user == donneur.User %}
+                                                    <p>Nom & prenom d'agent: {{ user.username }}</p>
+                                                    <p>Cin d'agent: {{ user.NUMCIN }} </p> 
+                                                {% endif %}
+                                            {% endfor %}
+                                            <p>Résultat de don: {{ donneur.Donvalide }}</p>
+                                </div>
+                                <div class="panel-footer text-muted">
+                                    <button type="button" onclick="window.location.href='/donneur/show/{{ donneur.id }}'" target="_blank" class="btn btn-success" >plus détais</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- END NEWS WIDGET -->
+        {% endif %}
+                        <!-- ============================================================== -->
+                        <!-- end working capital  -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- inventory turnover  -->
+                        <!-- ============================================================== -->
+        {% if fichemedicale %}
+                    <!-- NEWS WIDGET -->
+                        <div class="col-md-4">
+
+                            <div class="panel panel-default">                            
+                                <div class="panel-body panel-body-image">
+                                    <img src="{{ asset('assets/images/bs_10.jpg')}}" alt="Ocean">
+                                    <a href="#" class="panel-body-inform">
+                                        <span></span>
+                                    </a>
+                                </div>
+                                <div class="panel-body">
+                                    <h3>Fiche médicale de don</h3>
+                                    {% for user in users%}
+                                       {% if user == fichemedicale.User %}
+                                        <p> Nom & prenom du medecin: {{ user.username }}</p>
+                                        <p> Cin du Medecin: {{ user.NUMCIN }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <p>Résultat: {{ fichemedicale.ApteInapte }}</p>
+                                </div>
+                                <div class="panel-footer text-muted">
+                                    <button type="button" target="_blank" onclick="window.location.href='/fiche/{{ fichemedicale.Id }}'" class="btn btn-success" >plus détais</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+        {% endif %}
+                    <!-- ============================================================== -->
+                    <!-- end inventory turnover -->
+                    <!-- ============================================================== --> 
+        {% if serologies %}{% for serologie in serologies %}
+                    <!-- NEWS WIDGET -->
+                        <div class="col-md-4">
+
+                            <div class="panel panel-default">                            
+                                <div class="panel-body panel-body-image">
+                                    <img src="{{ asset('assets/images/bs_16.jpg')}}" alt="Ocean">
+                                    <a href="#" class="panel-body-inform">
+                                        <span></span>
+                                    </a>
+                                </div>
+                                <div class="panel-body">
+                                    <h3>Date de sérologie : {{ serologie.DateDeJour|date ('d/m/y à H:i')  }}</h3>
+                                    <p>Avant: {{ serologie.AUtiliserAvant|date ('d/m/y à H:i') }}</p>
+                                    {% for user in users %}
+                                        {% if user == serologie.User1 %}
+                                            <p>Technicien 1: {{ user.Username }} ---- Cin: {{ user.NUMCIN }}</p>
+                                        {% elseif user == serologie.User2 %}
+                                            <p>Technicien 2: {{ user.Username }} ---- Cin: {{ user.NUMCIN }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <p>Resultat: {{ serologie.ResultatSerologie }}</p>
+                                    <div class="panel-footer text-muted">
+                                        {% if serologie.Statut == 1 %}
+                                            <button type="button" class="btn btn-success" onclick="window.location.href='/serologie/termnier/{{ serologie.id }}'">Terminer</button>
+                                        {% elseif serologie.ResultatSerologie == " " %}
+                                            <button type="button" class="btn btn-success" onclick="window.location.href='/serologie/{{ serologie.id }}/edit'">Modifier </button>
+                                        {% endif %} 
+                                            
+                                    </div>
+                            </div>
+
+                        </div>
+            {% endfor %}            
+        {% endif %}
+</div>
+
+<div class="row">
+        {% if poche %}
+            <div class="col-md-6">
+
+                            <div class="panel panel-default">                            
+                                <div class="panel-body panel-body-image">
+                                    <img src="{{ asset('assets/images/bs_13.jpg')}}" alt="Ocean">
+                                    <a href="#" class="panel-body-inform">
+                                        <span></span>
+                                    </a>
+                                </div>
+                                <div class="panel-body">
+                                    <h3>Poche maintenant: Poche {{ poche.NOrdre }}</h3>
+                                    <p>Date de création: {{ poche.Date|date ('d/m/y à H:i')  }}<br>A utiliser avant: {{ poche.AUtiliserAvant|date ('d/m/y à H:i')  }}<br>Type de poche :{{ poche.Type }}<br>
+                                       {% for cong in congelateur %}
+                                            {% if cong == poche.Congelateur %}
+                                                Congélateur: {{ cong.NumCong}}.{{ cong.Type}}<br>
+                                            {% endif %}
+                                        {% endfor %}
+                                            
+                                        {% for user in users%}
+                                            {% if user == poche.User %}
+                                                <p>Nom et prénom du préleveur: {{ user.username }}<br>Cin du préleveur: {{ user.NUMCIN }} </p> 
+                                            {% endif %}
+                                        {% endfor %}
+                                    <h4>Statut poche: {{ poche.statut }}</h4>
+                                    {% if poche.statut == "Poche en stock ---> Poche sortie" or poche.statut == "Poche reservée ---> Poche sortie" %} 
+                                        <p>Session: {{ poche.Session }}<br>Raision: {{ poche.Raison }}<br>Agent de service: {{ poche.AgentService }}</p>
+                                    {% endif %}
+                                    <div class="panel-footer text-muted">
+                                        <button type="button" class="btn btn-primary" onclick="window.location.href='/poche/mettre/a/jour/statut/poche/{{ poche.id }}'">Mettre a jour statut poche</button>
+                                        <button type="button" onclick="window.location.href='/poche/show/{{ poche.id }}'" class="btn btn-info" >plus détais</button>
+                                    </div>
+                            </div>
+
+                        </div>
+        {% endif %}
+             <!-- ============================================================== -->
+</div>
+            <h2>Historique de poche</h2>
+            <div class="row">
+            {% for his in historique %}
+            <div class="col-md-6">
+           
+                            <div class="panel panel-default">
+                                <div class="panel-body profile bg-info">
+
+                                    <div class="profile-data">
+                                        <div class="profile-data-name">{{ his.Statut }}</div>
+                                        <div class="profile-data-title">date d'action: {{ his.DateAction|date ('d/m/y à H:i') }} </div>
+                                    </div>
+                                </div>
+                                <div class="panel-body list-group">
+                                    <a href="#" class="list-group-item"><p>Congélateur :{% for cong in congelateur %} {% if cong.id == his.Congelateur %}{{ cong.NumCong}}.{{ cong.Type}}{% endif %}{% endfor %}.</a>
+                                    <a href="#" class="list-group-item">{% for user in users%}{% if user.id == his.User %}<p>Avec: {{ user.username }}<br>Cin du préleveur: {{ user.NUMCIN }} </p>{% endif %}{% endfor %}</a>
+                                    {% if his.Statut == "Poche en stock ---> Poche reservée" %}
+                                        <p>N° test de compatibilité: {{ his.TestDeCompatibilite }}<br>N° Demande: {{ his.Demande }}</p>
+                                        <div class="card-footer text-center bg-white">
+                                            <a href="/demande/{{ his.Demande }}/show" target="_blank" class="card-link">Voire demande <i class="fa fa-long-arrow-right"></i></a>
+                                        </div>
+                                    {% elseif his.Statut == "Poche en attente ---> Poche perimée" or his.Statut == "Poche en stock ---> Poche perimée" or his.Statut == "Poche sortie ---> Poche perimée" %}
+                                        <p>Session: {{ his.Session }}<br>Raision: {{ his.Raison }}</p>
+                                    {% elseif poche.Statut == "Poche en stock ---> Poche sortie" or poche.Statut == "Poche reservée ---> Poche sortie" or poche.Statut == "Poche sortie ---> Poche en stock" or poche.Statut == "Poche sortie ---> Poche perimée" %}
+                                        <p>Session: {{ his.Session }}<br>Raision: {{ his.Raison }}<br>Agent de service: {{ his.AgentService }}</p>
+                                    {% endif %}     
+                                </div>                            
+                            </div>
+                        </div>  
+                {% endfor %}
+</div>
+
+
+
+            <br><br>
+            <button type="button" class="btn btn-primary btn-block" onclick="window.location.href='/tc/show/{{ poche.id }}'">Test de compatibilité</button>
+
+{% endif %}
+{% endblock %}

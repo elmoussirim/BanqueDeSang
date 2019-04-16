@@ -1,29 +1,60 @@
 {% extends 'base.html.twig' %}
+
 {% form_theme formDemande 'bootstrap_4_layout.html.twig'%}
-
 {% block body %}
-    {% if editMode %}
-        <h1>Modification d'une demande de poche !</h1>
-    {% else %}
-        <h1>Création d'une demande de poche !</h1>
-    {% endif %}
-    
-    {{ form_start(formDemande) }}
-        {{ form_row(formDemande.date_utilisation ,{'label':'Date d\'utilisation: '} )}}
-        {{ form_row(formDemande.type ,{'label':'Type de poche: ','attr':{'placeholder':'Type de poche ....'}} )}}
-        {{ form_row(formDemande.nombre_poche ,{'label':'Nombre de poche: ','attr':{'placeholder':'Nombre de poche....'}} )}}
-        {{ form_row(formDemande.G_S ,{'label':'Groupe sanguin: ','attr':{'placeholder':'Groupe sanguin ! '}} )}}
+{% if not is_granted('ROLE_INFSER') %}
 
-        {{ form_row(formDemande.serum ,{'label':'Numéro Tupe de sérum: ','attr':{'placeholder':'Numéro Tupe de sérum ! '}} )}}
-        {{ form_row(formDemande.cin_malade ,{'label':'N°Cin malade: ','attr':{'placeholder':'N°Cin malade'}} )}}
-        {{ form_row(formDemande.nom_malade ,{'label':'nom malade: ','attr':{'placeholder':'nom malade'}} )}}
-        {{ form_row(formDemande.prenom_malade ,{'label':'prénom malade: ','attr':{'placeholder':'prénom malade'}} )}}
-        {{ form_row(formDemande.service ,{'label':'Service: ','attr':{'placeholder':'Service'}} )}}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+<p>Connectez-vous avec un compte "Infirmière de service" pour effectuer cette opération</p>
 
-        
+{% else %}
 
-    <button type="submit" class="btn btn-secondary btn-lg btn-block">Enregistrer !</button>
+                        <!-- ============================================================== -->
+                        <!-- horizontal form -->
+                        <!-- ============================================================== -->
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">Demande</h5>
+                                <div class="card-body">
+                                     {{ form_start(formDemande) }}
+                                        
+                                        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                            {{ form_row(formDemande.date_utilisation ,{'label':'Date d\'utilisation: '} )}}
+                        
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{ form_row(formDemande.type ,{'label':'Type de poche: ','attr':{'placeholder':'Type de poche ....'}} )}}
 
-    {{ form_end(formDemande)}}   
- 
+
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{ form_row(formDemande.nombre_poche ,{'label':'Nombre de poche: ','attr':{'placeholder':'Nombre de poche....'}} )}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{ form_row(formDemande.G_S ,{'label':'Groupe sanguin: ','attr':{'placeholder':'Groupe sanguin ! '}} )}}
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-row">
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{ form_row(formDemande.serum ,{'label':'Numéro Tupe de sérum: ','attr':{'placeholder':'Numéro Tupe de sérum ! '}} )}}
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-sm-6 pl-0">
+                                                <p class="text-right"><br><br>
+                                                    <button type="reset" value="Reset" class="btn btn-secondary">Vider</button>
+                                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                                </p>
+                                        </div>  
+                                    {{form_end(formDemande)}} 
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ============================================================== -->
+                        <!-- end horizontal form -->
+                        <!-- ============================================================== -->
+
+{% endif %}
 {% endblock %}

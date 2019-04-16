@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+{% if not app.user %}
+<p>Connectez-vous avec un compte "Technicien de laboratoire" pour effectuer cette opération</p>
+{% elseif app.user.poste == "Technicien de laboratoire"  %}
+
+<!-- Welcome Area Starts -->
+   <div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <h3 class="panel-title">Les testes de compatibilité</h3>
+                                    <div class="pull-right">
+                                        <div class="overview-wrap">
+                                            <button type="button" class="btn btn-warning" onclick="window.location.href='/poche/tc/new/{{ poche.id }}'"><i class="zmdi zmdi-plus"></i>Ajouter test de compatibilité</button>
+                                            <button type="button" class="btn btn-success" onclick="window.location.href='/poche/mettre/a/jour/statut/poche/{{ poche.id }}'"><i class="fa fa-cogs"></i> Mettre à jour statut poche</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                                <div class="panel-body">
+                                    <table id="customers" class="table table-striped">
+                                
+                                        <thead>
+        
+                                        <tr>
+                                        <th scope="col">N°test</th>
+                                        <th scope="col">Date</th>
+                                        
+
+                                        <th scope="col">Cin technicien</th>
+                                        <th scope="col">Tchnicien</th>
+                                        <th scope="col">Resultat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                     {% for tc in testCompatibilite %}
+
+                                            <tr>
+                                                <th scope="row">{{ tc.Id }}</th>
+                                                <td scope="col">{{ tc.Date|date ('d/m/y à H:i')  }}</td>
+                                                {% for user in users %}
+                                                    {% if user == tc.User %}
+                                                        <td  scope="col">{{ user.NUMCIN }}</td>
+                                                        <td scope="col">{{ user.Username }}</td>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <th scope="row">{{ tc.Resultat }}</th>
+                                            </tr>
+                                        
+                                    {% endfor %}
+
+                            </tbody>
+                        </table>
+                               
+                    </div>
+    <!-- Welcome Area End -->
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% endif %}
+{% endblock %}

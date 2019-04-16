@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% if not app.user %}
+<p>Connectez-vous avec un compte "Technicien de laboratoire" pour effectuer cette opération</p>
+{% elseif app.user.poste == "Technicien de laboratoire"  %} 
+
+<div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <h3 class="panel-title">L'historique des poches</h3>
+                                    <div class="pull-right">
+                                    </div>
+                                </div>
+                                <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer">
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">                               
+                                        <form role="form"  method="request" action="{{ path('search_historique') }}">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="search" placeholder="N° Ordre ??"/>
+                                                    <span class="input-group-addon" type="submit">chercher</span>
+                                                </div>
+                                        </form>
+                                    </div>                                 
+                                </div>
+
+                                <div class="panel-body">
+                                    <table id="customers" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Date d'action</th>
+                                                <th>N°Ordre</th>
+                                                <th>Technicien</th>
+                                                <th>Statut</th>
+                                            </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for h in historique %}
+                                                        <tr>
+                                                            <td>{{ h.DateAction|date ('d/m/y à H:i')  }}</td>
+                                                            {% for poche in poches %}
+                                                                {% if h.Poche == poche %}
+                                                                    <td><a href="/poche/show/{{ poche.id }}" class="btn btn-link"><i class="fa fa-link"></i> {{ poche.NOrdre }}</a></td>
+                                                                    {% for user in users %}
+                                                                        {% if user == poche.user %}
+                                                                            <td>{{ user.username }} {{ user.NUMCIN }}</td>
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                            <td>{{ h.Statut }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                            </div>
+                            
+
+
+
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% endif %}
+{% endblock %}

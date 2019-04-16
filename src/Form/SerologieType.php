@@ -17,13 +17,13 @@ class SerologieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('A_utiliser_avant', TextType::class, array(
+            ->add('A_utiliser_avant', DateType::class, array(
                 'required' => false,
                 'empty_data' => null,
                 'attr' => array(
                     'placeholder' => 'mm/dd/yyyy'
                 )))
-            ->add('groupe_sanguins',TextType::class)
+            ->add('groupe_sanguin',TextType::class)
             ->add('AGHBR',ChoiceType::class, [
                 'choices' =>[   ' ' => ' ',
                                 'positive' => 'positive', 

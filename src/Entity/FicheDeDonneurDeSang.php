@@ -128,9 +128,11 @@ class FicheDeDonneurDeSang
     private $Date;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $id_user;
+    private $user;
+    
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -407,18 +409,17 @@ class FicheDeDonneurDeSang
     }
 
 
-    public function getIdUser(): ?int
+    public function getUser(): ?User
     {
-        return $this->id_user;
+        return $this->user;
     }
 
-    public function setIdUser(int $id_user): self
+    public function setUser(?User $user): self
     {
-        $this->id_user = $id_user;
+        $this->user = $user;
 
         return $this;
     }
-
     public function getNOrdre(): ?int
     {
         return $this->N_ordre;

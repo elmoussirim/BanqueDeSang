@@ -22,19 +22,18 @@ class TestDeCompatibiliteRepository extends ServiceEntityRepository
     // /**
     //  * @return TestDeCompatibilite[] Returns an array of TestDeCompatibilite objects
     //  */
-    /*
+    
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
+            ->andWhere('t.poche = :val')
             ->setParameter('val', $value)
             ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?TestDeCompatibilite

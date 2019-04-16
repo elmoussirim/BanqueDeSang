@@ -50,17 +50,20 @@ class Serologie
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
      */
-    private $groupe_sanguins;
+    private $groupe_sanguin;
+
+     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user_1;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $id_user1;
+    private $user_2;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $id_user2;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -161,51 +164,44 @@ class Serologie
         return $this->A_utiliser_avant;
     }
 
-    public function setAUtiliserAvant(string $A_utiliser_avant): self
+    public function setAUtiliserAvant(\DateTimeInterface $A_utiliser_avant): self
     {
-        try {
-    
-            $this->A_utiliser_avant = new \DateTime($A_utiliser_avant);
-        }
-        catch(\Exception $e) {
-           //Do Nothing
-        }
-    
+        $this->A_utiliser_avant = $A_utiliser_avant;
+
         return $this;
     }
     
-    public function getGroupeSanguins(): ?string
+    public function getGroupeSanguin(): ?string
     {
-        return $this->groupe_sanguins;
+        return $this->groupe_sanguin;
     }
 
-    public function setGroupeSanguins(string $groupe_sanguins): self
+    public function setGroupeSanguin(string $groupe_sanguin): self
     {
-        $this->groupe_sanguins = $groupe_sanguins;
+        $this->groupe_sanguin = $groupe_sanguin;
 
         return $this;
     }
 
-    public function getIdUser1(): ?int
+    public function getUser1(): ?User
     {
-        return $this->id_user1;
+        return $this->user_1;
     }
 
-    public function setIdUser1(int $id_user1): self
+    public function setUser1(?User $user_1): self
     {
-        $this->id_user1 = $id_user1;
+        $this->user_1 = $user_1;
 
         return $this;
     }
-
-    public function getIdUser2(): ?int
+    public function getUser2(): ?User
     {
-        return $this->id_user2;
+        return $this->user_2;
     }
 
-    public function setIdUser2(?int $id_user2): self
+    public function setUser2(?User $user_2): self
     {
-        $this->id_user2 = $id_user2;
+        $this->user_2 = $user_2;
 
         return $this;
     }

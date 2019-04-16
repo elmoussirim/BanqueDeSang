@@ -35,7 +35,10 @@ class Congelateur
      * @ORM\Column(type="datetime")
      */
     private $dateCtCong;
-
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $existe;
     public function getId(): ?int
     {
         return $this->id;
@@ -88,4 +91,17 @@ class Congelateur
 
         return $this;
     }
+
+    public function getExiste(): ?string
+    {
+        return $this->existe;
+    }
+
+    public function setExiste(string $existe): self
+    {
+        $this->existe = $existe;
+
+        return $this;
+    }
+    
 }

@@ -3,50 +3,83 @@
 
 {% block body %}
 
-    <form class="form-inline my-2 my-lg-0"  method="request" action="{{ path('search_service') }} ">
-        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Chercher">
-        <button class="btn btn-secondary my-2 my-sm-0"  type="submit">Chercher</button>
-    </form>
-    <br>
-    <br>
-    <br>
 
-    <button type="button" class="btn btn-primary" onclick="window.location.href='/service/createSer'">Nouveau Service</button>
+{% if not is_granted('ROLE_ADMIN') %}
+<p>Vos droits d'utilisateur Windows sont insuffisants pour l'opération demandée!</p>
+<p>Connectez-vous avec un compte "Administrateur" pour effectuer cette opération</p>
+{% else %}
 
-    <br>
-    <br>
-    <br>
+<div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <h3 class="panel-title">Les services</h3>
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-primary" onclick="window.location.href='/service/createSer'"><i class="zmdi zmdi-plus"></i> Nouveau Service</button>
+                                    </div>
+                                </div>
+                                <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer"><table class="table datatable_simple dataTable no-footer" id="DataTables_Table_1" role="grid"> 
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">                               
+                                        <form role="form"  method="request" action="{{ path('search_service') }} ">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="search" placeholder="Chercher">
+                                                    <span class="input-group-addon" type="submit">chercher</span>
+                                                </div>
+                                        </form>
+                                    </div>                                 
+                                </div>
 
-    <section class="articles">
-            
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Service</th>
-                        <th scope="col">Chef de service</th>
-                        <th scope="col">Capacité</th>
-                        <th scope="col">Date de création </th>
-                        <th scope="col">Actions</th>
+                                <div class="panel-body">
+                                    <table id="customers" class="table table-striped">
+                                
+                                        <thead>
+                                            <tr>
+    
+                                                    <th scope="col">Service</th>
+                                                    <th scope="col">Chef de service</th>
+                                                    <th scope="col">Capacité</th>
+                                                    <th scope="col">Date de création </th>
+                                                    <th scope="col"></th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                    </tr>
-                </thead>
-                <tbody>
+                                                {% for service in services %}
+                                                    {% if service.existe == "oui"%}
+                                                    <tr>
+                                                        <td>{{ service.NomService }}</ts>
+                                                        <td>{{ service.ChService }}</td>
+                                                        <td>{{ service.Capacite }}</td>
+                                                        <td>{{ service.dateCtSer|date ('d/m/y à H:i') }}</td>
+                                                        <td><button type="button" class="btn btn-primary" onclick="window.location.href='/service/{{ service.id }}/edit'"><i class="fa fa-edit"></i> Modifier</button></td>
+                                                        <td><button type="button" class="btn btn-warning"  data-toggle="modal" href="#infos"><i class="fa fa-ban"></i> Supprimer</button></td>
+                                                       
 
-                    {% for service in services %}
+                                                    </tr>
 
-                        <tr>
-                            <th scope="row">{{ service.NomService }}</th>
-                            <td>{{ service.ChService }}</td>
-                            <td>{{ service.Capacite }}</td>
-                            <td>{{ service.dateCtSer|date ('d/m/y à H:i') }}</td>
-                            <td><button type="button" class="btn btn-secondary" onclick="window.location.href='/service/{{ service.id }}/edit'">Modifier</button></td>
-                            <td><button type="button" class="btn btn-primary" onclick="window.location.href='/service/{{ service.id }}/delete'">Supprimer</button></td>
-                        </tr>
+                                                    {% endif %}
+                                                    <div class="modal fade" id="infos">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal">x</button>
+                                                                    <h4 class="modal-title">Confirmation</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    Etes-vous sur de vouloir supprimer cet service !
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button onclick="window.location.href='/service/{{ service.id }}/delete'" class="btn btn-info" data-dismiss="modal">OUI</button>
+                                                                    <button class="btn btn-info" data-dismiss="modal">NON</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
 
-                    {% endfor %}
-
-                </tbody>
-            </table>  
-      
-    </section>
+                                            </tbody>
+                                        </table>
+                                
+                    </div>
+                   
+{% endif %}
 {% endblock %}

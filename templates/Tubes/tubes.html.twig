@@ -1,63 +1,92 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{% if not app.user %}
+<p>Connectez-vous pour effectuer cette opération</p>
+{% elseif app.user.poste == "Technicien de laboratoire" or app.user.poste =="Infirmière de prélèvement" %}
 
 
-    <form class="form-inline my-2 my-lg-0"  method="request" action="{{ path('search_tube') }} ">
-        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Chercher">
-        <button class="btn btn-secondary my-2 my-sm-0"  type="submit">Chercher</button>
-    </form>
-    <br>
-    <br>
-    <br>
+<div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <h3 class="panel-title">Les tubes</h3>
+                                    
+                                </div>
+                                <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer"><table class="table datatable_simple dataTable no-footer" id="DataTables_Table_1" role="grid"> 
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">                               
+                                        <form role="form"  method="request" action="{{ path('search_tube') }}">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="search" placeholder="Tube ?? --> N°Ordre ??">
+                                                    <span class="input-group-addon" type="submit">chercher</span>
+                                                </div>
+                                        </form>
+                                        {% if app.user.poste =="Infirmière de prélèvement" %}
+                                        <form class="form-header"  method="request" action="{{ path('poche_create') }} ">
+                                            <div class="col-md-12">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Mettre à jour statut poche</span>
+                                                    <input type="text" class="form-control"  name="search" placeholder="Pour créer poche -> taper d'aprés le N°Ordre de tube ?">
+                                                </div>
+                                            </div>
+                                        </form>
+                                        {% endif %}
+                                    </div>                                 
+                                </div>
 
+                                <div class="panel-body">
+                                    <table id="customers" class="table table-striped">
 
-    <br>
-    <br>
-    <br>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">N°ordre</th>
+                                                <th scope="col">Cin Donneur</th>
+                                                <th scope="col">Donneur</th>
+                                                <th scope="col">Préleveur</th>
+                                                <th scope="col">Cin Préleveur</th>
+                                                <th scope="col"></th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for tube in tubes %}
+                                                {% for user in users %}
+                                                    {% if user.id == tube.User.id %}
+                                                        {% if (tube.testee == 'Non') %}
+                                                            <tr class="text-danger">
+                                                        {% else %}
+                                                            <tr class = "text-primary">
+                                                        {% endif %}
+                                                            {% if tube.NumTube == 1 %}
 
-    <section class="user">
-            
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">N° d'ordre</th>
-                        <th scope="col">N°cin</th>
-                        <th scope="col">Nom & prenom du donneur</th>
-                        <th scope="col">Nom & prenom du préleveur</th>
-                        <th scope="col">Cin du préleveur</th>
-                        <th scope="col">Numéro de tube</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
+                                                                <td class="table-light">{{ tube.Date|date ('d/m/y à H:i')  }}</td>
+                                                                <td class="table-light">{{ tube.NOrdre }}</th>
 
-                    </tr>
-                </thead>
-                <tbody>
+                                                                <th class="table-light">{{ tube.CinDonneur }}</th>
+                                                                <td class="table-light">{{ tube.NomDonneur }} {{ tube.PrenomDonneur }}</td>
+                                                                <td class="table-light">{{ user.username }}</td>
+                                                                <td class="table-light">{{ user.NUMCIN }}</td>
+                                                                {% if app.user.poste =="Technicien de laboratoire" %}
+                                                                    {% if tube.testee != "Oui" %}
+                                                                        <td class="table-light"><button type="button" class="btn btn-primary" onclick="window.location.href='/tube/testee/{{ tube.id }}'">Terminer</button></td>
+                                                                    {% endif %}
+                                                                    <td class="table-light"><button type="button" class="btn btn-secondary" onclick="window.location.href='/serologie/new/{{ tube.id }}'">Tester</button></td>
+                                                                {% else %}
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                {% endif %}
 
-                {% for tube in tubes %}
-                    {% for user in users %}
-                        {% if user.id == tube.IdUser %}
-                            {% if (tube.testee == 'Non') %}
-                                <tr class="text-danger">
-                            {% else %}
-                                <tr class = "text-success">
-                            {% endif %}
-                                    <td scope="col">{{ tube.Date|date ('d/m/y à H:i')  }}</td>
-                                    <td scope="row">{{ tube.NOrdre }}</th>
+                                                            {% endif %}
+                                                            </tr>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                        </div>      
+                    </div>
+    <!-- Welcome Area End -->
 
-                                    <th scope="row">{{ tube.CinDonneur }}</th>
-                                    <td scope="col">{{ tube.NomDonneur }} {{ tube.PrenomDonneur }}</td>
-                                    <td scope="col">{{ user.username }}</td>
-                                    <td scope="col">{{ user.NUMCIN }}</td>
-                                    <td scope="col">{{ tube.NumTube }}</td>
-                                    <td><button type="button" class="btn btn-primary" onclick="window.location.href='/tube/testee/{{ tube.id }}'">Terminer</button></td>
-                                    <td><button type="button" class="btn btn-secondary" onclick="window.location.href='/serologie/new/{{ tube.id }}'">Tester</button></td>
-                                </tr>
-                        {% endif %}
-                   {% endfor %}
-                {% endfor %}
-                </tbody>
-            </table>  
-    </section>
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% endif %}
 {% endblock %}

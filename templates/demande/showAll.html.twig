@@ -3,123 +3,148 @@
 
 {% block body %}
 
-    <form class="form-inline my-2 my-lg-0"  method="request" action="{{ path('search_demande') }} ">
-        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Chercher">
-        <button class="btn btn-secondary my-2 my-sm-0"  type="submit">Chercher</button>
-    </form>
-    <br>
-    <br>
-    <br>
-{% if is_granted('ROLE_INFSER')  %}
 
-    <button type="button" class="btn btn-primary" onclick="window.location.href='/demande/new'">Nouvelle demande</button>
+{% if not app.user %}
+<p>Connectez-vous pour effectuer cette opération</p>
+{% elseif is_granted('ROLE_INFSER') or is_granted('ROLE_MEDSER') or  app.user.poste == "Technicien de laboratoire"  %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <h3 class="panel-title">Les demandes</h3>
+                                    <div class="pull-right">
+                                    </div>
+                                </div>
+                                <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer"><table class="table datatable_simple dataTable no-footer" id="DataTables_Table_1" role="grid"> 
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">                               
+                                        <form role="form"  method="request" action="{{ path('search_demande') }}">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="search" placeholder="Nom malade ?? (ou) Cin malade?? (ou) service ?? (ou) N° demande??">
+                                                    <span class="input-group-addon" type="submit">chercher</span>
+                                                </div>
+                                        </form>
+                                    </div>                                 
+                                </div>
+
+                                <div class="panel-body">
+                                    <table id="customers" class="table table-striped">
+                                
+                                        <thead>
+                                            <tr>
+                       
+                                                <th>N°demande</th>
+                                                <th>Date</th>
+                                                <th>Avant</th>
+                                                <th>Type</th>
+                                                <th>N° poches </th>
+                                                <th>GS</th>
+                                                <th>Sérum</th>
+                                                <th>Malade</th>
+                                                <th>Service</th>
+                                                <th>Inférmiere</th>
+                                                <th>Médecin</th>
+                                                <th>Actions</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            {% for demande in demandes %}
+                                                {% if app.user.poste != "Technicien de laboratoire" %} 
+                                                    {% if demande.reponse == " " %}
+                                                        <tr class="text-danger">
+                                                    {% else %}
+                                                        <tr class="text-primary">
+                                                    {% endif %}
+                                                        <th scope="row">{{ demande.Id }}</th>
+                                                        <td>{{ demande.DateDemande|date ('d/m/y à H:i') }}</td>
+                                                        <td>{{ demande.DateUtilisation|date ('d/m/y à H:i') }}</td>
+                                                        <td>{{ demande.Type }}</td>
+                                                        <td>{{ demande.NombrePoche }}</td>
+                                                        <td>{{ demande.GS }}</td>
+                                                        <td>{{ demande.serum }}</td>
+                                                        {% for malade in malades %}
+                                                            {% if malade == demande.Malade %}
+                                                                <td>{{ malade.Malade }}: {{ malade.NumeroCin }}</td>
+                                                            {% endif %}
+                                                        
+                                                            {% for service in services %}
+                                                                {% if service.id == malade.service.id %}
+                                                                    <td>{{ service.NomService }}</td>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        
+                                                    {% for user in users %}
+                                                        {% if user == demande.User1 %}
+                                                            <td>{{ user.NUMCIN }}: {{ user.username }}</td>
+                                                        {% elseif user== demande.User2 %}
+                                                            <td>{{ user.NUMCIN }}: {{ user.username }}</td>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    {% if demande.User2 == null %} 
+                                                        <td></td>   
+                                                    {% endif %}
+                                                    {% if is_granted('ROLE_INFSER') and demande.reponse == " " %}
+                                                    
+                                                        <td><button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/delete'">Supprimer</button></td>
+                                                    {% elseif is_granted('ROLE_INFSER') and demande.reponse != " " %}
+                                                        <td><button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/show'">Voir</button></td>
+                                                    {% elseif app.user.poste == "Médecin de service" and  demande.User2 == null and demande.reponse == " " %}
+                                                        <td><button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/valide'">Valider</button></td>
+                                                    {% elseif app.user.poste == "Médecin de service" and  demande.User2 != null and demande.reponse != " " %}
+                                                        <td><button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/feedback'">Commenter</button></td>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                                {% if app.user.poste == "Technicien de laboratoire" and  demande.User2 != null %} 
+                                                    {% if demande.reponse == " " %}
+                                                        <tr>
+                                                    {% else %}
+                                                        <tr class="text-primary">
+                                                    {% endif %}
+                                                        <th scope="row">{{ demande.Id }}</th>
+                                                        <td>{{ demande.DateDemande|date ('d/m/y à H:i') }}</td>
+
+                                                        <td>{{ demande.DateUtilisation|date ('d/m/y à H:i') }}</td>
+
+                                                        <td>{{ demande.Type }}</td>
+                                                        <td>{{ demande.NombrePoche }}</td>
+                                                        <td>{{ demande.GS }}</td>
+                                                        <td>{{ demande.serum }}</td>
+                                                        {% for malade in malades %}
+
+                                                            {% if malade == demande.Malade %}
+                                                                <td>{{ malade.Malade }}: {{ malade.NumeroCin }}</td>
+                                                            {% endif %}
+                                                            
+                                                            {% for service in services %}
+                                                                {% if service.id == malade.service.id %}
+                                                                    <td>{{ service.NomService }}</td>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endfor %}
+                                                    {% for user in users %}
+                                                        {% if user == demande.User1 %}
+                                                            <td>{{ user.NUMCIN }}: {{ user.username }}</td>
+                                                        {% elseif user == demande.User2 %}
+                                                            <td>{{ user.NUMCIN }}: {{ user.username }}</td>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    {% if demande.User2 == null %} 
+                                                        <td></td>   
+                                                    {% endif %}
+                                                    {% if demande.reponse == " " %}
+                                                        <td><button type="button" class="btn btn-warning" onclick="window.location.href='demande/{{ demande.id }}/reponse'">Répondre</button></td>
+                                                    {% else %}
+                                                        <td><button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/show'">Voir</button></td>
+                                                    {% endif %}
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        </tbody>
+                                </table>
+                               </div>
+       
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
 {% endif %}
-
-    <br>
-    <br>
-    <br>
-
-    <section class="articles">
-            
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">N°demande</th>
-                        <th scope="col">Date de création</th>
-                        <th scope="col">Pour le</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Nombres des poches </th>
-                        <th scope="col">GS</th>
-                        <th scope="col">Sérum</th>
-                        <th scope="col">Cin: Nom & prénom malade</th>
-                        <th scope="col">Service</th>
-                        <th scope="col">Cin: Nom & prénom Inférmiere de service</th>
-                        <th scope="col">Cin: Nom & prénom médecin de service</th>
-                        <th scope="col">Actions</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-
-                    {% for demande in demandes %}
-                        {% if app.user.poste != "Technicien de laboratoire" and demande.reponse != "existe" %} 
-                            <tr class="text-danger">
-                        {% elseif app.user.poste != "Technicien de laboratoire" and demande.reponse == "existe" %}
-                            <tr class="text-success">
-                        
-                            <th scope="row">{{ demande.Id }}</th>
-                                <td>{{ demande.DateDemande|date ('d/m/y à H:i') }}</td>
-
-                                <td>{{ demande.DateUtilisation|date ('d/m/y à H:i') }}</td>
-
-                                <td>{{ demande.Type }}</td>
-                                <td>{{ demande.NombrePoche }}</td>
-                                <td>{{ demande.GS }}</td>
-                                <td>{{ demande.serum }}</td>
-                                <td>{{ demande.CinMalade }}: {{ demande.NomMalade }} {{ demande.PrenomMalade }}</td>
-                            
-                            {% for service in services %}
-                                {% if service.id == demande.service.id %}
-                                    <td>{{ service.NomService }}</td>
-                                {% endif %}
-                            {% endfor %}
-
-                            {% for user in users %}
-                                {% if user.id == demande.idUser1 %}
-                                    <td>{{ user.NUMCIN }}: {{ user.username }}</td>
-                                {% elseif user.id == demande.idUser2 %}
-                                    <td>{{ user.NUMCIN }}: {{ user.username }}</td>
-                                {% endif %}
-                            {% endfor %}
-                            {% if demande.idUser2 == null %} 
-                                <td></td>   
-                            {% endif %}
-                            {% if is_granted('ROLE_INFSER') and demande.reponse != "existe" %}
-                                <td><button type="button" class="btn btn-secondary" onclick="window.location.href='/demande/{{ demande.id }}/edit'">Modifier</button></td>
-                                <td><button type="button" class="btn btn-primary" onclick="window.location.href='/demande/{{ demande.id }}/delete'">Supprimer</button></td>
-                            {% elseif is_granted('ROLE_INFSER') and demande.reponse == "existe" %}
-                                <td><button type="button" class="btn btn-secondary" onclick="window.location.href='/demande/{{ demande.id }}/show'">Voir</button></td>
-                            {% elseif app.user.poste == "Médecin de service" and  demande.idUser2 == null and demande.reponse != "existe" %}
-                                <td><button type="button" class="btn btn-primary" onclick="window.location.href='/demande/{{ demande.id }}/valide'">Valider</button></td>
-                            {% endif %}
-                        {% endif %}
-                        {% if app.user.poste == "Technicien de laboratoire" and  demande.idUser2 != null and demande.reponse != "existe"%} 
-                            <tr class="text-danger">
-                                <th scope="row">{{ demande.Id }}</th>
-                                <td>{{ demande.DateDemande|date ('d/m/y à H:i') }}</td>
-
-                                <td>{{ demande.DateUtilisation|date ('d/m/y à H:i') }}</td>
-
-                                <td>{{ demande.Type }}</td>
-                                <td>{{ demande.NombrePoche }}</td>
-                                <td>{{ demande.GS }}</td>
-                                <td>{{ demande.serum }}</td>
-                                <td>{{ demande.CinMalade }}: {{ demande.NomMalade }} {{ demande.PrenomMalade }}</td>
-                            
-                            {% for service in services %}
-                                {% if service.id == demande.service.id %}
-                                    <td>{{ service.NomService }}</td>
-                                {% endif %}
-                            {% endfor %}
-
-                            {% for user in users %}
-                                {% if user.id == demande.idUser1 %}
-                                    <td>{{ user.NUMCIN }}: {{ user.username }}</td>
-                                {% elseif user.id == demande.idUser2 %}
-                                    <td>{{ user.NUMCIN }}: {{ user.username }}</td>
-                                {% endif %}
-                            {% endfor %}
-                            {% if demande.idUser2 == null %} 
-                                <td></td>   
-                            {% endif %}
-                                <td><button type="button" class="btn btn-primary" onclick="window.location.href='demande/{{ demande.id }}/reponse'">Répondre</button></td>
-                                <td><button type="button" class="btn btn-secondary" onclick="window.location.href='demande/{{ demande.id }}/envoyer'">Répondre</button></td>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-
-                </tbody>
-            </table>  
-      
-    </section>
 {% endblock %}

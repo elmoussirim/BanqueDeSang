@@ -26,6 +26,25 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class DonneurController extends AbstractController
 {
+
+
+    /**
+     * @Route("/donneur/show/{id}", name="show_donneur")
+     */
+        public function ShowDonneur($id)
+        {
+            $repo2=$this->getDoctrine()->getRepository(Donneur::class);
+            $donneur= $repo2->find($id);
+            $em = $this->getDoctrine()->getManager();
+            $user=$em->getRepository(User::class)->findOne($donneur->getUser());
+
+ 
+            return $this->render('donneur/showDonneur.html.twig', [
+                'controller_name' => 'DonneurController',
+                'donneur'=>$donneur,
+                'user' => $user
+            ]);
+        }
      
     /**
      * @Route("/donneurs", name="don_donneur")
@@ -61,7 +80,7 @@ class DonneurController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $donneur=$em->getRepository(Donneur::class)->findOneBySomeField($search);
-            $user=$em->getRepository(User::class)->findOne($donneur->getIdUser());
+            $user=$em->getRepository(User::class)->findOne($donneur->getUser());
 
  
             return $this->render('donneur/showDonneur.html.twig', [
@@ -89,8 +108,8 @@ class DonneurController extends AbstractController
 
             if($formDonneur->isSubmitted() && $formDonneur->isValid() ){
                     
-                $donneur->setDonvalide("Inapte");
-                $donneur->setIdUser($this->getUser()->getId());
+                $donneur->setDonvalide("En Attent");
+                $donneur->setUser($this->getUser());
 
                 $manager->persist($donneur);
                 $manager->flush();
@@ -104,4 +123,6 @@ class DonneurController extends AbstractController
             'editMode' =>$donneur->getId()!==null
             ]);
         }
+
+        
 }

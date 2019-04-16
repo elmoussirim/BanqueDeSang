@@ -2,51 +2,59 @@
 
 {% block body %}
 
+{% if not is_granted('ROLE_AGACC') %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+<p>Connectez-vous avec un compte "Agent d'accueil" pour effectuer cette opération</p>
+{% else %}
 
-<br>
-<br>
-    <form class="form-inline my-2 my-lg-0"  method="request" action="{{ path('search_donneur') }} ">
-        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Chercher">
-        <button class="btn btn-secondary my-2 my-sm-0"  type="submit">Chercher</button>
-    </form>
-    <br>
-    <br>
-    <br>
+    <div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <h3 class="panel-title">Les donneurs</h3>
+                                    <div class="pull-right">
+                                    </div>
+                                </div>
+                                <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer"><table class="table datatable_simple dataTable no-footer" id="DataTables_Table_1" role="grid"> 
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">                               
+                                        <form role="form"  method="request" action="{{ path('search_donneur') }}">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="search" placeholder="cin ??">
+                                                    <span class="input-group-addon" type="submit">chercher</span>
+                                                </div>
+                                        </form>
+                                    </div>                                 
+                                </div>
 
-    <br>
-    <br>
-    <br>
+                                <div class="panel-body">
+                                    <table id="customers" class="table table-striped">
+                                
+                                        <thead>
+                                            <tr>
+                                                    <th scope="col">N° CIN</th>
+                                                    <th scope="col">Nom </th>
+                                                    <th scope="col">Prénom</th>
+                                                    <th scope="col">Dernier don à: </th>
+                                                    <th scope="col">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-    <section class="donneur">
-              <h1> liste des donneurs : </h1>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">N° CIN</th>
-                        <th scope="col">Nom </th>
-                        <th scope="col">Prénom</th>
-                        <th scope="col">Dernier don à: </th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
+                                                {% for donneur in donneurs %}
 
-                    {% for donneur in donneurs %}
+                                                <tr>
+                                                    <td>{{ donneur.NUMCIN }}</td>
+                                                    <td scope="col">{{ donneur.nom }}</td>
+                                                    <td  scope="col">{{ donneur.prenom }}</td>
+                                                    <td scope="col">{{ donneur.DateDuDernierDon|date ('d/m/y à H:i')  }}</td>
+                                                    <td><button type="button" class="btn btn-warning"  onclick="window.location.href='/donneur/{{ donneur.id }}/edit'">Modifier </button></td>
 
-                    <tr>
-                        <th scope="row">{{ donneur.NUMCIN }}</th>
-                        <td scope="col">{{ donneur.nom }}</td>
-                        <td  scope="col">{{ donneur.prenom }}</td>
-                        <td scope="col">{{ donneur.DateDuDernierDon|date ('d/m/y à H:i')  }}</td>
-                        <td><button type="button" class="btn btn-secondary" onclick="window.location.href='/donneur/{{ donneur.id }}/edit'">Modifier </button></td>
+                                                
+                                                </tr>
 
-                       
-                    </tr>
+                                            {% endfor %}
 
-                   {% endfor %}
-
-                </tbody>
-            </table>  
-      
-    </section>
+                                            </tbody>
+                                    </table>
+                             
+                    </div>
+{% endif %}
 {% endblock %}

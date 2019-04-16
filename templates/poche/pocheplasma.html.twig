@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% if not app.user %}
+<p>Connectez-vous avec un compte "Technicien de laboratoire" pour effectuer cette opération</p>
+{% elseif app.user.poste == "Technicien de laboratoire"  %}
+<div class="overview-wrap">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/poches/st">Sang total</a></li>
+        <li class="breadcrumb-item"><a href="/poches/cg">Concentré globulaire</a></li>
+        <li class="breadcrumb-item"><a href="/poches/plasma">Plasma</a></li>
+    </ol>
+
+</div>
+    
+                            <div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <h3 class="panel-title">Les poches de plasma (PFC)</h3>
+                                    <div class="pull-right">
+                                    </div>
+                                </div>
+                                <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer">
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">                               
+                                        <form role="form"  method="request" action="{{ path('search_poche_plasma') }}">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control"  name="search_plasma" placeholder="Chercher">
+                                                    <span class="input-group-addon" type="submit">chercher</span>
+                                                </div>
+                                        </form>
+                                    </div>                                 
+                                </div>
+
+                                <div class="panel-body">
+                                    <table id="customers" class="table table-striped">
+                                
+                                        <thead>
+                                    <tr>
+                                        <th scope="col">N°ordre</th>
+                                        <th scope="col">Date</th>
+                                        
+                                        <th scope="col">Avant</th>
+                                        <th scope="col">Congélateur</th>
+
+                                        <th scope="col">GS</th>
+                                        <th scope="col">Type</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                     {% for poche in poches %}
+
+                                        {% if poche.statut == "Poche en attente ---> Poche en stock" or poche.statut == "Poche en stock" and poche.type =="Plasma" %}
+                                            <tr>
+                                                <td scope="row"><a href="/poche/show/{{ poche.id }}" class="btn btn-link"><i class="fa fa-link"></i> {{ poche.NOrdre }}</a></td>
+                                                <td scope="col">{{ poche.Date|date ('d/m/y à H:i')  }}</td>
+                                                <td scope="col">{{ poche.AUtiliserAvant|date ('d/m/y à H:i')  }}</td>
+                                                {% for cong in congelateur %}
+                                                    {% if cong == poche.Congelateur %}
+                                                        <td  scope="col">{{ cong.NumCong }}.{{ cong.Type }}</td>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                
+                                                <td  scope="col">{{ poche.GroupeSanguin }}</td>
+                                                <td  scope="col">{{ poche.Type}}</td>
+
+                                                <td><button type="button" class="btn btn-warning" onclick="window.location.href='/poche/mettre/a/jour/statut/poche/{{ poche.id }}'">Mettre a jour statut poche</button></td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+
+                            </tbody>
+                        </table>
+                            
+                    </div>
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% endif %}
+{% endblock %}

@@ -3,48 +3,59 @@
 {% block body %}
 
 
-    <form class="form-inline my-2 my-lg-0"  method="request" action="{{ path('search_user') }} ">
-        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Chercher">
-        <button class="btn btn-secondary my-2 my-sm-0"  type="submit">Chercher</button>
-    </form>
-    <br>
-    <br>
-    <br>
 
-    <button type="button" class="btn btn-primary" onclick="window.location.href='/user/create'">Nouveau Utilisateur</button>
+{% if is_granted('ROLE_ADMIN') %}
 
-    <br>
-    <br>
-    <br>
+<div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <h3 class="panel-title">Les Utilisateurs</h3>
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-primary" onclick="window.location.href='/user/create'"><i class="zmdi zmdi-plus"></i> Nouveau Congelateur</button>
+                                    </div>
+                                </div>
+                                <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer"><table class="table datatable_simple dataTable no-footer" id="DataTables_Table_1" role="grid"> 
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">                               
+                                        <form role="form"  method="request" action="{{ path('search_user') }} ">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="search" placeholder="Chercher">
+                                                    <span class="input-group-addon" type="submit">chercher</span>
+                                                </div>
+                                        </form>
+                                    </div>                                 
+                                </div>
 
-    <section class="user">
-            
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Nom & prenom</th>
-                        <th scope="col">N°cin</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Poste</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
+                                <div class="panel-body">
+                                    <table id="customers" class="table table-striped">
+                                
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">N°cin</th>
+                                                <th scope="col">Nom & prenom</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Poste</th>
+                                                <th scope="col">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                    {% for user in users %}
+                                            {% for user in users %}
 
-                    <tr>
-                        <th scope="row">{{ user.NUMCIN }}</th>
-                        <td>{{ user.username }}</td>
-                        <td>{{ user.Email }}</td>
-                        <td>{{ user.Poste }}</td>
-                        <td><button type="button" class="btn btn-secondary" onclick="window.location.href='/user/{{ user.id }}/delete'">Supprimer</button></td>
-                    </tr>
+                                            <tr>
+                                                <td>{{ user.NUMCIN }}</td>
+                                                <td>{{ user.username }}</td>
+                                                <td>{{ user.Email }}</td>
+                                                <td>{{ user.Poste }}</td>
+                                                <td><button type="button"class="btn btn-warning" onclick="window.location.href='/user/{{ user.id }}/update'"><i class="fa fa-ban"></i> Modifier</button></td>
+                                            </tr>
 
-                   {% endfor %}
+                                        {% endfor %}
 
-                </tbody>
-            </table>  
-      
-    </section>
+                                        </tbody>
+                                        </table>
+                                
+                    </div>
+    {% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+<p>Connectez-vous avec un compte "Administrateur" pour effectuer cette opération</p>
+{% endif %}
 {% endblock %}

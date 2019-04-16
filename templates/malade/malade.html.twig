@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% if not app.user %}
+<p>Connectez-vous pour effectuer cette opération</p>
+{% elseif is_granted('ROLE_INFSER') %}
+
+
+<!-- NEWS WIDGET -->
+                        <div class="panel-body">
+
+                            <div class="panel panel-default">                            
+                                <div class="panel-body panel-body-image">
+                                    <a href="#" class="panel-body-inform">
+                                        <span ></span>
+                                    </a>
+                                </div>
+                                <div class="panel-body">
+									<div class="row">
+										<div class="col-lg-6">
+											<h3>N° Malade: {{ malade.Id }}</h3>
+											<p>Malade: {{ malade.Malade }}</p>
+											<p> Age: {{ malade.Age }}</p>
+											<p>N°cin du donneur: {{ malade.NumeroCin }}</p>
+											<p>Date de naissance : {{ malade.DateDeNaissance|date ('d/m/y') }}</p>
+										</div>
+										<div class="col-lg-6">
+											
+											<p>Age: {{ malade.Age }}</p>
+											<p>Groupe sanguin : {{ malade.GroupeSanguin }}</p>
+											{% for service in services %}
+												{% if service == malade.Service %}
+													<p> Service: {{ service.NomService }}</p>
+												{% endif %}
+											{% endfor %}
+											<p>Sexe: {{ malade.Sexe }}</p>
+											<p>Telephone: {{ malade.Telephone }}</p>
+											<p>Profession: {{ malade.Profession }}</p>
+											<p>Adresse: {{ malade.Adresse }}</p>
+										</div>
+									</div>
+                                <div class="panel-footer text-muted">
+                                    <button type = "button" class="btn btn-warning" onclick="window.location.href='/demande/new/{{ malade.id }}'"> Passer une demande de sang </buttton>
+                                </div>
+                            </div>
+
+                        </div>
+
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% endif %}
+{% endblock %}

@@ -35,6 +35,10 @@ class Service
      * @ORM\Column(type="datetime")
      */
     private $dateCtSer;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $existe;
 
     public function getId(): ?int
     {
@@ -85,6 +89,18 @@ class Service
     public function setDateCtSer(\DateTimeInterface $dateCtSer): self
     {
         $this->dateCtSer = $dateCtSer;
+
+        return $this;
+    }
+
+    public function getExiste(): ?string
+    {
+        return $this->existe;
+    }
+
+    public function setExiste(string $existe): self
+    {
+        $this->existe = $existe;
 
         return $this;
     }

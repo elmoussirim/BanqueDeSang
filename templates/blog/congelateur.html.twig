@@ -4,47 +4,78 @@
 {% block body %}
 
 
-    <form class="form-inline my-2 my-lg-0"  method="request" action="{{ path('search_congelateur') }} ">
-        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Chercher">
-        <button class="btn btn-secondary my-2 my-sm-0"  type="submit">Chercher</button>
-    </form>
-    <br>
-    <br>
-    <br>
-    <button type="button" class="btn btn-primary" onclick="window.location.href='/congelateur/createCong'">Nouveau Congelateur</button>
+{% if not is_granted('ROLE_ADMIN') %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+<p>Connectez-vous avec un compte "Administrateur" pour effectuer cette opération</p>
+{% else %}
 
-    <br>
-    <br>
-    <br>
-    <section class="articles">
-            
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Type</th>
-                        <th scope="col">Numéro de congélateur</th>
-                        <th scope="col">Capacité</th>
-                        <th scope="col">Date de création </th>
-                        <th scope="col">Actions</th>
+<div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <h3 class="panel-title">Les Congélateurs</h3>
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-primary" onclick="window.location.href='/congelateur/createCong'"><i class="zmdi zmdi-plus"></i> Nouveau Congelateur</button>
+                                    </div>
+                                </div>
+                                <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer"><table class="table datatable_simple dataTable no-footer" id="DataTables_Table_1" role="grid"> 
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">                               
+                                        <form role="form"  method="request" action="{{ path('search_congelateur') }} ">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="search" placeholder="Chercher">
+                                                    <span class="input-group-addon" type="submit">chercher</span>
+                                                </div>
+                                        </form>
+                                    </div>                                 
+                                </div>
 
-                    </tr>
-                </thead>
-                <tbody>
+                                <div class="panel-body">
+                                    <table id="customers" class="table table-striped">
+                                
+                                        <thead>
+                                            <tr>
+                                                        <th scope="col">Type</th>
+                                                        <th scope="col">Numéro</th>
+                                                        <th scope="col">Capacité</th>
+                                                        <th scope="col">Date de création </th>
+                                                        <th scope="col"></th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
 
-                    
-                    {% for congelateur in congelateurs %}
-                        <tr>
-                            <th scope="row">{{ congelateur.type }}</th>
-                            <td>{{ congelateur.numCong }}</td>
-                            <td>{{ congelateur.capacite }}</td>
-                            <td>{{ congelateur.dateCtCong|date ('d/m/y à H:i')  }}</td>
-                            <td><button type="button" class="btn btn-secondary" onclick="window.location.href='/congelateur/{{ congelateur.id }}/edit'">Modifier</button></td>
-                            <td><button type="button" class="btn btn-primary" onclick="window.location.href='/congelateur/{{ congelateur.id }}/delete'">Supprimer</button></td>
-                        </tr>
-                    {% endfor %}
-
-                </tbody>
-            </table>  
-      
-    </section>
+                                                    
+                                                    {% for congelateur in congelateurs %}
+                                                    {% if congelateur.existe == "oui" %}
+                                                        <tr>
+                                                            <td>{{ congelateur.type }}</td>
+                                                            <td>{{ congelateur.numCong }}</td>
+                                                            <td>{{ congelateur.capacite }}</td>
+                                                            <td>{{ congelateur.dateCtCong|date ('d/m/y à H:i')  }}</td>
+                                                            <td><button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/congelateur/{{ congelateur.id }}/edit'"><i class="fas fa-edit"></i> Modifier</button></td>
+                                                            <td><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" href="#infos"><i class="fa fa-ban"></i> Supprimer</button></td>
+                                                    </tr>
+                                                    {% endif %}
+                                                    <div class="modal fade" id="infos">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal">x</button>
+                                                                    <h4 class="modal-title">Confirmation</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    Etes-vous sur de vouloir supprimer cet congelateur !
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button onclick="window.location.href='/congelateur/{{ congelateur.id }}/delete'" class="btn btn-info" data-dismiss="modal">OUI</button>
+                                                                    <button class="btn btn-info" data-dismiss="modal">NON</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                          
+                                                        {% endfor %}
+                                                    </tbody>
+                            </table>
+                            
+                    </div>
+{% endif %}
 {% endblock %}

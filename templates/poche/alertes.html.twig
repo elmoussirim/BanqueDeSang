@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% if not app.user %}
+<p>Connectez-vous avec un compte "Technicien de laboratoire" pour effectuer cette opération</p>
+{% elseif app.user.poste == "Technicien de laboratoire"  %}
+
+<!-- Welcome Area Starts -->
+    <br><br><br>
+    <div class="table-responsive m-b-40">
+                            <table class="table table-borderless table-striped table-earning">
+                                <thead>
+                                    <tr>
+                                            <th>Date d'alerte</th>
+                                            <th>Date</th>
+                                            <th>A utiliser avant</th>
+                                            <th>N° ordre</th>
+                                            <th>Congelateur</th>
+                                            <th>Type</th>
+                                            <th>Statut</th>
+                                            <th></th>
+                                        </tr>                                            
+
+                                    </thead>
+                                    <tbody>
+                                        {% for alerte in alertes %}
+                                            <tr>
+                                                <td scope="col">{{ alerte.Date|date ('d/m/y à H:i')  }}</td>
+                                                {% for poche in poches %}
+                                                    {% if alerte.poche == poche %}
+                                                        <td scope="col">{{ poche.Date|date ('d/m/y à H:i')  }}</td>
+                                                        <td scope="col">{{ poche.AUtiliserAvant|date ('d/m/y à H:i')  }}</td>
+                                                        <td scope="row">{{ poche.NOrdre }}</td>
+                                                        {% for cong in congelateur %}
+                                                        {% if cong == poche.Congelateur %}
+                                                            <td  scope="col">{{ cong.NumCong }}.{{ cong.Type }}</td>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                        {% if poche.Congelateur == null %}
+                                                            <td></td>
+                                                        {% endif %}
+                                                        <td  scope="col">{{ poche.Type }}</td>
+                                                        <td>{{ poche.Statut }}</td>
+                                                        {% if poche.Statut == "Poche en attente ---> Poche en stock" or poche.Statut == "Poche sortie ---> Poche en stock" or poche.Statut == "Poche en stock" or poche.Statut == "Poche reservée ---> Poche en stock" %}
+                                                            <td><button type="button" class="btn btn-warning" onclick="window.location.href='/poche/mettre/a/jour/statut/poche/{{ poche.id }}'">Mettre a jour statut poche</button></td>
+                                                        {% else %}<td></td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}    
+                                            </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+                             
+                    </div>
+
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% endif %}
+{% endblock %}

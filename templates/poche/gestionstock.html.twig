@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% if not app.user %}
+<p>Connectez-vous avec un compte "Technicien de laboratoire" pour effectuer cette opération</p>
+{% elseif app.user.poste == "Technicien de laboratoire"  %}
+
+<button type="button" onclick="window.location.href='/gestion/poche'" class="btn btn-warning" ><i class="fa fa-cogs"></i> Mise à jour</button>
+<br><br>
+ 
+
+{% for gt in gestion %} 
+<div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <p><i class="fa fa-tachometer-alt"></i> Date: {{ gt.Date|date ('d/m/y à H:i') }}</p>
+                                    <p><i class="fa fa-user"></i> {% for user in users %}{% if user.id == gt.User.id %}Technicien: {{ user.username }} {{ user.NUMCIN}}{% endif %}{% endfor %}</p>
+                                    <p><i class="fa fa-check"></i> Total: {{ gt.StockTotal }}</p>
+                                    <div class="pull-right">
+                                        <p><i class="fa fa-arrow-up"></i> Sorties: {{ gt.SStock }}</p>
+                                    </div>
+                                    <p><i class="fa fa-arrow-down"></i> Entrées: {{ gt.EStock }}</p>
+                                </div>
+                                <div class="panel-body" id="exportTable" style="display: none;">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="list-group border-bottom">
+                                                <a href="#" class="list-group-item" onclick="$('#customers').tableExport({type:'json',escape:'false'});"><img src="img/icons/json.png" width="24"> JSON</a>
+                                                <a href="#" class="list-group-item" onclick="$('#customers').tableExport({type:'json',escape:'false',ignoreColumn:'[2,3]'});"><img src="img/icons/json.png" width="24"> JSON (ignoreColumn)</a>
+                                                <a href="#" class="list-group-item" onclick="$('#customers').tableExport({type:'json',escape:'true'});"><img src="img/icons/json.png" width="24"> JSON (with Escape)</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="list-group border-bottom">
+                                                <a href="#" class="list-group-item" onclick="$('#customers').tableExport({type:'xml',escape:'false'});"><img src="img/icons/xml.png" width="24"> XML</a>
+                                                <a href="#" class="list-group-item" onclick="$('#customers').tableExport({type:'sql'});"><img src="img/icons/sql.png" width="24"> SQL</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="list-group border-bottom">
+                                                <a href="#" class="list-group-item" onclick="$('#customers').tableExport({type:'csv',escape:'false'});"><img src="img/icons/csv.png" width="24"> CSV</a>
+                                                <a href="#" class="list-group-item" onclick="$('#customers').tableExport({type:'txt',escape:'false'});"><img src="img/icons/txt.png" width="24"> TXT</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="list-group border-bottom">
+                                                <a href="#" class="list-group-item" onclick="$('#customers').tableExport({type:'excel',escape:'false'});"><img src="img/icons/xls.png" width="24"> XLS</a>
+                                                <a href="#" class="list-group-item" onclick="$('#customers').tableExport({type:'doc',escape:'false'});"><img src="img/icons/word.png" width="24"> Word</a>
+                                                <a href="#" class="list-group-item" onclick="$('#customers').tableExport({type:'powerpoint',escape:'false'});"><img src="img/icons/ppt.png" width="24"> PowerPoint</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="list-group border-bottom">
+                                                <a href="#" class="list-group-item" onclick="$('#customers').tableExport({type:'png',escape:'false'});"><img src="img/icons/png.png" width="24"> PNG</a>
+                                                <a href="#" class="list-group-item" onclick="$('#customers').tableExport({type:'pdf',escape:'false'});"><img src="img/icons/pdf.png" width="24"> PDF</a>
+                                            </div>
+                                        </div>
+                                    </div>                               
+                                </div>
+                                <div class="panel-body panel-body-table">
+                                    <table id="customers" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th scope="col">A+</th>
+                                                <th scope="col">A-</th>
+                                                
+                                                <th scope="col">B+</th>
+                                                <th scope="col">B-</th>
+
+                                                <th scope="col">AB+</th>
+                                                <th scope="col">AB-</th>
+                                                <th scope="col">O+</th>
+                                                <th scope="col">O-</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Stock entree</th>
+                                                <td>{{ gt.EAPositive }}</td>
+                                                <td>{{ gt.EANegative }}</td>
+                                                <td>{{ gt.EBPositive }}</td>
+                                                <td>{{ gt.EBNegative }}</td>
+                                                <td>{{ gt.EABPositive }}</td>
+                                                <td>{{ gt.EABNegative }}</td>
+                                                <td>{{ gt.EOPositive }}</td>
+                                                <td>{{ gt.EONegative }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Stock sortie</th>
+                                                <td>{{ gt.SAPositive }}</td>
+                                                <td>{{ gt.SANegative }}</td>
+                                                <td>{{ gt.SBPositive }}</td>
+                                                <td>{{ gt.SBNegative }}</td>
+                                                <td>{{ gt.SABPositive }}</td>
+                                                <td>{{ gt.SABNegative }}</td>
+                                                <td>{{ gt.SOPositive }}</td>
+                                                <td>{{ gt.SONegative }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>                                    
+                                    <br><br>
+                                </div>
+                            </div>
+{% endfor %}
+    <!-- Welcome Area End -->
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% endif %}
+{% endblock %}

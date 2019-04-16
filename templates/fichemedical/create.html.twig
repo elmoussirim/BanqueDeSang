@@ -1,36 +1,114 @@
 {% extends 'base.html.twig' %}
-{% form_theme formfichemedical 'bootstrap_4_layout.html.twig'%}
+{% form_theme formfichemedical 'bootstrap_4_layout.html.twig' %}
 
  
 {% block body %}
 
 
-<h1> création d'une fiche médicale  ! </h1>
-{{ form_start(formfichemedical)}}
-{{form_row(formfichemedical.NUMERO_CIN, {'attr' : {'placeholder' :"N°cin du donneur"}}) }}
-{{form_row(formfichemedical.nom, {'attr' : {'placeholder' :"Nom du donneur"}} )}}
+{% if not is_granted('ROLE_MEDPRE') %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+<p>Connectez-vous avec un compte "Médecin banque de sang" pour effectuer cette opération</p>
+{% else %}
 
-{{form_row(formfichemedical.prenom, {'attr' : {'placeholder' :"Prenom du donneur"}} )}}
-{{form_row(formfichemedical.date_de_naissance)}}
-{{form_row(formfichemedical.taille)}}
-{{form_row(formfichemedical.poids)}}
-{{form_row(formfichemedical.groupe, {'attr' : {'placeholder' :"Groupe sanguin "}} )}}
-{{form_row(formfichemedical.RAA)}}
-{{form_row(formfichemedical.Paludisme)}}
-{{form_row(formfichemedical.Maladie_pulmonaire)}}
-{{form_row(formfichemedical.Ictere)}}
-{{form_row(formfichemedical.Diabete)}}
-{{form_row(formfichemedical.Autre)}}
-{{form_row(formfichemedical.T_A, {'attr' : {'placeholder' :""}} )}}
-{{form_row(formfichemedical.Coeur, {'attr' : {'placeholder' :""}} )}}
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">Fiche médicale</h5>
+                                <div class="card-body">
+                                     {{ form_start(formfichemedical) }}
+                                        <div class="form-row">
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.NUMERO_CIN, {'attr' : {'placeholder' :"N°cin du donneur"}}) }}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.nom, {'attr' : {'placeholder' :"Nom du donneur"}} )}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.prenom, {'attr' : {'placeholder' :"Prenom du donneur"}} )}}
+                                            </div>
+                                        </div>
+                                        
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.date_de_naissance)}}
+                                            </div>
+                                            
+                                        <div class="form-row">
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.taille)}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.poids)}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.groupe, {'attr' : {'placeholder' :"Groupe sanguin "}} )}}
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.RAA)}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.Paludisme)}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.Maladie_pulmonaire)}}
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.Ictere)}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.Diabete)}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.Autre)}}
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.T_A, {'attr' : {'placeholder' :""}} )}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.Coeur, {'attr' : {'placeholder' :""}} )}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.Appariel_Respiratoire, {'attr' : {'placeholder' :""}} )}}
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.Foie, {'attr' : {'placeholder' :""}} )}}                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.Rate, {'attr' : {'placeholder' :""}} )}} 
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.Systeme_nerveux, {'attr' : {'placeholder' :""}} )}} </br>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.ApteInapte)}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.Rate, {'attr' : {'placeholder' :""}} )}} 
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formfichemedical.Observations, {'attr' : {'placeholder' :""}} )}} </br>
+                                            </div>
+                                        </div>
 
-{{form_row(formfichemedical.Appariel_Respiratoire, {'attr' : {'placeholder' :""}} )}}
-
-{{form_row(formfichemedical.Foie, {'attr' : {'placeholder' :""}} )}} </br>
-{{form_row(formfichemedical.Rate, {'attr' : {'placeholder' :""}} )}} </br>
-{{form_row(formfichemedical.Systeme_nerveux, {'attr' : {'placeholder' :""}} )}} </br>
-{{form_row(formfichemedical.ApteInapte)}} </br>
-{{form_row(formfichemedical.Observations, {'attr' : {'placeholder' :""}} )}} </br>
-<button type = "submit" class="btn btn-secondary"> Enregistrer  </buttton>
-{{form_end(formfichemedical)}}
+                                        <div class="col-sm-6 pl-0">
+                                                <p class="text-right">
+                                                    <button type="reset" value="Reset" class="btn btn-secondary">Vider</button>
+                                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                                </p>
+                                        </div>  
+                                    {{form_end(formfichemedical)}} 
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ============================================================== -->
+                        <!-- end horizontal form -->
+                        <!-- ============================================================== -->
+{% endif %}
  {% endblock %}

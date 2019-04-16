@@ -4,13 +4,13 @@ namespace App\Controller;
 
 use App\Form\DemandeSangType;
 use App\Entity\DemandeSang;
+use App\Entity\Feedback;
 
 use App\Entity\User;
 use App\Entity\Service;
-use App\Entity\PocheEntree;
-
-use App\Form\PocheReserveeType;
-use App\Entity\PocheReservee;
+use App\Entity\Malade;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,7 +26,8 @@ class DemandeController extends AbstractController
     {
         $repo1=$this->getDoctrine()->getRepository(DemandeSang::class);
         $demandes= $repo1->findAll();
-
+        $repo4=$this->getDoctrine()->getRepository(Malade::class);
+        $malades= $repo4->findAll();
         $repo2= $this->getDoctrine()->getRepository(User::class);
         $users= $repo2->findAll();
 
@@ -37,15 +38,16 @@ class DemandeController extends AbstractController
             'controller_name' => 'DemandeController',
             'demandes'=>$demandes,
             'users'=>$users,
+            'malades' => $malades,
             'services'=>$services
         ]);
     }
     
     /**
-     * @Route("/demande/new", name="demande_new")
-     * @Route("/demande/{id}/edit",name="demande_edit")
+     * @Route("/demande/new/{id}", name="demande_new")
+     * @Route("/demande/{id}/edit/{id_malade}",name="demande_edit")
      */
-    public function CreateDemande(DemandeSang $demande = NULL ,Request $request ,ObjectManager $manager)
+    public function CreateDemande(DemandeSang $demande = NULL,Malade $malade ,Request $request ,ObjectManager $manager)
     {
         if (!$demande)
         {
@@ -59,9 +61,9 @@ class DemandeController extends AbstractController
         if($formDemande->isSubmitted() && $formDemande->isValid() ){
             
             $demande->setDateDemande(new \DateTime());
-            $demande->setIdUser1($this->getUser()->getId());
-            $demande->setReponse("inexiste");
-
+            $demande->setUser1($this->getUser());
+            $demande->setReponse(" ");
+            $demande->setMalade($malade);
             $manager->persist($demande);
             $manager->flush();
             return $this->redirectToRoute('demandes');
@@ -80,7 +82,7 @@ class DemandeController extends AbstractController
     public function ValideDemande(DemandeSang $demande ,Request $request ,ObjectManager $manager)
     {
 
-            $demande->setIdUser2($this->getUser()->getId());
+            $demande->setUser2($this->getUser());
   
             $manager->persist($demande);
             $manager->flush();
@@ -109,12 +111,14 @@ class DemandeController extends AbstractController
             $users= $repo1->findAll();
             $repo2=$this->getDoctrine()->getRepository(Service::class);
             $services= $repo2->findAll();
-            
+            $repo3=$this->getDoctrine()->getRepository(Malade::class);
+            $malades= $repo3->findAll();
 
             return $this->render('demande/showAll.html.twig', [
                 'controller_name' => 'DemandeController',
                 'demandes'=> $demandes,
                 'users'=> $users,
+                'malades' => $malades,
                 'services' => $services,
 
             ]);
@@ -135,54 +139,36 @@ class DemandeController extends AbstractController
         return $this->redirectToRoute('demandes');
         return $this->render('demande/showAll.html.twig');
     }
+
     /**
      * @Route("/demande/{id}/reponse", name="demande_reponse") 
      * */
     public function reponse (Request $request ,ObjectManager $manager,$id){
         
         $demande=$this->getDoctrine()->getRepository(DemandeSang::class)->find($id);
+        
+        $formDemande = $this->createFormBuilder($demande)
 
-        $pochereservee = new PocheReservee();
-        $FormPocheReservee = $this->createForm(PocheReserveeType::class,$pochereservee);
-
-        $FormPocheReservee->handleRequest($request);
-
-        if($FormPocheReservee->isSubmitted() && $FormPocheReservee->isValid() ){
+            ->add('reponse',TextType::class)
             
-            $pochereservee->setDate(new \DateTime());
-            $pochereservee->setUser($this->getUser());
-            $pochereservee->setDemande($demande);
+            ->getForm();
+            $formDemande->handleRequest($request);
 
-            $manager->persist($pochereservee);
-            $manager->flush();
+            if ($formDemande->isSubmitted() && $formDemande->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
-            $pocheentree=$em->getRepository(PocheEntree::class)->ModifierStatut($pochereservee->getNOrdre(),0,$demande->getType());
+                $manager->persist($demande);
+                $manager->flush();
+                
+                return $this->redirectToRoute('demandes');
+                
+            }
 
-            return $this->redirectToRoute('demandes');
-
-        }
-
-        return $this->render('technicienlabo/pochereservee/create.html.twig', [
+        
+        return $this->render('demande/reponse.html.twig', [
             'controller_name' => 'DemandeController',
-            'FormPocheReservee' => $FormPocheReservee->createView(),
+            'formDemande' => $formDemande->createView(),
         ]);
 
-        return $this->redirectToRoute('demandes');
-        return $this->render('demande/showAll.html.twig');
-    }
-
-    /**
-     * @Route("/demande/{id}/envoyer", name="reponse_envoyee") 
-     * */
-    public function EnvoyerReponse (Request $request ,$id ){
-
-        $em = $this->getDoctrine()->getManager();
-        $DemandeReponse=$em->getRepository(DemandeSang::class)->ModifierReponse($id);
-
-
-        return $this->redirectToRoute('demandes');
-        return $this->render('demande/showAll.html.twig');
     }
 
     /**
@@ -193,20 +179,68 @@ class DemandeController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $demande=$em->getRepository(DemandeSang::class)->find($id);
-        $pochesreservees=$em->getRepository(PocheReservee::class)->findByExampleField($id);
 
         $repo= $this->getDoctrine()->getRepository(User::class);
         $users= $repo->findAll();
-
+        
         $repo1= $this->getDoctrine()->getRepository(Service::class);
         $services= $repo1->findAll();
-
+        $repo2 = $this->getDoctrine()->getRepository(Feedback::class);
+        $feedbacks= $repo2->findAll();
+        $repo3= $this->getDoctrine()->getRepository(Malade::class);
+        $malades= $repo3->findAll();
         return $this->render('demande/show.html.twig', [
             'controller_name' => 'DemandeController',
             'demande'=> $demande,
             'users'=> $users,
-            'services' => $services,
-            'pochesreservees'=> $pochesreservees
+            'feedbacks' => $feedbacks,
+            'malades' => $malades,
+            'services' => $services
+        ]);
+    }
+
+    /**
+     * @Route("/demande/{id}/feedback",name="feedback_new")
+     */
+    public function Createfeedback(DemandeSang $demande,Request $request ,ObjectManager $manager)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $demande=$em->getRepository(DemandeSang::class)->find($demande->getId());
+
+        $fb = new Feedback();
+        $fb->setUser($this->getUser());
+        $fb->setDate(new \DateTime());
+        $fb->setDemande($demande);
+        $formfb = $this->createFormBuilder($fb)
+
+            ->add('feedback',TextareaType::class)
+            ->getForm();
+            $formfb->handleRequest($request);
+            if ($formfb->isSubmitted() && $formfb->isValid()) {
+
+                $manager->persist($fb);
+                $manager->flush();
+                return $this->redirectToRoute('feedback_new',['id' => $demande->getId()]);
+                
+            }
+        $repo= $this->getDoctrine()->getRepository(User::class);
+        $users= $repo->findAll();
+        
+        $repo1= $this->getDoctrine()->getRepository(Service::class);
+        $services= $repo1->findAll();
+        $repo2= $this->getDoctrine()->getRepository(Feedback::class);
+        $feedbacks= $repo2->findAll();
+        $repo3= $this->getDoctrine()->getRepository(Malade::class);
+        $malades= $repo3->findAll();
+        return $this->render('demande/show.html.twig', [
+            'controller_name' => 'DemandeController',
+            'demande'=> $demande,
+            'formfb' => $formfb->createView(),
+            'users'=> $users,
+            'feedbacks' => $feedbacks,
+            'malades' => $malades,
+            'services' => $services
         ]);
     }
 }

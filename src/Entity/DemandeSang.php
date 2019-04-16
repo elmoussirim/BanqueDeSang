@@ -49,35 +49,22 @@ class DemandeSang
     private $serum;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $cin_malade;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nom_malade;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $prenom_malade;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $id_user1;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $id_user2;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Service", inversedBy="nom_service")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Malade")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $service;
+    private $malade;
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user_1;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $user_2;
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -160,74 +147,36 @@ class DemandeSang
         return $this;
     }
 
-    public function getNomMalade(): ?string
+    public function getMalade(): ?Malade
     {
-        return $this->nom_malade;
+        return $this->malade;
     }
 
-    public function setNomMalade(string $nom_malade): self
+    public function setMalade(Malade $malade): self
     {
-        $this->nom_malade = $nom_malade;
+        $this->malade = $malade;
 
         return $this;
     }
-
-    public function getPrenomMalade(): ?string
+    public function getUser1(): ?User
     {
-        return $this->prenom_malade;
+        return $this->user_1;
     }
 
-    public function setPrenomMalade(string $prenom_malade): self
+    public function setUser1(?User $user_1): self
     {
-        $this->prenom_malade = $prenom_malade;
+        $this->user_1 = $user_1;
 
         return $this;
     }
-
-    public function getIdUser1(): ?int
+    public function getUser2(): ?User
     {
-        return $this->id_user1;
+        return $this->user_2;
     }
 
-    public function setIdUser1(int $id_user1): self
+    public function setUser2(?User $user_2): self
     {
-        $this->id_user1 = $id_user1;
-
-        return $this;
-    }
-
-    public function getIdUser2(): ?int
-    {
-        return $this->id_user2;
-    }
-
-    public function setIdUser2(?int $id_user2): self
-    {
-        $this->id_user2 = $id_user2;
-
-        return $this;
-    }
-
-    public function getService(): ?Service
-    {
-        return $this->service;
-    }
-
-    public function setService(Service $service): self
-    {
-        $this->service = $service;
-
-        return $this;
-    }
-
-    public function getCinMalade(): ?int
-    {
-        return $this->cin_malade;
-    }
-
-    public function setCinMalade(int $cin_malade): self
-    {
-        $this->cin_malade = $cin_malade;
+        $this->user_2 = $user_2;
 
         return $this;
     }

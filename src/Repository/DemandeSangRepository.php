@@ -31,8 +31,8 @@ class DemandeSangRepository extends ServiceEntityRepository
 
         $query = $entityManager->createQuery(
             'SELECT d
-            FROM App\Entity\DemandeSang d , App\Entity\Service s
-            WHERE s.id = d.service and s.nom_service = :val OR d.id = :val OR d.cin_malade = :val
+            FROM App\Entity\DemandeSang d , App\Entity\Malade m ,App\Entity\Service s
+            WHERE s.id = m.service and s.nom_service = :val OR d.id = :val OR d.malade = m.id and m.malade = :val OR d.malade = m.id and m.numero_cin = :val
             ORDER BY d.id ASC'
         )->setParameter('val', $value);
         // returns an array of Product objects

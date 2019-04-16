@@ -2,57 +2,81 @@
 
 
 {% block body %}
-<h1>{{ donneur.nom }} {{  donneur.prenom }}</h1>
 
-<table class="table table-hover">
-  <tbody>
-    <tr>
-      <th scope="col">Nom & prénom du donneur:{{ donneur.nom }} {{  donneur.prenom }}</th>
-      <th scope="col">Sexe :{{ donneur.sexe }}</th>
+{% if app.user.poste == "Technicien de laboratoire" or is_granted('ROLE_AGACC') %}
 
-    </tr>
-    <tr> 
-      <th scope="col">Nom & prénom du pére: {{ donneur.PrenomPere }}</th>
-      <th scope="col">Nom & prénom du mére: {{ donneur.PrenomMere }}</th>
-    </tr>
-    <tr>
-      <th scope="col">Date de naissance: {{ donneur.DateDeNaissance|date ('d/m/y') }}</th>
-      <th scope="col">Etat civil : {{ donneur.EtatCivil }}</th>
-    </tr>
+<div class="au-card au-card--no-shadow au-card--no-pad m-b-40">
+                                    <div class="au-card-title" style="background-image:url('images/bg-title-02.jpg');">
+                                        <div class="bg-overlay bg-overlay--blue"></div>
+                                        <h3>
+                                            <i class="zmdi zmdi-comment-text"></i>{{ donneur.nom }} {{  donneur.prenom }}.</h3>
+                                    </div>
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                  
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="example" class="table table-striped table-bordered second" style="width:100%">
+                                              
+                                          <tbody>
+                                            <tr>
+                                              <th scope="col">Nom & prénom du donneur:{{ donneur.nom }} {{  donneur.prenom }}</th>
+                                              <th scope="col">Sexe :{{ donneur.sexe }}</th>
 
-    <tr> 
-      <th scope="col">Numéro carte CIN: {{ donneur.NUMCIN }}</th>
-      <th scope="col">Adresse compléte: {{ donneur.AdresseComplete }}</th>
-    </tr>
-    <tr>
-      <th scope="col">Numéro du téléphone: {{ donneur.NumeroTelephone }}</th>
-      <th scope="col">Profession: {{ donneur.Profession }}</th>
-    </tr>
-    <tr> 
-      <th scope="col">L'origine du donneur: {{ donneur.Origine }}</th>
-      <th scope="col">Dons anterieurs: {{ donneur.DonsAnterieurs }}</th>
-    </tr>
-    <tr>
-      <th scope="col">Nombre de Dons antérieur volontaire: {{ donneur.DonsAnterieursVolontaires }}</th>
-      <th scope="col">Nombre de Dons antérieur Familiaux: {{ donneur.DonsAnterieursFamiliaux }}</th>
-    </tr>
-    <tr> 
-      <th scope="col">Donneur convocable: {{ donneur.DonneurConvocable }}</th>
-      <th scope="col">Dernier don à: {{ donneur.DateDuDernierDon|date ('d/m/y à H:i')  }}</th>
-    </tr>
-    <tr> 
-      <th scope="col">Donneur enregistré par: {{ user.username }}</th>
-      <th scope="col">Cin d'agent d'acceuil: {{ user.NUMCIN }}</th>
-    </tr>
-  </tbody>
-</table>
+                                            </tr>
+                                            <tr> 
+                                              <th scope="col">Nom & prénom du pére: {{ donneur.PrenomPere }}</th>
+                                              <th scope="col">Nom & prénom du mére: {{ donneur.PrenomMere }}</th>
+                                            </tr>
+                                            <tr>
+                                              <th scope="col">Date de naissance: {{ donneur.DateDeNaissance|date ('d/m/y') }}</th>
+                                              <th scope="col">Etat civil : {{ donneur.EtatCivil }}</th>
+                                            </tr>
 
-  <hr class="my-4">
+                                            <tr> 
+                                              <th scope="col">Numéro carte CIN: {{ donneur.NUMCIN }}</th>
+                                              <th scope="col">Adresse compléte: {{ donneur.AdresseComplete }}</th>
+                                            </tr>
+                                            <tr>
+                                              <th scope="col">Numéro du téléphone: {{ donneur.NumeroTelephone }}</th>
+                                              <th scope="col">Profession: {{ donneur.Profession }}</th>
+                                            </tr>
+                                            <tr> 
+                                              <th scope="col">L'origine du donneur: {{ donneur.Origine }}</th>
+                                              <th scope="col">Dons anterieurs: {{ donneur.DonsAnterieurs }}</th>
+                                            </tr>
+                                            <tr>
+                                              <th scope="col">Nombre de Dons antérieur volontaire: {{ donneur.DonsAnterieursVolontaires }}</th>
+                                              <th scope="col">Nombre de Dons antérieur Familiaux: {{ donneur.DonsAnterieursFamiliaux }}</th>
+                                            </tr>
+                                            <tr> 
+                                              <th scope="col">Donneur convocable: {{ donneur.DonneurConvocable }}</th>
+                                              <th scope="col">Dernier don à: {{ donneur.DateDuDernierDon|date ('d/m/y à H:i')  }}</th>
+                                            </tr>
+                                            <tr> 
+                                              <th scope="col">Donneur enregistré par: {{ user.username }}</th>
+                                              <th scope="col">Cin d'agent d'acceuil: {{ user.NUMCIN }}</th>
+                                            </tr>
+                                          </tbody>
+                                        </table>
 
-    <em>Résultat de don: {{ donneur.Donvalide }}</em>
+                                          <hr class="my-4">
 
-  <p class="lead">
-   <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="window.location.href='/donneur/{{ donneur.id }}/edit'">Modifier les informations</button>
-  </p>
-
+                                            <em>Résultat de don: {{ donneur.Donvalide }}</em></br>
+                                          {% if is_granted('ROLE_AGACC') %}
+                                            <button type="button" class="btn btn-primary" onclick="window.location.href='/donneur/{{ donneur.id }}/edit'">Modifier les informations</button>
+                                          {% else %}
+                                          <button type="button" onclick="history.go(-1)" class="btn btn-danger">Retour</button>
+                                          {% endif %}
+                                        </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% endif %}
 {% endblock %}

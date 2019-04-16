@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% if not app.user %}
+<p>Connectez-vous avec un compte "Infirmière de service" pour effectuer cette opération</p>
+{% elseif app.user.poste == "Infirmière de service"  %}
+
+
+    <div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <h3 class="panel-title">Les malades</h3>
+                                    <div class="pull-right">
+                                    </div>
+                                </div>
+                                <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer"><table class="table datatable_simple dataTable no-footer" id="DataTables_Table_1" role="grid"> 
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">                               
+                                        <form role="form"  method="request" action="{{ path('search_malade') }}">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="search" placeholder="N° cin?? Nom complet ???">
+                                                    <span class="input-group-addon" type="submit">chercher</span>
+                                                </div>
+                                        </form>
+                                    </div>                                 
+                                </div>
+
+                                <div class="panel-body">
+                                    <table id="customers" class="table table-striped">
+                                
+                                        <thead>
+                                            <tr>
+                                                    <th scope="col">N° Malade</th>
+                                                    <th scope="col">Malade</th>
+                                                    <th scope="col">Date de naissance</th>
+                                                    <th scope="col">Service</th>
+                                                    <th scope="col">groupe sanguin</th>
+                                                    <th scope="col">Voir</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for malade in malades %}
+                                                    <tr>                             
+                                                        <td class="table-light">{{ malade.Id }}</td>
+                                                        <td class="table-light">{{ malade.Malade }}</td>
+                                                        <td class="table-light">{{ malade.DateDeNaissance|date ('d/m/y')  }}</td>
+                                                        {% for service in services %}
+                                                            {% if service == malade.service %}
+                                                                <td class="table-light">{{ service.NomService }}</td>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        <th class="table-light">{{ malade.GroupeSanguin }}</td>
+                                                        <th class="table-light"><button type="button" class="btn btn-warning"  onclick="window.location.href='/malade/show/{{malade.Id}}'">Voir</button></td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                
+                    </div>
+    <!-- Welcome Area End -->
+
+
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% endif %}
+{% endblock %}

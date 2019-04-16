@@ -1,35 +1,61 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
 <!-- Affichage de sérologie avec Modifier, enregistre ou supprimer-->
+{% if not app.user %}
+<p>Connectez-vous avec un compte "Technicien de laboratoire" pour effectuer cette opération</p>
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% elseif app.user.poste == "Technicien de laboratoire"  %}
 
-<div class="jumbotron">
-  <h1 class="display-3"></h1>
-
-  <p class="lead">Date: {{ serologie.DateDeJour|date ('d/m/y à H:i')  }} </p>
-  <p class="lead">N° ordre: {{ serologie.NOrdre }}</p>
-  {% if serologie.AUtiliserAvant != null %}
-   <p class="lead">A utiliser avant: {{ serologie.AUtiliserAvant|date ('d/m/y à H:i') }}</p>
-  {% endif %}
-  <p class="lead">N°cin du donneur: {{ serologie.CinDonneur }}</p>
-  <p class="lead">Nom & Prenom donneur: {{ serologie.NomDonneur }} {{ serologie.PrenomDonneur }}</p>
-  <p class="lead">GS: {{ serologie.GroupeSanguins }}</p>
-  <p class="lead">AGHBR: {{ serologie.AGHBR }} </p>
-  <p class="lead">ACHCV: {{ serologie.ACHCV }} </p>
-  <p class="lead">TPHA: {{ serologie.TPHA }}</p>
-  <p class="lead">HIV: {{ serologie.HIV }}</p>
-  <p class="lead">Resultat Serologie: {{ serologie.ResultatSerologie }}</p>
-{% for user in users %}
-  {% if user.id == serologie.IdUser1 %}
-    <p class="lead">Technicien 1: {{ user.NUMCIN }} : {{ user.Username }}</p>
-  {% elseif user.id == serologie.IdUser2 %}
-   <p class="lead">Technicien 2: {{ user.NUMCIN }} : {{ user.Username }}</p>
-  {% endif %}
-{% endfor %}
-  <hr class="my-4">
-    <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="window.location.href='/serologie/termnier/{{ serologie.id }}'">Terminier sérologie</button>
-
-    <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="window.location.href='/serologie/{{ serologie.id }}/edit'">Modifier les informations</button>
-</div>
-
+<div class="timeline timeline-right">
+                                
+                                <!-- START TIMELINE ITEM -->
+                                <div class="timeline-item timeline-main">
+                                    <div class="timeline-date">{{ serologie.NOrdre }}</div>
+                                </div>
+                                <!-- END TIMELINE ITEM -->
+                                
+                                <!-- START TIMELINE ITEM -->
+                                <div class="timeline-item timeline-item-right">
+                                    <div class="timeline-item-info">{{ serologie.DateDeJour|date ('d/m/y à H:i')  }}</div>
+                                    <div class="timeline-item-icon"><span class="fa fa-globe"></span></div>
+                                    <div class="timeline-item-content">
+                                        <div class="timeline-heading">
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>A utiliser avant: {{ serologie.AUtiliserAvant|date ('d/m/y à H:i') }}</p>
+                                            <p>N°cin du donneur: {{ serologie.CinDonneur }}</p>
+											<p>Nom & Prenom donneur: {{ serologie.NomDonneur }} {{ serologie.PrenomDonneur }}</p>
+											<p>GS: {{ serologie.GroupeSanguin }}</p>
+											{% for user in users %}
+                                                {% if user == serologie.User1 %}
+                                                    <p> Technicien 1 --> Cin {{ user.NUMCIN }} Nom {{ user.Username }}</p>
+                                                {% elseif user == serologie.User2 %}
+                                                    <p>Technicien 2 --> {{ user.NUMCIN }} Nom {{ user.Username }}</p> 
+                                                {% endif %}
+                                            {% endfor %}           
+                                        </div>
+                                        <div class="timeline-body comments">
+                                            <div class="comment-item">
+                                                <p class="comment-head">AGHBR: {{ serologie.AGHBR }}</p>
+												<p class="comment-head">ACHCV: {{ serologie.ACHCV }}</p>
+												<p class="comment-head">TPHA: {{ serologie.TPHA }}</p>
+												<p class="comment-head">HIV: {{ serologie.HIV }}</p>
+                                            </div>
+                                        </div>                                        
+                                        
+                                    </div>
+                                </div>       
+                                <!-- END TIMELINE ITEM -->
+                             
+                                
+                                
+                                <!-- START TIMELINE ITEM -->
+                                <div class="timeline-item timeline-main">
+                                    <div class="timeline-date"><span>Resultat: {{ serologie.ResultatSerologie }}<span></div>
+                                </div>                                
+                                <!-- END TIMELINE ITEM -->
+                            </div>
+{% endif %}
 {% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formPoche 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+<br><br>
+{% if not app.user %}
+<p>Connectez-vous pour effectuer cette opération</p>
+{% elseif app.user.poste == "Technicien de laboratoire" or app.user.poste == "Infirmière de prélèvement" %}
+
+
+
+                        <!-- ============================================================== -->
+                        <!-- horizontal form -->
+                        <!-- ============================================================== -->
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">Poche</h5><br><br>
+                                <div class="card-body">
+                                    {{ form_start(formPoche) }}
+
+                                        {% if (not editMode) %} 
+                                            {{form_row(formPoche.type)}}
+                                            {{form_row(formPoche.congelateur)}}
+                                        {% elseif poche.Statut == "Poche en attente ---> Poche en stock" or poche.Statut == "Poche sortie ---> Poche en stock" %}
+                                                                
+
+                                            {{form_row(formPoche.a_utiliser_avant )}}
+                                            {{form_row(formPoche.groupe_sanguin )}}
+                                            {{ form_row(formPoche.congelateur)}}
+                                        {% elseif poche.Statut == "Poche en attente ---> Poche perimée" or poche.Statut == "Poche en stock ---> Poche perimée" or poche.Statut == "Poche sortie ---> Poche perimée" %}
+                                            {{ form_row(formPoche.session ,{'label':'Session: ','attr':{'placeholder':'Session de poche ....'}} )}}
+                                            {{ form_row(formPoche.raison ,{'label':'Raison: ','attr':{'placeholder':'Raison ???'}} )}}
+                                            {{ form_row(formPoche.congelateur)}}
+                                        {% elseif poche.Statut == "Poche en stock ---> Poche sortie" or poche.Statut == "Poche reservée ---> Poche sortie" or poche.Statut == "Poche sortie ---> Poche en stock" or poche.Statut == "Poche sortie ---> Poche perimée" %}
+                                            {{ form_row(formPoche.session ,{'label':'Session: ','attr':{'placeholder':'Session de poche ....'}} )}}
+                                            {{ form_row(formPoche.raison ,{'label':'Raison: ','attr':{'placeholder':'Raison ???'}} )}}
+                                            {{ form_row(formPoche.agent_service ,{'label':'Agent: ','attr':{'placeholder':'Agent de service ???'}} )}}
+                                        {% elseif poche.Statut == "Poche en stock ---> Poche reservée" %}
+                                            {{ form_row(formPoche.demande ,{'label':'Numéro de demande: ','attr':{'placeholder':'Numéro de demande ....'}} )}}
+                                            {{ form_row(formPoche.test_de_compatibilite ,{'label':'Numéro de test: ','attr':{'placeholder':'Numéro de test de compatibilité sanguine qui valide cette réservation ....'}} )}}
+                                            {{ form_row(formPoche.congelateur)}}
+                                        {% endif %}
+                                            <button type = "submit" class="btn btn-warning btn-block"> Enregistrer  </buttton>
+                                        {{form_end(formPoche)}} 
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ============================================================== -->
+                        <!-- end horizontal form -->
+                        <!-- ============================================================== -->
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% endif %}
+{% endblock %}

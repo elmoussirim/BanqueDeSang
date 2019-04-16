@@ -113,10 +113,12 @@ class Donneur
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $don_valide;
+
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $id_user;
+    private $user;
 
     public function getId(): ?int
     {
@@ -342,14 +344,14 @@ class Donneur
         return $this;
     }
 
-    public function getIdUser(): ?int
+    public function getUser(): ?User
     {
-        return $this->id_user;
+        return $this->user;
     }
 
-    public function setIdUser(int $id_user): self
+    public function setUser(?User $user): self
     {
-        $this->id_user = $id_user;
+        $this->user = $user;
 
         return $this;
     }

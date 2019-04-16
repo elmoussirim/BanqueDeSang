@@ -1,26 +1,40 @@
 {% extends 'base.html.twig' %}
+
 {% form_theme formServ 'bootstrap_4_layout.html.twig'%}
 
 {% block body %}
+<br><br><br><br><br><br><br>
 
-    <h1>Création d'un service !</h1>
+{% if not is_granted('ROLE_ADMIN') %}
+<p>Vos droits d'utilisateur Windows sont insuffisants pour l'opération demandée!</p>
+<p>Connectez-vous avec un compte "Administrateur" pour effectuer cette opération</p>
+{% else %}
+ <!-- ============================================================== -->
+                        <!-- horizontal form -->
+                        <!-- ============================================================== -->
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">Sercive</h5>
+                                <div class="card-body">
+                                     {{ form_start(formServ) }}
+                                        {{ form_row(formServ.nom_service ,{'attr':{'placeholder':"le nom de service"}} )}}
+                                        {{ form_row(formServ.ChService ,{'attr':{'placeholder':"le nom de Che service"}} )}}
 
-    {{ form_start(formServ) }}
-
-        {{ form_row(formServ.nom_service ,{'attr':{'placeholder':"le nom de service"}} )}}
-        {{ form_row(formServ.ChService ,{'attr':{'placeholder':"le nom de Che service"}} )}}
-
-        {{ form_row(formServ.capacite,{'attr':{'placeholder':"la capacité de sercive"}} )}}
-
-        <button type="submit" class="btn btn-secondary btn-lg btn-block">
-            {% if editMode %}
-                Enregisrer les modifications
-            {% else %}    
-                Ajouter le service
-            {% endif %}
-            
-        </button>
-
-    {{ form_end(formServ)}}   
-
+                                        {{ form_row(formServ.capacite,{'attr':{'placeholder':"la capacité de sercive"}} )}}
+                                        </div>
+                                        <div class="col-sm-6 pl-0">
+                                                <p class="text-right"><br><br><br>
+                                                    <button type="reset" value="Reset" class="btn btn-secondary">Vider</button>
+                                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                                </p>
+                                        </div>  
+                                    {{form_end(formServ)}} 
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ============================================================== -->
+                        <!-- end horizontal form -->
+                        <!-- ============================================================== -->
+          
+{% endif %}
 {% endblock %}

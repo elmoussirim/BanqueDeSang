@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formPoche 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+{% if not app.user %}
+<p>Connectez-vous pour effectuer cette opération</p>
+{% elseif app.user.poste == "Technicien de laboratoire" %}
+<br><br><br><br><br><br>
+                        <!-- ============================================================== -->
+                        <!-- horizontal form -->
+                        <!-- ============================================================== -->
+                       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">Création du poche</h5>
+                                <div class="card-body">
+                                    {{ form_start(formPoche) }}
+                                        <div class="row">
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">  
+                                                {{form_row(formPoche.n_ordre, {'attr' : {'placeholder' :"N°ordre"}} )}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2"> 
+                                                {{form_row(formPoche.type)}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formPoche.congelateur)}}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                                      
+                                                {{form_row(formPoche.NomDonneur, {'attr' : {'placeholder' :"Nom du donneur"}} )}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                                      
+                                                {{form_row(formPoche.PrenomDonneur, {'attr' : {'placeholder' :"Prenom du donneur"}} )}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formPoche.CinDonneur, {'attr' : {'placeholder' :"N°cin du donneur"}} )}}
+                                            </div>
+                                        </div>
+                                            
+                                        <div class="row">
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(formPoche.groupe_sanguin, {'attr' : {'placeholder' :"Groupe sanguin"}} )}}
+                                            </div>
+                                            <br><br>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{ form_row(formPoche.a_utiliser_avant) }}
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                                <p class="text-right"><br><br>
+                                                    <button type="reset" value="Reset" class="btn btn-secondary">Vider</button>
+                                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                                </p>
+                                        </div>
+                                    {{form_end(formPoche)}}     
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ============================================================== -->
+                        <!-- end horizontal form -->
+                        <!-- ============================================================== -->
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% endif %}
+{% endblock %}

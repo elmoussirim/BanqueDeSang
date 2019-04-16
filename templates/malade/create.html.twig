@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form'bootstrap_4_layout.html.twig' %}
+{% block body %}
+
+{% if not app.user %}
+<p>Connectez-vous pour effectuer cette opération</p>
+{% elseif app.user.poste == "Infirmière de service" %}
+
+                        <!-- ============================================================== -->
+                        <!-- horizontal form -->
+                        <!-- ============================================================== -->
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">Malade</h5>
+                                <div class="card-body">
+                                     {{ form_start(form) }}
+                                        <div class="form-row">
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(form.malade)}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(form.numero_cin )}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(form.telephone )}}
+                                            </div>
+                                        </div>
+                                        
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(form.date_de_naissance)}}
+                                            </div>
+                                            
+                                        <div class="form-row">
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{ form_row(form.service)}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(form.sexe )}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{form_row(form.age )}}
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{ form_row(form.adresse)}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{ form_row(form.profession)}}
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
+                                                {{ form_row(form.groupe_sanguin)}}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 pl-0">
+                                                <p class="text-right">
+                                                    <button type="reset" value="Reset" class="btn btn-secondary">Vider</button>
+                                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                                </p>
+                                        </div>  
+                                    {{form_end(form)}} 
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ============================================================== -->
+                        <!-- end horizontal form -->
+                        <!-- ============================================================== -->
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% endif %}
+{% endblock %}

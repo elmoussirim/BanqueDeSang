@@ -56,6 +56,7 @@ class FichemedicalController extends AbstractController
       
         return $this->render('fichemedical/editfiche.html.twig',[
             'formficheedit' => $formficheedit->createView(),
+            'fiche' => $fiche
             ]);
     }
 
@@ -74,7 +75,7 @@ class FichemedicalController extends AbstractController
         if($form->isSubmitted() && $form->isValid() ){
             
             $FicheDeDonneurDeSang->setDate(new \DateTime());
-            $FicheDeDonneurDeSang->setIdUser($this->getUser()->getId());
+            $FicheDeDonneurDeSang->setUser($this->getUser());
 
             
             $manager->persist($FicheDeDonneurDeSang);
@@ -102,7 +103,7 @@ class FichemedicalController extends AbstractController
       */
       public function show(FicheDeDonneurDeSang $fiche){
         $em = $this->getDoctrine()->getManager();
-        $user=$em->getRepository(User::class)->findOne($fiche->getIdUser());
+        $user=$em->getRepository(User::class)->findOne($fiche->getUser());
 
         return $this->render('fichemedical/show.html.twig', [
             'controller_name' => 'FichemedicalController',

@@ -19,7 +19,7 @@ class FicheDeDonneurDeSangRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, FicheDeDonneurDeSang::class);
     }
-    public function findOneBySomeField($value): ?FicheDeDonneurDeSang
+    public function findByExampleField($value): ?FicheDeDonneurDeSang
     {
 
         return $this->createQueryBuilder('f')

@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\PocheEnAttente;
-use App\Form\PocheEnAttenteType;
 use App\Entity\User;
+use App\Entity\Congelateur;
+use App\Entity\Poche;
 
 use App\Entity\Tubes;
 use App\Form\TubesType;
@@ -15,64 +15,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 
 class PrelevementController extends AbstractController
-{
-
-    /**
-     * @Route("/poche/apres/separation/new", name="search_inf_don") 
-     * @Route("/poche/apres/separation/new", name="PocheEnAttente_new") 
-     * */
-    public function formPocheEnAttente (Request $request ,ObjectManager $manager){
-
-        $request = Request::createFromGlobals();
-
-        $search = $request->query->get('search');
-
-
-        $em = $this->getDoctrine()->getManager();
-        $tube=$em->getRepository(Tubes::class)->findOneBySomeField($search);
-
-        $PocheEnAttente = new PocheEnAttente();
-        
-        $formPocheEnAttente = $this->createForm(PocheEnAttenteType::class, $PocheEnAttente);
-
-        $formPocheEnAttente->handleRequest($request);
-        
-        if($formPocheEnAttente->isSubmitted() && $formPocheEnAttente->isValid() ){
-            $PocheEnAttente->setNOrdre($tube->getNOrdre());
-            $PocheEnAttente->setCinDonneur($tube->getCinDonneur());
-            $PocheEnAttente->setNomDonneur($tube->getNomDonneur());
-            $PocheEnAttente->setPrenomDonneur($tube->getPrenomDonneur());
-            $PocheEnAttente->setDate(new \DateTime());
-            $PocheEnAttente->setIdUser($this->getUser()->getId());
-            $PocheEnAttente->setStatut(1);
-
-            
-            if($PocheEnAttente->getType() == "CG"){
-                $PocheEnAttente2 = new PocheEnAttente();
-                $PocheEnAttente2->setNOrdre($tube->getNOrdre());
-                $PocheEnAttente2->setStatut(1);
-
-                $PocheEnAttente2->setCinDonneur($tube->getCinDonneur());
-                $PocheEnAttente2->setNomDonneur($tube->getNomDonneur());
-                $PocheEnAttente2->setPrenomDonneur($tube->getPrenomDonneur());
-                $PocheEnAttente2->setDate(new \DateTime());
-                $PocheEnAttente2->setType("Plasma");
-                $PocheEnAttente2->setIdUser($this->getUser()->getId());
-                $manager->persist($PocheEnAttente2);
-            }
-            $manager->persist($PocheEnAttente);
-
-            $manager->flush();
-            return $this->redirectToRoute('PocheEnAttente_new');
-
-        }
-        return $this->render('pocheenattente/create.html.twig', [
-            'controller_name' => 'PrelevementController',
-            'tube'=>$tube,
-            'formPocheEnAttente' => $formPocheEnAttente->createView()
-        ]);
-    }
-      
+{    
     /**
      * @Route("/tube/new", name="tube_new") 
      * */
@@ -92,8 +35,8 @@ class PrelevementController extends AbstractController
             $tube2->setCinDonneur($tube1->getCinDonneur());
             $tube2->setNomDonneur($tube1->getNomDonneur());
             $tube2->setPrenomDonneur($tube1->getPrenomDonneur());
-            $tube1->setIdUser($this->getUser()->getId());
-            $tube2->setIdUser($this->getUser()->getId());
+            $tube1->setUser($this->getUser());
+            $tube2->setUser($this->getUser());
 
             $tube1->setDate(new \DateTime());
             $tube2->setDate(new \DateTime());
@@ -182,24 +125,7 @@ class PrelevementController extends AbstractController
             ]);
             
         }
-        
-    /**
-     * @Route("/poches/en/attente", name="poches_en_attentes")
-     */
-    public function PocheEnAttente()
-    {
-        $repo1=$this->getDoctrine()->getRepository(PocheEnAttente::class);
-        $repo2=$this->getDoctrine()->getRepository(User::class);
-
-        $PochesEnAttentes= $repo1->findAll();
-        $users= $repo2->findAll();
-
-        return $this->render('pocheenattente/PocheEnAttente.html.twig', [
-            'controller_name' => 'PrelevementController',
-            'PochesEnAttentes'=>$PochesEnAttentes,
-            'users' =>$users
-        ]);
-    }
+    
 
         /**
         * @Route("/PocheEnAttente/search", name="search_pochesenattente") 
@@ -212,13 +138,13 @@ class PrelevementController extends AbstractController
 
 
             $em = $this->getDoctrine()->getManager();
-            $PochesEnAttentes=$em->getRepository(PocheEnAttente::class)->findByExampleField($search);
-            $repo=$this->getDoctrine()->getRepository(User::class);
-            $users= $repo->findAll();
-            return $this->render('pocheenattente/PocheEnAttente.html.twig', [
+            $poches=$em->getRepository(Poche::class)->findByExampleField($search);
+            $repo=$this->getDoctrine()->getRepository(Congelateur::class);
+            $congelateur= $repo->findAll();
+            return $this->render('poche/pocheenattente.html.twig', [
                 'controller_name' => 'PrelevementController',
-                'PochesEnAttentes'=>$PochesEnAttentes,
-                'users'=> $users
+                'poches'=>$poches,
+                'congelateur'=> $congelateur
             ]);
             
         }

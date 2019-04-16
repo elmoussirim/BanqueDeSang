@@ -1,32 +1,72 @@
-{% extends 'base.html.twig' %}
+ {% extends 'base.html.twig' %}
+
 {% form_theme formserologie 'bootstrap_4_layout.html.twig'%}
 
 
  
 {% block body %}
+    
+{% if not app.user %}
+<p>Connectez-vous avec un compte "Technicien de laboratoire" pour effectuer cette opération</p>
 
-    <br>
-    <br>
-    <br>
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% elseif app.user.poste == "Technicien de laboratoire"  %}
 
-<div class="jumbotron">
-    <h1 class="display-3">Don numéro: {{ tube.NOrdre }} </h1>
+<br><br><br><br><br><br><br><br>
+    <!-- ============================================================== -->
+                        <!-- horizontal form -->
+                        <!-- ============================================================== -->
+                       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">Sérologie</h5>
+                                    <div class="card-body">
+                                            
+                                         {{ form_start(formserologie)}}
+                                                
+                                               
+                                            <div class="form-row">
+                                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                                      
+                                                    {{form_row(formserologie.A_utiliser_avant ,{'label':'a utiliser avant '} )}}
+                                                </div>
+                                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                                      
+                                                    {{form_row(formserologie.groupe_sanguin )}}
+                                                </div>
+                                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                                      
+                                                    {{form_row(formserologie.HIV)}}
+                                                </div>
+                                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                                      
+                                                    {{form_row(formserologie.AGHBR)}}
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                
+                                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                                      
+                                                    {{form_row(formserologie.ACHCV)}}
+                                                </div>
+                                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                                      
+                                                    {{form_row(formserologie.TPHA)}}
+                                                </div>
+                                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                                      
+                                                    {{form_row(formserologie.Resultat_Serologie)}}
+                                                </div>   
+                                            </div>
+                                            <br><br>
+                                            <div class="col-md-12">
+                                                    <p class="text-right">
+                                                        <button type="reset" value="Reset" class="btn btn-secondary">Vider</button>
+                                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                                    </p>
+                                            </div>
+                                            {{form_end(formserologie)}} 
+                                    </div>
+                            </div>      
+                        </div>
 
-    <p class="lead">Nom du donneur: {{ tube.NomDonneur }}</p>
-    <p class="lead">Prénom du donneur:{{ tube.PrenomDonneur }}</p>
-    <p class="lead">N°cin du donneur:{{ tube.CinDonneur }}</p>
-</div>
 
-<h1> création d'un teste de serologie   ! </h1>
-{{ form_start(formserologie)}}
-{{form_row(formserologie.A_utiliser_avant )}}
-{{form_row(formserologie.groupe_sanguins )}}
-{{form_row(formserologie.AGHBR)}}
-{{form_row(formserologie.ACHCV)}}
-{{form_row(formserologie.TPHA)}}
-{{form_row(formserologie.HIV)}}
-{{form_row(formserologie.Resultat_Serologie)}}
-
-<button type = "submit" class="btn btn-secondary btn-lg btn-block"> Enregistrer  </buttton>
-{{form_end(formserologie)}}
+                        <!-- ============================================================== -->
+                        <!-- end horizontal form -->
+                        <!-- ============================================================== -->
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% endif %}
  {% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formtc 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+<br><br><br><br>
+
+{% if not app.user %}
+<p>Connectez-vous pour effectuer cette opération</p>
+{% elseif app.user.poste == "Technicien de laboratoire" %}
+
+    <!-- ============================================================== -->
+                        <!-- horizontal form -->
+                        <!-- ============================================================== -->
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">Test de compatibilité</h5>
+                                <div class="card-body">
+                                    {{ form_start(formtc) }}
+
+                                        {{form_row(formtc.resultat )}}
+
+                                        <div class="col-sm-6 pl-0">
+                                                <p class="text-right">
+                                                    <button type="reset" value="Reset" class="btn btn-secondary">Vider</button>
+                                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                                </p>
+                                        </div>  
+                                    {{form_end(formtc)}} 
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ============================================================== -->
+                        <!-- end horizontal form -->
+                        <!-- ============================================================== -->
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% endif %}
+{% endblock %}

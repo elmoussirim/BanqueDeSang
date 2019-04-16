@@ -23,22 +23,13 @@ class DemandeSangType extends AbstractType
         ->add('date_utilisation', DateTimeType::class )
         ->add('type',ChoiceType::class, ['choices' => 
             [   'CG' => 'CG', 
-                'Plasma' => 'CG',
+                'Plasma' => 'Plasma',
                 'ST' => 'ST',
             ],
         ])
         ->add('nombre_poche', NumberType::class)
         ->add('G_S', TextType::class)
         ->add('serum',NumberType::class)
-        ->add('cin_malade',NumberType::class, ['attr' => ['maxlength' => 8,'minlength' =>7]])
-        ->add('nom_malade', TextType::class)
-        
-
-        ->add('prenom_malade', TextType::class)
-        ->add('service', EntityType::class , [
-            'class' => Service::class,
-            'choice_label' => 'NomService',
-            ])
         ;
     }
 

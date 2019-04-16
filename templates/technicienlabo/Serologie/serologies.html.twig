@@ -1,67 +1,74 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{% if not app.user %}
+<p>Connectez-vous avec un compte "Technicien de laboratoire" pour effectuer cette opération</p>
+
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% elseif app.user.poste == "Technicien de laboratoire"  %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <h3 class="panel-title">Les sérologies</h3>
+                                    <div class="pull-right">
+                                        <button class="btn btn-info toggle"  onclick="window.location.href='/tubes/a/tester'" data-toggle="exportTable"><i class="fa fa-bars"></i> Nouvelle sérologie</button>
+                                    </div>
+                                </div>
+                                <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer"><table class="table datatable_simple dataTable no-footer" id="DataTables_Table_1" role="grid"> 
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">                               
+                                        <form role="form"  method="request" action="{{ path('search_serologie') }}">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="search" placeholder="N° Ordre??">
+                                                    <span class="input-group-addon" type="submit">chercher</span>
+                                                </div>
+                                        </form>
+                                    </div>                                 
+                                </div>
+
+                                <div class="panel-body">
+                                    <table id="customers" class="table table-striped">
+                                
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>N°ordre</th>
+                                                <th>Avant</th>
+                                                <th>Donneur </th>
+                                                <th>N°Cin</th>
+                                                <th>GS</th>
+                                                <th>Résultat</th>
+                                                <th></th>
+                                        </thead>
+                                        <tbody>
+                                            {% for serologie in serologies %}  
+                                            {% if (serologie.statut == 1) %}
+                                                <tr class="text-danger">
+                                            {% else %}
+                                                <tr class = "text-primary">
+                                            {% endif %}                                
+                                                <td>{{ serologie.DateDeJour|date ('d/m/y à H:i')  }}</td>
+                                                <td>{{ serologie.NOrdre }}</td>
+                                                <td>{{ serologie.AUtiliserAvant|date ('d/m/y à H:i') }}</td>
+
+                                                
+                                                <td>{{ serologie.NomDonneur }} {{ serologie.PrenomDonneur }}</td>
+                                                <td>{{ serologie.CinDonneur }}</td>
+                                                <td>{{ serologie.GroupeSanguin }}</td>
+                                                <td>{{ serologie.ResultatSerologie }}</td>
+                                                <td><button type="button" class="btn btn-warning" onclick="window.location.href='/serologie/show/{{ serologie.id }}'">Afficher</button></td>
+                                                {% if serologie.statut == 1 %}
+                                                    <td><button type="button" class="btn btn-warning" onclick="window.location.href='/serologie/termnier/{{ serologie.id }}'">Terminer</button></td>
+                                                {% elseif serologie.ResultatSerologie == " " %}
+                                                    <td><button type="button" class="btn btn-warning" onclick="window.location.href='/serologie/{{ serologie.id }}/edit'">Modifier </button></td>
+                                                {% endif %}
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
 
-    <form class="form-inline my-2 my-lg-0"  method="request" action="{{ path('search_serologie') }} ">
-        <input class="form-control mr-sm-2" type="text" name="search" placeholder="Chercher">
-        <button class="btn btn-secondary my-2 my-sm-0"  type="submit">Chercher</button>
-    </form>
-    <br>
-    <br>
-    <br>
-
-    <button type="button" class="btn btn-primary" onclick="window.location.href='/tubes/a/tester'">Nouvelle sérologie</button>
-
-    <br>
-    <br>
-    <br>
-
-                                    <!--Tableau des sérologies Avec Modifier -->
-
-    
-    <section class="donneur">
-            <h1> liste des sérologies : </h1>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">N° ordre</th>
-                        <th scope="col">A utiliser avant</th>
-                        <th scope="col">N°cin donneur </th>
-                        <th scope="col">Nom & Prenom donneur</th>
-                        <th scope="col">GS</th>
-                        <th scope="col">Résultat</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    {% for serologie in serologies %}
-                            {% if (serologie.statut == 1) %}
-                                <tr class="text-danger">
-                            {% else %}
-                                <tr class = "text-success">
-                            {% endif %}                                
-                                <td scope="col">{{ serologie.DateDeJour|date ('d/m/y à H:i')  }}</td>
-                                <td scope="row">{{ serologie.NOrdre }}</td>
-                                <td scope="row">{{ serologie.AUtiliserAvant|date ('d/m/y à H:i') }}</td>
-
-                                <td scope="row">{{ serologie.CinDonneur }}</td>
-                                <th scope="row">{{ serologie.NomDonneur }} {{ serologie.PrenomDonneur }}</td>
-
-                                <td  scope="col">{{ serologie.GroupeSanguins }}</td>
-                                <td  scope="col">{{ serologie.ResultatSerologie }}</td>
-                                <td><button type="button" class="btn btn-primary" onclick="window.location.href='/serologie/show/{{ serologie.id }}'">Afficher</button></td>
-                                <td><button type="button" class="btn btn-secondary" onclick="window.location.href='/serologie/termnier/{{ serologie.id }}'">Terminer</button></td>
-                                {% if serologie.ResultatSerologie == " " %}
-                                <td><button type="button" class="btn btn-primary" onclick="window.location.href='/serologie/{{ serologie.id }}/edit'">Modifier </button></td>
-                                {% endif %}
-                            </tr>
-                   {% endfor %}
-
-                </tbody>
-            </table>  
-      
-    </section>
+{% else %}
+<p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
+{% endif %}
 {% endblock %}

@@ -9,7 +9,8 @@ use App\Repository\UserRepository;
 
 use App\Entity\Service;
 use App\Form\ServiceType;
-
+use App\Form\ProfilType;
+use App\Form\MdpType;
 use App\Form\CongelateurType;
 use App\Entity\Congelateur;
 
@@ -49,13 +50,15 @@ class BlogController extends AbstractController
 
     /**  
      * @Route("/user/create",name="user_create")
-
+      *@Route("/user/{id}/update",name="user_create")
     *  */
 
-    public function form (Request $request ,ObjectManager $manager,UserPasswordEncoderInterface $encoder){
+    public function form (User $user =null ,Request $request ,ObjectManager $manager,UserPasswordEncoderInterface $encoder){
                   
+        if ($user == null){
+            $user= new User();
+        }
         
-        $user= new User();
 
         $form = $this->createForm(UserType::class, $user);
 
@@ -65,7 +68,7 @@ class BlogController extends AbstractController
 
             $hash = $encoder->encodePassword($user,$user->getPassword());
             $user->setPassword($hash);
-
+            
             $manager->persist($user);
             $manager->flush();
             return $this->redirectToRoute('blog_user');
@@ -128,6 +131,7 @@ class BlogController extends AbstractController
                 
                 if (!$service->getId()){
                     $service->setDateCtSer(new \DateTime());
+                    $service->setExiste("oui");
                 }
                 
                 $manager->persist($service);
@@ -151,9 +155,8 @@ class BlogController extends AbstractController
 
         $service=$this->getDoctrine()->getRepository(Service::class)->find($id);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($service);
-        $entityManager->flush();
+        $repo=$this->getDoctrine()->getRepository(Service::class);
+        $service= $repo->UpdateExiste($id);
 
         
 
@@ -194,6 +197,7 @@ class BlogController extends AbstractController
             if($formCong->isSubmitted() && $formCong->isValid() ){
                 if (!$congelateur->getId()){
                     $congelateur->setDateCtCong(new \DateTime());
+                    $congelateur->setExiste("oui");
 
                 }
                 $manager->persist($congelateur);
@@ -214,13 +218,12 @@ class BlogController extends AbstractController
         * @Route("/congelateur/{id}/delete", name="congelateur_delete") 
         * */
     public function deleteCong (Request $request,$id ){
-
-        $congelateur=$this->getDoctrine()->getRepository(Congelateur::class)->find($id);
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($congelateur);
-        $entityManager->flush();
+                    
+        $repo=$this->getDoctrine()->getRepository(Congelateur::class);
+        $congelateur= $repo->UpdateExiste($id);
         return $this->redirectToRoute('blog_congelateur');
+
+
         return $this->render('blog/congelateur.html.twig');
 
     }    
@@ -286,4 +289,38 @@ class BlogController extends AbstractController
                 'services'=>$services
             ]);
         }
+
+        
+    /** 
+      *@Route("/profil/{id}",name="profil")
+     */
+
+    public function profil (User $user,$id, Request $request ,ObjectManager $manager,UserPasswordEncoderInterface $encoder){
+           
+        $form = $this->createForm(ProfilType::class, $user);
+        $mdp = $this->createForm(MdpType::class, $user);
+        $u=$this->getDoctrine()->getRepository(User::class)->find($id);
+        $form->handleRequest($request);
+        $mdp->handleRequest($request);
+        if($mdp->isSubmitted() && $mdp->isValid() ){
+
+            $hash = $encoder->encodePassword($user,$user->getPassword());
+            $user->setPassword($hash);
+            
+            $manager->persist($user);
+            $manager->flush();
+            return $this->redirectToRoute('profil',['id' => $user->getId()]);
+        }
+        if ($form->isSubmitted() && $form->isValid() ){
+            $manager->persist($user);
+            $manager->flush();
+            return $this->redirectToRoute('profil',['id' => $user->getId()]);
+        }
+        return $this->render('blog/profil.html.twig', [
+            'form' => $form->createView(),
+            'mdp' => $mdp->createView(),
+            'u' => $u
+        ]);
+   
+    }
 }

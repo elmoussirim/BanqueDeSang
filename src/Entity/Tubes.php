@@ -37,9 +37,11 @@ class Tubes
     private $CinDonneur;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $id_preleveur;
+    private $user;
+
     /**
      * @ORM\Column(type="integer")
      */
@@ -107,15 +109,14 @@ class Tubes
 
         return $this;
     }
-
-    public function getIdPreleveur(): ?int
+    public function getUser(): ?User
     {
-        return $this->id_preleveur;
+        return $this->user;
     }
 
-    public function setIdPreleveur(int $id_preleveur): self
+    public function setUser(?User $user): self
     {
-        $this->id_preleveur = $id_preleveur;
+        $this->user = $user;
 
         return $this;
     }

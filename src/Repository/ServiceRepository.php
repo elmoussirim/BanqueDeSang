@@ -36,15 +36,17 @@ class ServiceRepository extends ServiceEntityRepository
     }
     
 
-    /*
-    public function findOneBySomeField($value): ?Service
+    
+    public function UpdateExiste($value): ?int
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
+        $entityManager = $this->getEntityManager();
+        
+        $query = $entityManager->createQuery('UPDATE App\Entity\Service s SET s.existe = :val1 WHERE s.id = :val')
+        ->setParameter('val', $value)
+        ->setParameter('val1', "non")
         ;
+        $query->execute();
+        return 1;
     }
-    */
+    
 }
