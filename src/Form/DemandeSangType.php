@@ -30,7 +30,16 @@ class DemandeSangType extends AbstractType
         ->add('nombre_poche', NumberType::class)
         ->add('G_S', TextType::class)
         ->add('serum',NumberType::class)
+        ->add('type_demande')
+        ->add('service', EntityType::class , [
+            'class' => Service::class,
+            'choice_label' => function ($service) {
+                return $service->getNomService();
+            },
+            ])
         ;
+
+        
     }
 
     public function configureOptions(OptionsResolver $resolver)

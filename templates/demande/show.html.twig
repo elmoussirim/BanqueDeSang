@@ -37,13 +37,18 @@
                                         <div class="timeline-body">
                                             <p>Date de création: {{ demande.DateDemande|date ('d/m/y à H:i')  }}</p>
                                             <p>Pour le: {{ demande.DateUtilisation|date ('d/m/y à H:i') }}</p>
+                                            <p>Pour le: {{ demande.TypeDemande }}</p>
+                                            <p>Type de poche: {{ demande.Type }}</p>
+                                            <p>Nombre des poche: {{ demande.NombrePoche }}</p>
+                                            <p>Groupe sanguin: {{ demande.GS }}</p>
+                                            <p>Sérum: {{ demande.serum }}</p>
                                              {% for malade in malades %}
                                                             {% if malade == demande.Malade %}
                                                                 <p>{{ malade.Malade }}: {{ malade.NumeroCin }}</p>
+                                                                <p>{{ malade.NDossier }}</p>
                                                             {% endif %}
-                                                        
                                                         {% for service in services %}
-                                                                    {% if service.id == malade.service.id %}
+                                                                    {% if service.id == demande.service.id %}
                                                                        <p> Service: {{ service.NomService }}</p>
                                                                     {% endif %}
                                                                 {% endfor %}

@@ -8,17 +8,21 @@
 {% elseif app.user.poste == "Technicien de laboratoire"  %}
 
 <!-- Welcome Area Starts -->
-   <div class="panel panel-default">
+                            <div class="panel panel-default">
                                 <div class="panel-heading ui-draggable-handle">
                                     <h3 class="panel-title">Les testes de compatibilité</h3>
-                                    <div class="pull-right">
-                                        <div class="overview-wrap">
-                                            <button type="button" class="btn btn-warning" onclick="window.location.href='/poche/tc/new/{{ poche.id }}'"><i class="zmdi zmdi-plus"></i>Ajouter test de compatibilité</button>
-                                            <button type="button" class="btn btn-success" onclick="window.location.href='/poche/mettre/a/jour/statut/poche/{{ poche.id }}'"><i class="fa fa-cogs"></i> Mettre à jour statut poche</button>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
-                                
+                                <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer">
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">                               
+                                        <form role="form"  method="request" action="{{ path('search_tc') }}">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control"  name="search" placeholder="malade (cin, nom et prénom ))?? Agent (cin, nom et prénom)??">
+                                                    <span class="input-group-addon" type="submit">chercher</span>
+                                                </div>
+                                        </form>
+                                    </div>                                 
+                                </div>
 
                                 <div class="panel-body">
                                     <table id="customers" class="table table-striped">
@@ -30,27 +34,53 @@
                                         <th scope="col">Date</th>
                                         
 
-                                        <th scope="col">Cin technicien</th>
-                                        <th scope="col">Tchnicien</th>
-                                        <th scope="col">Resultat</th>
+                                        <th scope="col">Cin Agent</th>
+                                        <th scope="col">Agent</th>
+                                        <th scope="col">Service</th>
+                                        <th scope="col">N°Dossier</th>
+                                        <th scope="col">Nom et prénom malade</th>
+                                        <th scope="col">Cin malade</th>
+                                        <th scope="col">CG</th>
+                                        <th scope="col">Reserve</th>
+                                        <th scope="col">P.testées</th>
+                                        <th scope="col">P.Deliverées</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                     {% for tc in testCompatibilite %}
-
-                                            <tr>
-                                                <th scope="row">{{ tc.Id }}</th>
-                                                <td scope="col">{{ tc.Date|date ('d/m/y à H:i')  }}</td>
-                                                {% for user in users %}
-                                                    {% if user == tc.User %}
-                                                        <td  scope="col">{{ user.NUMCIN }}</td>
-                                                        <td scope="col">{{ user.Username }}</td>
-                                                    {% endif %}
-                                                {% endfor %}
-                                                <th scope="row">{{ tc.Resultat }}</th>
-                                            </tr>
-                                        
+                                    {% for tc in testCompatibilite %}
+                                        {% for demande in demandes %}
+                                            {% if demande.id == tc.Demande.id %}
+                                                <tr>
+                                                    <th scope="row">{{ tc.Id }}</th>
+                                                    <td scope="col">{{ tc.Date|date ('d/m/y à H:i')  }}</td>
+                                                    {% for user in users %}
+                                                        {% if user == tc.User %}
+                                                            <td  scope="col">{{ user.NUMCIN }}</td>
+                                                            <td scope="col">{{ user.Username }}</td>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    {% for service in services %}
+                                                        {% if service == demande.service %}
+                                                            <td  scope="col">{{ service.NomService }}</td>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    {% for malade in malades %}
+                                                        {% if malade == demande.Malade %}
+                                                            <td>{{ malade.NDossier }}</td>
+                                                            <td>{{ malade.Malade }}</td>
+                                                            <td>{{ malade.NumeroCin }}</td>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    <td>{{ demande.NombrePoche }} {{ demande.Type }}</td>
+                                                    <td>{{ tc.Reserve }}</td>
+                                                    <td>{{ tc.PTestees }}</td>
+                                                    <td>{{ tc.PDeliverees }}</td>
+                                                    <td><button type="button" class="btn btn-warning" onclick="window.location.href='/tc/edit/{{ tc.id }}'">Modifier</button></td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
                                     {% endfor %}
 
                             </tbody>

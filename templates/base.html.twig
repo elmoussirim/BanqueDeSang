@@ -31,17 +31,17 @@
                 <ul class="x-navigation">
                     
                     <li class="xn-logo">
-                        <a href="/">I.M.K</a>
+                        <a href="/">I.M.K.O</a>
                         <a href="/" class="x-navigation-control"></a>
                     </li>
                     {% if app.user %}
                         <li class="xn-profile">
                             <a href="#" class="profile-mini">
-                                <img src="{{ asset ('assets/images/users/avatar.jpg')}}" alt="John Doe"/>
+                                <img src="{{ asset ('assets/images/users/no-image.jpg')}}" alt="John Doe"/>
                             </a>
                             <div class="profile">
                                 <div class="profile-image">
-                                    <img src="{{ asset ('assets/images/users/avatar.jpg')}}" alt="John Doe"/>
+                                    <img src="{{ asset ('assets/images/users/no-image.jpg')}}" alt="John Doe"/>
                                 </div>
                                 <div class="profile-data">
                                     <div class="profile-data-name">{{ app.user.username }}</div>
@@ -86,6 +86,7 @@
                                     <li><a href="{{path('gestion')}}"><span class="fa fa-cogs"></span> Mise à jour </a></li>
                                     <li><a href="{{path('alertes-gestion')}}"><span class="fa fa-bell"></span> Les alertes </a></li>
                                     <li><a href="{{path('historique')}}"><span class="fa fa-archive"></span> L'historique </a></li>
+                                    <li><a href="{{path('show_tc')}}"><span class="fa fa-archive"></span> Les tests de compatibilité </a></li>
                                 {% endif %} 
                                 <li>
                                     <a href="{{ path ('security_logout') }}"><span class="fa fa-power-off"></span>Déconnexion</a>
@@ -134,15 +135,14 @@
             </div>            
             <!-- END PAGE CONTENT -->
         </div>
-        <!-- END PAGE CONTAINER -->
 
         <!-- MESSAGE BOX-->
         <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
             <div class="mb-container">
                 <div class="mb-middle">
-                    <div class="mb-title"><span class="fa fa-sign-out"></span>Déconnexion <strong>???</strong> ?</div>
+                    <div class="mb-title"><span class="fa fa-sign-out"></span> Déconnexion <strong>??</strong> ?</div>
                     <div class="mb-content">
-                        <p>Déconnexion ?</p>                    
+                        <p>Déconnexion ??</p>                    
                         <p>Voulez-vous vraiment déconnecter ??</p>
                     </div>
                     <div class="mb-footer">
@@ -155,7 +155,6 @@
             </div>
         </div>
         <!-- END MESSAGE BOX-->
-
         <!-- START PRELOADS -->
         <audio id="audio-alert" src="{{ asset ('audio/alert.mp3')}}" preload="auto"></audio>
         <audio id="audio-fail" src="{{ asset ('audio/fail.mp3')}}" preload="auto"></audio>
@@ -163,7 +162,9 @@
         
     <!-- START SCRIPTS -->
         <!-- START PLUGINS -->
+
         <script type="text/javascript" src="{{ asset ('js/plugins/jquery/jquery.min.js')}}"></script>
+
         <script type="text/javascript" src="{{ asset ('js/plugins/jquery/jquery-ui.min.js')}}"></script>
         <script type="text/javascript" src="{{ asset ('js/plugins/bootstrap/bootstrap.min.js')}}"></script>        
         <!-- END PLUGINS -->

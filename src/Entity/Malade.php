@@ -37,30 +37,9 @@ class Malade
     private $groupe_sanguin;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $age;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
-    private $adresse;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $profession;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $telephone;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Service")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $service;
+    private $n_dossier;
 
     /**
      * @ORM\Column(type="integer")
@@ -108,65 +87,31 @@ class Malade
         return $this;
     }
 
-    public function getAge(): ?int
+ 
+    public function getNDossier(): ?string
     {
-        return $this->age;
+        return $this->n_dossier;
     }
 
-    public function setAge(int $age): self
+    public function setNDossier(string $n_dossier): self
     {
-        $this->age = $age;
+        $this->n_dossier = $n_dossier;
 
         return $this;
-    }
-
-    public function getAdresse(): ?string
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(string $adresse): self
-    {
-        $this->adresse = $adresse;
-
-        return $this;
-    }
-
+    } 
     public function getGroupeSanguin(): ?string
     {
         return $this->groupe_sanguin;
     }
 
-    public function setGroupeSanguins(string $groupe_sanguin): self
+    public function setGroupeSanguin(string $groupe_sanguin): self
     {
         $this->groupe_sanguin = $groupe_sanguin;
 
         return $this;
     }
 
-    public function getProfession(): ?string
-    {
-        return $this->profession;
-    }
-
-    public function setProfession(string $profession): self
-    {
-        $this->profession = $profession;
-
-        return $this;
-    }
-
-    public function getTelephone(): ?int
-    {
-        return $this->telephone;
-    }
-
-    public function setTelephone(int $telephone): self
-    {
-        $this->telephone = $telephone;
-
-        return $this;
-    }
+    
 
     public function getNumeroCin(): ?int
     {
@@ -180,15 +125,5 @@ class Malade
         return $this;
     }
 
-    public function getService(): ?Service
-    {
-        return $this->service;
-    }
-
-    public function setService(Service $service): self
-    {
-        $this->service = $service;
-
-        return $this;
-    }
+    
 }

@@ -33,16 +33,18 @@
                                                 <th>N°demande</th>
                                                 <th>Date</th>
                                                 <th>Avant</th>
+                                                <th>Type demande</th>
                                                 <th>Type</th>
                                                 <th>N° poches </th>
                                                 <th>GS</th>
                                                 <th>Sérum</th>
                                                 <th>Malade</th>
+                                                <th>N°Dossier</th>
                                                 <th>Service</th>
                                                 <th>Inférmiere</th>
                                                 <th>Médecin</th>
                                                 <th>Actions</th>
-
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -57,6 +59,7 @@
                                                         <th scope="row">{{ demande.Id }}</th>
                                                         <td>{{ demande.DateDemande|date ('d/m/y à H:i') }}</td>
                                                         <td>{{ demande.DateUtilisation|date ('d/m/y à H:i') }}</td>
+                                                        <td>{{ demande.TypeDemande }}</td>
                                                         <td>{{ demande.Type }}</td>
                                                         <td>{{ demande.NombrePoche }}</td>
                                                         <td>{{ demande.GS }}</td>
@@ -64,10 +67,11 @@
                                                         {% for malade in malades %}
                                                             {% if malade == demande.Malade %}
                                                                 <td>{{ malade.Malade }}: {{ malade.NumeroCin }}</td>
+                                                                <td>{{ malade.NDossier }}</td>
                                                             {% endif %}
                                                         
                                                             {% for service in services %}
-                                                                {% if service.id == malade.service.id %}
+                                                                {% if service.id == demande.service.id %}
                                                                     <td>{{ service.NomService }}</td>
                                                                 {% endif %}
                                                             {% endfor %}
@@ -83,8 +87,10 @@
                                                         <td></td>   
                                                     {% endif %}
                                                     {% if is_granted('ROLE_INFSER') and demande.reponse == " " %}
-                                                    
-                                                        <td><button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/delete'">Supprimer</button></td>
+
+
+                                                        <td><button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/delete'" >Supprimer</button></td>
+                                                        <td><button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/edit/{{ demande.malade.id }}'">Modifier</button></td>
                                                     {% elseif is_granted('ROLE_INFSER') and demande.reponse != " " %}
                                                         <td><button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/show'">Voir</button></td>
                                                     {% elseif app.user.poste == "Médecin de service" and  demande.User2 == null and demande.reponse == " " %}
@@ -102,9 +108,8 @@
                                                     {% endif %}
                                                         <th scope="row">{{ demande.Id }}</th>
                                                         <td>{{ demande.DateDemande|date ('d/m/y à H:i') }}</td>
-
                                                         <td>{{ demande.DateUtilisation|date ('d/m/y à H:i') }}</td>
-
+                                                        <td>{{ demande.TypeDemande }}</td>
                                                         <td>{{ demande.Type }}</td>
                                                         <td>{{ demande.NombrePoche }}</td>
                                                         <td>{{ demande.GS }}</td>
@@ -113,10 +118,11 @@
 
                                                             {% if malade == demande.Malade %}
                                                                 <td>{{ malade.Malade }}: {{ malade.NumeroCin }}</td>
+                                                                <td>{{ malade.NDossier }}</td>
                                                             {% endif %}
                                                             
                                                             {% for service in services %}
-                                                                {% if service.id == malade.service.id %}
+                                                                {% if service.id == demande.service.id %}
                                                                     <td>{{ service.NomService }}</td>
                                                                 {% endif %}
                                                             {% endfor %}
@@ -133,11 +139,40 @@
                                                     {% endif %}
                                                     {% if demande.reponse == " " %}
                                                         <td><button type="button" class="btn btn-warning" onclick="window.location.href='demande/{{ demande.id }}/reponse'">Répondre</button></td>
+                                                        <td><button type="button" class="btn btn-warning" onclick="window.location.href='tc/{{ demande.id }}/new'">Test de compatibilité</button></td>
                                                     {% else %}
                                                         <td><button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/show'">Voir</button></td>
                                                     {% endif %}
                                                     </tr>
                                                 {% endif %}
+
+
+
+
+                                                <!-- MESSAGE BOX-->
+                                                <div class="message-box animated fadeIn" data-sound="alert" id="mb-delate">
+                                                    <div class="mb-container">
+                                                        <div class="mb-middle">
+                                                            <div class="mb-title"><span class="fa fa-sign-out"></span>Déconnexion <strong>???</strong> ?</div>
+                                                            <div class="mb-content">
+                                                                <p>Supprimer ?</p>                    
+                                                                <p>Voulez-vous vraiment supprimer cette demande ??</p>
+                                                            </div>
+                                                            <div class="mb-footer">
+                                                                <div class="pull-right">
+                                                                    <a href="window.location.href='/demande/{{ demande.id }}/delete" class="btn btn-success btn-lg">Oui</a>
+                                                                    <button class="btn btn-default btn-lg mb-control-close">Non</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- END MESSAGE BOX-->
+
+                                                <!-- START PRELOADS -->
+                                                <audio id="audio-alert" src="{{ asset ('audio/alert.mp3')}}" preload="auto"></audio>
+                                                <audio id="audio-fail" src="{{ asset ('audio/fail.mp3')}}" preload="auto"></audio>
+                                                <!-- END PRELOADS -->
                                             {% endfor %}
 
                                         </tbody>

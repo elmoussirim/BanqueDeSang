@@ -194,4 +194,15 @@ class HistoriquePoche
 
         return $this;
     }
+
+    public function getDateAct(): ?string
+    {
+        $date_action = $this->date_action ;
+
+
+        $dateDmy = $date_action->format('d/m/y');
+
+        return $dateDmy;
+        
+    }
 }

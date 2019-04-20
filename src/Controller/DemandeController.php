@@ -45,7 +45,7 @@ class DemandeController extends AbstractController
     
     /**
      * @Route("/demande/new/{id}", name="demande_new")
-     * @Route("/demande/{id}/edit/{id_malade}",name="demande_edit")
+
      */
     public function CreateDemande(DemandeSang $demande = NULL,Malade $malade ,Request $request ,ObjectManager $manager)
     {
@@ -241,6 +241,38 @@ class DemandeController extends AbstractController
             'feedbacks' => $feedbacks,
             'malades' => $malades,
             'services' => $services
+        ]);
+    }
+
+
+    /**
+     * @Route("/demande/{id}/edit/{id_malade}",name="demande_edit")
+     */
+    public function EditDemande(DemandeSang $demande,$id_malade ,Request $request ,ObjectManager $manager)
+    {
+       
+        $repo= $this->getDoctrine()->getRepository(Malade::class);
+        $malade= $repo->find($id_malade);
+        $formDemande = $this->createForm(DemandeSangType::class,$demande);
+
+        $formDemande->handleRequest($request);
+
+        if($formDemande->isSubmitted() && $formDemande->isValid() ){
+            
+            $demande->setDateDemande(new \DateTime());
+            $demande->setUser1($this->getUser());
+            $demande->setReponse(" ");
+            $demande->setMalade($malade);
+            $manager->persist($demande);
+            $manager->flush();
+            return $this->redirectToRoute('demandes');
+
+        }
+
+        return $this->render('demande/create.html.twig', [
+            'controller_name' => 'DemandeController',
+            'formDemande' => $formDemande->createView(),
+            'editMode' =>$demande->getId()!==null,
         ]);
     }
 }

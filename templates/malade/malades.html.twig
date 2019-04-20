@@ -11,6 +11,7 @@
                                 <div class="panel-heading ui-draggable-handle">
                                     <h3 class="panel-title">Les malades</h3>
                                     <div class="pull-right">
+                                        <button type="button" class="btn btn-primary" onclick="window.location.href='/malade/create'"><i class="zmdi zmdi-plus"></i> Nouveau malade</button>
                                     </div>
                                 </div>
                                 <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer"><table class="table datatable_simple dataTable no-footer" id="DataTables_Table_1" role="grid"> 
@@ -32,9 +33,9 @@
                                                     <th scope="col">N° Malade</th>
                                                     <th scope="col">Malade</th>
                                                     <th scope="col">Date de naissance</th>
-                                                    <th scope="col">Service</th>
+                                                    <th scope="col">N°Dossier</th>
                                                     <th scope="col">groupe sanguin</th>
-                                                    <th scope="col">Voir</th>
+                                                    <th scope="col"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -43,11 +44,7 @@
                                                         <td class="table-light">{{ malade.Id }}</td>
                                                         <td class="table-light">{{ malade.Malade }}</td>
                                                         <td class="table-light">{{ malade.DateDeNaissance|date ('d/m/y')  }}</td>
-                                                        {% for service in services %}
-                                                            {% if service == malade.service %}
-                                                                <td class="table-light">{{ service.NomService }}</td>
-                                                            {% endif %}
-                                                        {% endfor %}
+                                                        <th class="table-light">{{ malade.NDossier }}</td>
                                                         <th class="table-light">{{ malade.GroupeSanguin }}</td>
                                                         <th class="table-light"><button type="button" class="btn btn-warning"  onclick="window.location.href='/malade/show/{{malade.Id}}'">Voir</button></td>
                                                     </tr>

@@ -16,10 +16,10 @@ use App\Form\PocheType;
 
 use App\Entity\HistoriquePoche;
 use App\Form\PocheEditStatutType;
-
+use App\Entity\Malade;
 use App\Entity\Serologie;
 use App\Form\SerologieType;
-
+use App\Entity\Service;
 use App\Entity\GestionStock;
 use App\Entity\Alertes;
 
@@ -282,13 +282,6 @@ class PocheController extends AbstractController
         *  */
 
         public function mettreajourstatutpoche (Poche $poche,Request $request ,ObjectManager $manager){
-
-            $formPocheEditStatut = $this->createForm(PocheEditStatutType::class,$poche);
-
-            $formPocheEditStatut->handleRequest($request);
-            
-            if($formPocheEditStatut->isSubmitted() && $formPocheEditStatut->isValid() ){
-
                 $historique = new HistoriquePoche();
                 $historique->setPoche($poche);
                 $historique->setTestDeCompatibilite($poche->getTestDeCompatibilite());
@@ -300,6 +293,13 @@ class PocheController extends AbstractController
                 $historique->setDateAction($poche->getDateAction()); 
                 $historique->setDemande($poche->getDemande());
                 $historique->setAgentService($poche->getAgentService());
+            $formPocheEditStatut = $this->createForm(PocheEditStatutType::class,$poche);
+
+            $formPocheEditStatut->handleRequest($request);
+            
+            if($formPocheEditStatut->isSubmitted() && $formPocheEditStatut->isValid() ){
+
+                
                 
                 $poche->setUser($this->getUser());
                 $poche->setDateAction(new \DateTime());
@@ -649,53 +649,29 @@ class PocheController extends AbstractController
                 'congelateur' => $congelateur
             ]);
         }
+        
         /**
-         * @Route("/poche/tc/new/{id}", name="test_compatibilite_new")
-         */
-        public function createTC(Poche $poche, Request $request ,ObjectManager $manager)
-        {
-            
-            $tc = new TestDeCompatibilite();
-            $tc->setUser($this->getUser());
-            $tc->setDate(new \DateTime());
-            $tc->setPoche($poche);
-            $formtc = $this->createFormBuilder($tc)
-
-                ->add('resultat',ChoiceType::class, [
-                    'choices' =>[   'test +' => 'test +',
-                                    'test -' => 'test -', 
-                                ],
-                    ])
-                ->getForm();
-                $formtc->handleRequest($request);
-                if ($formtc->isSubmitted() && $formtc->isValid()) {
-    
-                    $manager->persist($tc);
-                    $manager->flush();
-                    return $this->redirectToRoute('show_tc');
-                    
-                }
-            
-            return $this->render('poche/testcreate.html.twig', [
-                'controller_name' => 'PocheController',
-                'formtc' => $formtc->createView(),
-            ]);
-        } 
-       
-        /**
-        * @Route("/tc/show/{id}", name="show_tc")
+        * @Route("/tc/show", name="show_tc")
         */
-        public function showtc (Poche $poche){
+        public function showtc (){
 
             $repo=$this->getDoctrine()->getRepository(TestDeCompatibilite::class);
-            $testCompatibilite= $repo->findByExampleField($poche);
+            $testCompatibilite= $repo->findAllTC();
             $repo=$this->getDoctrine()->getRepository(User::class);
             $users= $repo->findAll();
+            $repo=$this->getDoctrine()->getRepository(DemandeSang::class);
+            $demandes= $repo->findAll();
+            $repo=$this->getDoctrine()->getRepository(Malade::class);
+            $malades= $repo->findAll();
+            $repo=$this->getDoctrine()->getRepository(Service::class);
+            $services= $repo->findAll();
                 return $this->render('poche/testcompatibilite.html.twig', [
                     'controller_name' => 'PocheController',
                     'testCompatibilite'=> $testCompatibilite,
                     'users' => $users,
-                    'poche' => $poche
+                    'demandes' => $demandes,
+                    'malades' => $malades,
+                    'services' => $services
                 ]);
             }
 
@@ -711,34 +687,57 @@ class PocheController extends AbstractController
 
             $repo=$this->getDoctrine()->getRepository(Poche::class);
             $poche= $repo->findAll();
-            
+            $repo=$this->getDoctrine()->getRepository(HistoriquePoche::class);
+            $hpoche= $repo->findAll();
             $i = 0; $e = 0; $s = 0; $t = 0;
             
             if ($i == 0){
                 foreach($poche as $p){
                     if ($p->getStatut() == "Poche en attente ---> Poche en stock" || $p->getStatut() == "Poche sortie ---> Poche en stock" || $p->getStatut() == "Poche en stock" || $p->getStatut() == "Poche reservée ---> Poche en stock"){
                         $t = $t + 1 ;
-                        if ($p->getGroupeSanguins() == "A+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEAPositive(1); $e = $e + 1 ;}
-                        if ($p->getGroupeSanguins() == "A-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEANegative(1); $e = $e + 1 ;}
-                        if ($p->getGroupeSanguins() == "B+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEBPositive(1); $e = $e + 1 ;}
-                        if ($p->getGroupeSanguins() == "B-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEBNegative(1); $e = $e+ 1 ;}
-                        if ($p->getGroupeSanguins() == "AB+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEABPositive(1); $e = $e + 1 ;}
-                        if ($p->getGroupeSanguins() == "AB-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEABNegative(1); $e = $e + 1 ;}
-                        if ($p->getGroupeSanguins() == "O+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEOPositive(1); $e = $e + 1 ;}
-                        if ($p->getGroupeSanguins() == "O-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEONegative(1); $e = $e + 1 ;}
+                        if ($p->getGroupeSanguin() == "A+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEAPositive(1); $e = $e + 1 ;}
+                        if ($p->getGroupeSanguin() == "A-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEANegative(1); $e = $e + 1 ;}
+                        if ($p->getGroupeSanguin() == "B+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEBPositive(1); $e = $e + 1 ;}
+                        if ($p->getGroupeSanguin() == "B-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEBNegative(1); $e = $e+ 1 ;}
+                        if ($p->getGroupeSanguin() == "AB+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEABPositive(1); $e = $e + 1 ;}
+                        if ($p->getGroupeSanguin() == "AB-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEABNegative(1); $e = $e + 1 ;}
+                        if ($p->getGroupeSanguin() == "O+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEOPositive(1); $e = $e + 1 ;}
+                        if ($p->getGroupeSanguin() == "O-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEONegative(1); $e = $e + 1 ;}
                     }
                     if ($p->getStatut() == "Poche en stock ---> Poche sortie" || $p->getStatut() == "Poche reservée ---> Poche sortie"){
-                        if ($p->getGroupeSanguins() == "A+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSAPositive(1); $s = $s + 1 ;}
-                        if ($p->getGroupeSanguins() == "A-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSANegative(1); $s = $s + 1 ;}
-                        if ($p->getGroupeSanguins() == "B+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSBPositive(1); $s = $s + 1 ;}
-                        if ($p->getGroupeSanguins() == "B-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSBNegative(1); $s = $s+ 1 ;}
-                        if ($p->getGroupeSanguins() == "AB+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSABPositive(1); $s = $s + 1 ;}
-                        if ($p->getGroupeSanguins() == "AB-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSABNegative(1); $s = $s + 1 ;}
-                        if ($p->getGroupeSanguins() == "O+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSOPositive(1); $se = $s + 1 ;}
-                        if ($p->getGroupeSanguins() == "O-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSONegative(1); $s = $s + 1 ;}
+                        if ($p->getGroupeSanguin() == "A+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSAPositive(1); $s = $s + 1 ;}
+                        if ($p->getGroupeSanguin() == "A-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSANegative(1); $s = $s + 1 ;}
+                        if ($p->getGroupeSanguin() == "B+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSBPositive(1); $s = $s + 1 ;}
+                        if ($p->getGroupeSanguin() == "B-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSBNegative(1); $s = $s+ 1 ;}
+                        if ($p->getGroupeSanguin() == "AB+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSABPositive(1); $s = $s + 1 ;}
+                        if ($p->getGroupeSanguin() == "AB-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSABNegative(1); $s = $s + 1 ;}
+                        if ($p->getGroupeSanguin() == "O+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSOPositive(1); $se = $s + 1 ;}
+                        if ($p->getGroupeSanguin() == "O-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSONegative(1); $s = $s + 1 ;}
                     }
-                }
-
+               }
+                foreach($hpoche as $p){
+                    if ($p->getStatut() == "Poche en attente ---> Poche en stock" || $p->getStatut() == "Poche sortie ---> Poche en stock" || $p->getStatut() == "Poche en stock" || $p->getStatut() == "Poche reservée ---> Poche en stock"){
+                        $t = $t + 1 ;
+                        if ($p->getPoche()->getGroupeSanguin() == "A+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEAPositive(1); $e = $e + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "A-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEANegative(1); $e = $e + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "B+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEBPositive(1); $e = $e + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "B-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEBNegative(1); $e = $e+ 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "AB+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEABPositive(1); $e = $e + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "AB-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEABNegative(1); $e = $e + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "O+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEOPositive(1); $e = $e + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "O-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEONegative(1); $e = $e + 1 ;}
+                    }
+                    if ($p->getStatut() == "Poche en stock ---> Poche sortie" || $p->getStatut() == "Poche reservée ---> Poche sortie"){
+                        if ($p->getPoche()->getGroupeSanguin() == "A+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSAPositive(1); $s = $s + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "A-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSANegative(1); $s = $s + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "B+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSBPositive(1); $s = $s + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "B-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSBNegative(1); $s = $s+ 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "AB+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSABPositive(1); $s = $s + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "AB-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSABNegative(1); $s = $s + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "O+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSOPositive(1); $se = $s + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "O-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSONegative(1); $s = $s + 1 ;}
+                    }
+                } 
                 $gestion->setEStock($e);
                 $gestion->setSStock($s);
                 
@@ -913,4 +912,92 @@ class PocheController extends AbstractController
                 'poches' => $poches
             ]);
         }
+
+        /**
+        * @Route("/tc/search", name="search_tc")
+        */
+        public function searchtc (){
+
+            $request = Request::createFromGlobals();
+
+            $search = $request->query->get('search');
+
+            $em = $this->getDoctrine()->getManager();
+            
+            $testCompatibilite =$em->getRepository(TestDeCompatibilite::class)->findByExampleField($search);
+            
+            $repo=$this->getDoctrine()->getRepository(User::class);
+            $users= $repo->findAll();
+            $repo=$this->getDoctrine()->getRepository(DemandeSang::class);
+            $demandes= $repo->findAll();
+            $repo=$this->getDoctrine()->getRepository(Malade::class);
+            $malades= $repo->findAll();
+            $repo=$this->getDoctrine()->getRepository(Service::class);
+            $services= $repo->findAll();
+                return $this->render('poche/testcompatibilite.html.twig', [
+                    'controller_name' => 'PocheController',
+                    'testCompatibilite'=> $testCompatibilite,
+                    'users' => $users,
+                    'demandes' => $demandes,
+                    'malades' => $malades,
+                    'services' => $services
+                ]);
+            }
+        /**
+         * @Route("/tc/edit/{id}", name="test_compatibilite_edit")
+         */
+        public function editTC(TestDeCompatibilite $tc, Request $request ,ObjectManager $manager)
+        {
+            $formtc = $this->createFormBuilder($tc)
+                ->add('reserve')
+                ->add('p_testees')
+                ->add('p_deliverees')
+                ->getForm();
+                $formtc->handleRequest($request);
+                if ($formtc->isSubmitted() && $formtc->isValid()) {
+
+                    $manager->persist($tc);
+                    $manager->flush();
+                    return $this->redirectToRoute('show_tc');
+                    
+                }
+            
+            return $this->render('poche/testcreate.html.twig', [
+                'controller_name' => 'PocheController',
+                'formtc' => $formtc->createView(),
+            ]);
+        } 
+
+
+        /** 
+         * @Route("/tc/{id}/new",name="tc_compatibilite_new")
+         */
+        public function createTC(DemandeSang $demande, Request $request ,ObjectManager $manager)
+        {
+            $tc = new TestDeCompatibilite();
+                
+            $tc->setUser($this->getUser());
+            $tc->setDate(new \DateTime());
+            $tc->setDemande($demande);
+
+            $formtc = $this->createFormBuilder($tc)
+                ->add('reserve')
+                ->add('p_testees')
+                ->add('p_deliverees')
+                ->getForm();
+                $formtc->handleRequest($request);
+                if ($formtc->isSubmitted() && $formtc->isValid()) {
+
+                    $manager->persist($tc);
+                    $manager->flush();
+                    return $this->redirectToRoute('show_tc');
+                    
+                }
+            
+            return $this->render('poche/testcreate.html.twig', [
+                'controller_name' => 'PocheController',
+                'formtc' => $formtc->createView(),
+            ]);
+        } 
+       
 }

@@ -21,19 +21,9 @@ class MaladeType extends AbstractType
             ->add('malade')
             ->add('date_de_naissance',BirthdayType::class)
             ->add('sexe')
-            ->add('age')
-            ->add('adresse')
-            ->add('profession')
-            ->add('telephone')
             ->add('numero_cin')
             ->add('groupe_sanguin')
-            ->add('service', EntityType::class , [
-                'class' => Service::class,
-                'choice_label' => function ($service) {
-                    if ($service->getExiste() == "oui")
-                    return $service->getNomService();
-                },
-                ])
+            ->add('n_dossier')
         ;
     }
 

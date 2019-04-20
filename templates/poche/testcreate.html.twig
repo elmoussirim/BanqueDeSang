@@ -17,8 +17,9 @@
                                 <div class="card-body">
                                     {{ form_start(formtc) }}
 
-                                        {{form_row(formtc.resultat )}}
-
+                                        {{form_row(formtc.p_deliverees,{'label':'Poches déliverées: ','attr':{'placeholder':'Les poches déliverées ....'}} )}}
+                                        {{form_row(formtc.p_testees,{'label':'Poches testées: ','attr':{'placeholder':'Les poches testées ....'}}  )}}
+                                        {{form_row(formtc.reserve,{'attr':{'placeholder':'reserve ....'}})}}
                                         <div class="col-sm-6 pl-0">
                                                 <p class="text-right">
                                                     <button type="reset" value="Reset" class="btn btn-secondary">Vider</button>

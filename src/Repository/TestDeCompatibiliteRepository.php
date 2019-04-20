@@ -23,27 +23,29 @@ class TestDeCompatibiliteRepository extends ServiceEntityRepository
     //  * @return TestDeCompatibilite[] Returns an array of TestDeCompatibilite objects
     //  */
     
-    public function findByExampleField($value)
+    public function findByExampleField($value): array
+    {    
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT t
+            FROM App\Entity\TestDeCompatibilite t , App\Entity\User u ,App\Entity\DemandeSang d , App\Entity\Malade m ,App\Entity\Service s
+            WHERE t.demande = d.id and s.id = d.service and s.nom_service = :val OR t.demande = d.id and m.id = d.malade and m.malade = :val OR t.demande = d.id and m.id = d.malade and m.numero_cin = :val OR t.user = u.id and u.username = :val OR t.user = u.id and u.NUM_CIN =:val
+            ORDER BY d.id ASC'
+        )->setParameter('val', $value);
+        // returns an array of Product objects
+        return $query->execute();
+
+    }
+
+    
+    public function findAllTC()
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.poche = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->getQuery()
-            ->getResult()
+        ->orderBy('t.id', 'DESC')
+        ->getQuery()
+        ->getResult()
         ;
     }
     
-
-    /*
-    public function findOneBySomeField($value): ?TestDeCompatibilite
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

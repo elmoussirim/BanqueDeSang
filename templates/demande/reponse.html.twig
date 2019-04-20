@@ -2,14 +2,14 @@
 
 {% form_theme formDemande 'bootstrap_4_layout.html.twig' %}
 {% block body %}
-
+<br><br>
 
 {% if not app.user %}
 <p>Connectez-vous pour effectuer cette opération</p>
 {% elseif app.user.poste == "Technicien de laboratoire" %}
 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="card">
-                                <h5 class="card-header">Réponse</h5>
+                                <h5 class="card-header">Réponse</h5><br><br><br><br><br><br>
                                 <div class="card-body">
                         {{ form_start(formDemande) }}
                          

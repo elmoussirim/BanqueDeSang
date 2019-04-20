@@ -31,6 +31,11 @@ class DemandeSang
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $type_demande;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $type;
 
     /**
@@ -53,6 +58,13 @@ class DemandeSang
      * @ORM\JoinColumn(nullable=false)
      */
     private $malade;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Service")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $service;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
@@ -95,6 +107,18 @@ class DemandeSang
     public function setDateUtilisation(\DateTimeInterface $date_utilisation): self
     {
         $this->date_utilisation = $date_utilisation;
+
+        return $this;
+    }
+
+    public function getTypeDemande(): ?string
+    {
+        return $this->type_demande;
+    }
+
+    public function setTypeDemande(string $type_demande): self
+    {
+        $this->type_demande = $type_demande;
 
         return $this;
     }
@@ -192,5 +216,15 @@ class DemandeSang
 
         return $this;
     }
+    public function getService(): ?Service
+    {
+        return $this->service;
+    }
 
+    public function setService(Service $service): self
+    {
+        $this->service = $service;
+
+        return $this;
+    }
 }

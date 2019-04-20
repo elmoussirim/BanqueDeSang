@@ -23,15 +23,25 @@ class TestDeCompatibilite
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Poche")
+     * @ORM\ManyToOne(targetEntity="App\Entity\DemandeSang")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $poche;
+    private $demande;
+
+    /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     */
+    private $p_deliverees;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $resultat;
+    private $p_testees;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $reserve;
 
     /**
      * @ORM\Column(type="datetime")
@@ -55,19 +65,6 @@ class TestDeCompatibilite
         return $this;
     }
 
-        
-    public function getResultat(): ?string
-    {
-        return $this->resultat;
-    }
-
-    public function setResultat(string $resultat): self
-    {
-        $this->resultat = $resultat;
-
-        return $this;
-    }
-
     public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
@@ -79,14 +76,50 @@ class TestDeCompatibilite
 
         return $this;
     }
-    public function getPoche(): ?Poche
+    public function getDemande(): ?DemandeSang
     {
-        return $this->poche;
+        return $this->demande;
     }
 
-    public function setPoche(?Poche $poche): self
+    public function setDemande(?DemandeSang $demande): self
     {
-        $this->poche = $poche;
+        $this->demande = $demande;
+
+        return $this;
+    }
+
+    public function getReserve(): ?string
+    {
+        return $this->reserve;
+    }
+
+    public function setReserve(string $reserve): self
+    {
+        $this->reserve = $reserve;
+
+        return $this;
+    }
+    
+    public function getPTestees(): ?string
+    {
+        return $this->p_testees;
+    }
+
+    public function setPTestees(string $p_testees): self
+    {
+        $this->p_testees = $p_testees;
+
+        return $this;
+    }
+
+    public function getPDeliverees(): ?string
+    {
+        return $this->p_deliverees;
+    }
+
+    public function setPDeliverees(string $p_deliverees): self
+    {
+        $this->p_deliverees = $p_deliverees;
 
         return $this;
     }
