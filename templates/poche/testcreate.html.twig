@@ -2,7 +2,7 @@
 
 {% form_theme formtc 'bootstrap_4_layout.html.twig' %}
 {% block body %}
-<br><br><br><br>
+<br>
 
 {% if not app.user %}
 <p>Connectez-vous pour effectuer cette opération</p>
@@ -13,13 +13,14 @@
                         <!-- ============================================================== -->
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="card">
-                                <h5 class="card-header">Test de compatibilité</h5>
+                                <h5 class="card-header">Enregistrer les résultats du test de compatibilité</h5><br>
                                 <div class="card-body">
                                     {{ form_start(formtc) }}
 
-                                        {{form_row(formtc.p_deliverees,{'label':'Poches déliverées: ','attr':{'placeholder':'Les poches déliverées ....'}} )}}
                                         {{form_row(formtc.p_testees,{'label':'Poches testées: ','attr':{'placeholder':'Les poches testées ....'}}  )}}
-                                        {{form_row(formtc.reserve,{'attr':{'placeholder':'reserve ....'}})}}
+                                        {{form_row(formtc.reserve,{'label':'Poches réservées: ','attr':{'placeholder':'les poches réservées ....'}})}}
+                                        {{form_row(formtc.p_deliverees,{'label':'Poches déliverées: ','attr':{'placeholder':'Les poches déliverées ....'}} )}}
+
                                         <div class="col-sm-6 pl-0">
                                                 <p class="text-right">
                                                     <button type="reset" value="Reset" class="btn btn-secondary">Vider</button>

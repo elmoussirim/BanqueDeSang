@@ -125,7 +125,7 @@ class HistoriquePoche
         return $this->congelateur;
     }
 
-    public function setCongelateur(?int $congelateur): self
+    public function setCongelateur(int $congelateur): self
     {
         $this->congelateur = $congelateur;
 

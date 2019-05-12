@@ -25,7 +25,6 @@ class PocheType extends AbstractType
                 ->add('congelateur', EntityType::class , [
                     'class' => Congelateur::class,
                     'choice_label' => function ($congelateur) {
-                        if ($congelateur->getExiste() == "oui")
                         return $congelateur->getType().' '.$congelateur->getNumCong();
                     }
                 ])

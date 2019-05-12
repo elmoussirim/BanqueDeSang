@@ -13,7 +13,7 @@
                                 <div class="panel-heading ui-draggable-handle">
                                     <h3 class="panel-title">Les services</h3>
                                     <div class="pull-right">
-                                        <button type="button" class="btn btn-primary" onclick="window.location.href='/service/createSer'"><i class="zmdi zmdi-plus"></i> Nouveau Service</button>
+                                        <button type="button" class="btn btn-primary" onclick="window.location.href='/service/createSer'"><i class="zmdi zmdi-plus"></i> Nouveau service</button>
                                     </div>
                                 </div>
                                 <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer"><table class="table datatable_simple dataTable no-footer" id="DataTables_Table_1" role="grid"> 
@@ -38,42 +38,21 @@
                                                     <th scope="col">Capacité</th>
                                                     <th scope="col">Date de création </th>
                                                     <th scope="col"></th>
-                                                    <th scope="col"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
 
                                                 {% for service in services %}
-                                                    {% if service.existe == "oui"%}
                                                     <tr>
                                                         <td>{{ service.NomService }}</ts>
                                                         <td>{{ service.ChService }}</td>
                                                         <td>{{ service.Capacite }}</td>
                                                         <td>{{ service.dateCtSer|date ('d/m/y à H:i') }}</td>
-                                                        <td><button type="button" class="btn btn-primary" onclick="window.location.href='/service/{{ service.id }}/edit'"><i class="fa fa-edit"></i> Modifier</button></td>
-                                                        <td><button type="button" class="btn btn-warning"  data-toggle="modal" href="#infos"><i class="fa fa-ban"></i> Supprimer</button></td>
+                                                        <td><button type="button" class="btn btn-warning" onclick="window.location.href='/service/{{ service.id }}/edit'"><i class="fa fa-edit"></i> Modifier</button></td>
                                                        
 
                                                     </tr>
-
-                                                    {% endif %}
-                                                    <div class="modal fade" id="infos">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <button type="button" class="close" data-dismiss="modal">x</button>
-                                                                    <h4 class="modal-title">Confirmation</h4>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    Etes-vous sur de vouloir supprimer cet service !
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button onclick="window.location.href='/service/{{ service.id }}/delete'" class="btn btn-info" data-dismiss="modal">OUI</button>
-                                                                    <button class="btn btn-info" data-dismiss="modal">NON</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    
                                                 {% endfor %}
 
                                             </tbody>

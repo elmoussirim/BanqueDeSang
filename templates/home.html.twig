@@ -2,15 +2,109 @@
 
 {% block body %}
 
+ 
 
-<!-- PAGE CONTENT WRAPPER -->
-                
-                    
-                    <!-- START WIDGETS -->                    
-                    <div class="row">
-                        <div class="col-md-3">
+    <!-- Feature Area Starts -->
+    <section class="feature-area section-padding">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="single-feature text-center item-padding">
+                        <img src="assets/images/feature1.png" alt="">
+                         <h3>REGLE</h3>
+                         <p>Toute personne âgée de 18 à 65 ans, qui pèse plus de 50 kg , peut donner son sang.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="single-feature text-center item-padding mt-4 mt-md-0">
+                        <img src="assets/images/feature2.png" alt="">
+                       <h3>VOLUME MAXIMAL</h3>
+                       <p>Le volume maximal prélevé lors du don est de 8ml/kg.</p>
+                       <br>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="single-feature text-center item-padding mt-4 mt-lg-0">
+                        <img src="assets/images/feature3.png" alt="">
+                        <h3>TEST DE COMPATIBILITÉ</h3>
+                        <p>Est nécessaire avant toute opération de transfusion sanguine.</p><br>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="single-feature text-center item-padding mt-4 mt-lg-0">
+                        <img src="assets/images/feature4.png" alt="">
+                        <h3>Nombre de fois</h3>
+                        <p>Les hommes peuvent donner jusqu’à 6 fois par an et les femmes jusqu’à 4 fois.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Feature Area End -->
+
+<div class="row">
+						<div class="col-md-4">
+                            <img src="{{ asset('assets/images/bs_23.jpg')}}" alt="Ocean">
+
+						</div>
+                        
+                        <div class="col-md-8">
                             
-                            <!-- START WIDGET SLIDER -->
+                            <!-- START SALES & EVENTS BLOCK -->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="panel-title-box">
+                                        <h3>DESIGNATION DES PROCEDURES</h3>
+                                        <span>les procédures de gestion du sang et de ses dérivés relatives à</span>
+                                    </div>
+                                    
+                                </div>
+                                <div class="panel-body padding-0">
+                                            <div class="progress-list">                                               
+                                                <div class="pull-left"><strong>Collecte de sang et de ses dérivés</strong></div>
+                                                <div class="progress progress-small progress-striped active">
+                                                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">Collecte</div>
+                                                </div>
+                                            </div>
+                                            <div class="progress-list">                                               
+                                                <div class="pull-left"><strong>Préparation des produits sanguins.</strong></div>                                             
+                                                <div class="progress progress-small progress-striped active">
+                                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">Préparation</div>
+                                                </div>
+                                            </div>
+                                            <div class="progress-list">                                               
+                                                <div class="pull-left"><strong>Validation biologique du don</strong></div>
+                                                <div class="progress progress-small progress-striped active">
+                                                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">Validation</div>
+                                                </div>
+                                            </div>
+                                            <div class="progress-list">                                               
+                                                <div class="pull-left"><strong class="text-warning">Gestion de stock et distribution des produits sanguins</strong></div>                                                
+                                                <div class="progress progress-small progress-striped active">
+                                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">Gestion et distribution</div>
+                                                </div>
+                                            </div>
+                                            <div class="progress-list">                                               
+                                                <div class="pull-left"><strong>Transfusion des produits sanguins</strong></div>
+                                                <div class="progress progress-small progress-striped active">
+                                                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">Transfusion</div>
+                                                </div>
+                                            </div>
+                                </div>
+                            </div>
+                            <!-- END SALES & EVENTS BLOCK -->
+                            
+                        </div>
+                    </div>
+
+
+
+    <!-- Department Area Starts -->
+
+<!-- START WIDGETS -->                    
+                     <div class="row">
+                        <!-- START WIDGET SLIDER -->
+                        <div class="col-md-3">
                             <div class="widget widget-default widget-carousel">
                                 <div class="owl-carousel" id="owl-example">
                                     <div>                                    
@@ -29,13 +123,9 @@
                                         <div class="widget-int">71 562 957</div>
                                     </div>
                                 </div>                            
-                                <div class="widget-controls">                                
-                                    <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
-                                </div>                             
-                            </div>         
+                            </div>   
+                        </div>      
                             <!-- END WIDGET SLIDER -->
-                            
-                        </div>
                         <div class="col-md-3">
                             
                             <!-- START WIDGET MESSAGES -->
@@ -47,14 +137,13 @@
                                     <div class="widget-int num-count">Facebook</div>
                                     <div class="widget-title"><a href ="https://www.facebook.com/Institut-Med-Taieb-Kassab-dOrthop%C3%A9die-307854149235590/">Facebook </a></div>
                                     <div class="widget-subtitle">Compte facebook de l'institut mohamed kassab </div>
-                                </div>      
-                                <div class="widget-controls">                                
-                                    <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
-                                </div>
+                                </div> 
                             </div>                            
                             <!-- END WIDGET MESSAGES -->
                             
                         </div>
+
+                        
                         <div class="col-md-3">
                             
                             <!-- START WIDGET REGISTRED -->
@@ -66,10 +155,7 @@
                                     <div class="widget-int num-count">Téléphone</div>
                                     <div class="widget-title">71 606 914</div>
                                     <div class="widget-subtitle">Numéro de téléphone de l'institut</div>
-                                </div>
-                                <div class="widget-controls">                                
-                                    <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
-                                </div>                            
+                                </div>                        
                             </div>                            
                             <!-- END WIDGET REGISTRED -->
                             
@@ -143,115 +229,13 @@
                             <!-- END PROJECTS BLOCK -->
                         </div>
                     </div>
-                    
-                    <div class="row">
-						<div class="col-md-8">
-                            
-                            <!-- START SALES BLOCK -->
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="panel-title-box">
-                                        <h3>REGLE</h3>
-                                        <span>Les régles de transfusion de sang</span>
-                                    </div>
-                                </div>
-                                <div class="panel-body">                                    
-                                    <div class="row stacked">
-                                                                                  
-                                            <div class="progress-list">                                               
-                                                <div class="pull-left"><strong>Toute personne âgée de 18 à 65 ans, qui pèse plus de 50 kg , peut donner son sang.</strong></div>
-                                                <div class="progress progress-small progress-striped active">
-                                                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">Age</div>
-                                                </div>
-                                            </div>
-                                            <div class="progress-list">                                               
-                                                <div class="pull-left"><strong>Le volume maximal prélevé lors du don est de 8ml/kg.</strong></div>                                             
-                                                <div class="progress progress-small progress-striped active">
-                                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">Volume maximal</div>
-                                                </div>
-                                            </div>
-                                            <div class="progress-list">                                               
-                                                <div class="pull-left"><strong>Le TEST DE COMPATIBILITÉ est nécessaire avant toute opération de transfusion sanguine</strong></div>                                                <div class="progress progress-small progress-striped active">
-                                                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">Test de compatibilité</div>
-                                                </div>
-                                            </div>
-                                            <div class="progress-list">                                               
-                                                <div class="pull-left"><strong class="text-warning">Les hommes peuvent donner jusqu’à 6 fois par an et les femmes jusqu’à 4 fois.</strong></div>                                                
-                                                <div class="progress progress-small progress-striped active">
-                                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">Nombre de fois</div>
-                                                </div>
-                                            </div>
-                                            <p><span class="fa fa-warning"></span> Attention !! les règles doivent être respectées</p>
-                                        </div>
-                                                                        
-                                </div>
-                            </div>
-                            <!-- END SALES BLOCK -->
-                            
-                        </div>
-						<div class="common-modal modal fade" id="common-Modal1" tabindex="-1" role="dialog" aria-hidden="true">
-							<div class="modal-content">
-								<ul class="list-inline item-details">
-									<li><a href="http://themifycloud.com/downloads/janux-premium-responsive-bootstrap-admin-dashboard-template/">Admin templates</a></li>
-									<li><a href="http://themescloud.org">Bootstrap themes</a></li>
-								</ul>
-							</div>
-						</div>
-                        
-                        <div class="col-md-4">
-                            
-                            <!-- START SALES & EVENTS BLOCK -->
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="panel-title-box">
-                                        <h3>DESIGNATION DES PROCEDURES</h3>
-                                        <span>les procédures de gestion du sang et de ses dérivés relatives à</span>
-                                    </div>
-                                    
-                                </div>
-                                <div class="panel-body padding-0">
-                                            <div class="progress-list">                                               
-                                                <div class="pull-left"><strong>Collecte de sang et de ses dérivés</strong></div>
-                                                <div class="progress progress-small progress-striped active">
-                                                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">Collecte</div>
-                                                </div>
-                                            </div>
-                                            <div class="progress-list">                                               
-                                                <div class="pull-left"><strong>Préparation des produits sanguins.</strong></div>                                             
-                                                <div class="progress progress-small progress-striped active">
-                                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">Préparation</div>
-                                                </div>
-                                            </div>
-                                            <div class="progress-list">                                               
-                                                <div class="pull-left"><strong>Validation biologique du don</strong></div>
-                                                <div class="progress progress-small progress-striped active">
-                                                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">Validation</div>
-                                                </div>
-                                            </div>
-                                            <div class="progress-list">                                               
-                                                <div class="pull-left"><strong class="text-warning">Gestion de stock et distribution des produits sanguins</strong></div>                                                
-                                                <div class="progress progress-small progress-striped active">
-                                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">Gestion et distribution</div>
-                                                </div>
-                                            </div>
-                                            <div class="progress-list">                                               
-                                                <div class="pull-left"><strong>Transfusion des produits sanguins</strong></div>
-                                                <div class="progress progress-small progress-striped active">
-                                                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">Transfusion</div>
-                                                </div>
-                                            </div>
-                                </div>
-                            </div>
-                            <!-- END SALES & EVENTS BLOCK -->
-                            
-                        </div>
-                    </div>
-                    
+
                     <!-- START DASHBOARD CHART -->
 					<div class="chart-holder" id="dashboard-area-1" style="height: 200px;"></div>
 					<div class="block-full-width">
                                                                        
                     </div>                    
                     <!-- END DASHBOARD CHART -->
-              
+    <!-- Hotline Area End -->
+
 {% endblock %}

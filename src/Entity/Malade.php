@@ -37,7 +37,7 @@ class Malade
     private $groupe_sanguin;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      */
     private $n_dossier;
 
@@ -88,12 +88,12 @@ class Malade
     }
 
  
-    public function getNDossier(): ?string
+    public function getNDossier(): ?int
     {
         return $this->n_dossier;
     }
 
-    public function setNDossier(string $n_dossier): self
+    public function setNDossier(int $n_dossier): self
     {
         $this->n_dossier = $n_dossier;
 

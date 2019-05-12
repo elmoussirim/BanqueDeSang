@@ -80,7 +80,7 @@ class DonneurController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $donneur=$em->getRepository(Donneur::class)->findOneBySomeField($search);
-            $user=$em->getRepository(User::class)->findOne($donneur->getUser());
+            $user=$em->getRepository(User::class)->findOne($this->getUser());
 
  
             return $this->render('donneur/showDonneur.html.twig', [

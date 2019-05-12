@@ -5,6 +5,31 @@
 {% if not app.user %}
 <p>Connectez-vous pour effectuer cette opération</p>
 {% elseif is_granted('ROLE_INFSER') %}
+<div class= "col-md-4">
+<div class="timeline timeline-right">
+<!-- START TIMELINE ITEM -->
+                                <div class="timeline-item timeline-main">
+                                    <div class="timeline-date">N°: {{ malade.Id }}</div>
+                                </div>
+                                <!-- END TIMELINE ITEM -->
+                                
+                                <!-- START TIMELINE ITEM -->
+                                <div class="timeline-item timeline-item-right">
+                                    <br><br><br><br><br><br><br><br><br><br>
+                                    <br><br><br><br><br><br><br><br><br><br><br>
+                                </div>       
+                                <!-- END TIMELINE ITEM -->
+                             
+                                
+                                
+                                <!-- START TIMELINE ITEM -->
+                                <div class="timeline-item timeline-main">
+                                    <div class="timeline-date"><span>Malade<span></div>
+                                </div>                                
+                                <!-- END TIMELINE ITEM -->
+                            </div>
+</div>
+<div class="col-md-8">
 
 
 <!-- NEWS WIDGET -->
@@ -12,9 +37,8 @@
 
                             <div class="panel panel-default">                            
                                 <div class="panel-body panel-body-image">
-                                    <a href="#" class="panel-body-inform">
-                                        <span ></span>
-                                    </a>
+                                    <img src="{{ asset('assets/images/malade.jpg')}}" alt="Ocean">
+
                                 </div>
                                 <div class="panel-body">
 									<div class="row">
@@ -30,13 +54,13 @@
                                             <p>Sexe: {{ malade.NDossier }}</p>
 										</div>
 									</div>
-                                <div class="panel-footer text-muted">
+                                <div>
                                     <button type = "button" class="btn btn-warning" onclick="window.location.href='/demande/new/{{ malade.id }}'"> Passer une demande de sang </buttton>
                                 </div>
                             </div>
 
                         </div>
-
+<div>
 {% else %}
 <p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
 {% endif %}

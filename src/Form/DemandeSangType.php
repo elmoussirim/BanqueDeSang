@@ -27,9 +27,9 @@ class DemandeSangType extends AbstractType
                 'ST' => 'ST',
             ],
         ])
-        ->add('nombre_poche', NumberType::class)
+        ->add('nombre_poche')
         ->add('G_S', TextType::class)
-        ->add('serum',NumberType::class)
+        ->add('serum')
         ->add('type_demande')
         ->add('service', EntityType::class , [
             'class' => Service::class,

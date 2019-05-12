@@ -37,42 +37,20 @@
                                                         <th scope="col">Capacité</th>
                                                         <th scope="col">Date de création </th>
                                                         <th scope="col"></th>
-                                                        <th scope="col"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
 
                                                     
                                                     {% for congelateur in congelateurs %}
-                                                    {% if congelateur.existe == "oui" %}
-                                                        <tr>
-                                                            <td>{{ congelateur.type }}</td>
-                                                            <td>{{ congelateur.numCong }}</td>
-                                                            <td>{{ congelateur.capacite }}</td>
-                                                            <td>{{ congelateur.dateCtCong|date ('d/m/y à H:i')  }}</td>
-                                                            <td><button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/congelateur/{{ congelateur.id }}/edit'"><i class="fas fa-edit"></i> Modifier</button></td>
-                                                            <td><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" href="#infos"><i class="fa fa-ban"></i> Supprimer</button></td>
-                                                    </tr>
-                                                    {% endif %}
-                                                    <div class="modal fade" id="infos">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <button type="button" class="close" data-dismiss="modal">x</button>
-                                                                    <h4 class="modal-title">Confirmation</h4>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    Etes-vous sur de vouloir supprimer cet congelateur !
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button onclick="window.location.href='/congelateur/{{ congelateur.id }}/delete'" class="btn btn-info" data-dismiss="modal">OUI</button>
-                                                                    <button class="btn btn-info" data-dismiss="modal">NON</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                          
-                                                        {% endfor %}
+                                                            <tr>
+                                                                <td>{{ congelateur.type }}</td>
+                                                                <td>{{ congelateur.numCong }}</td>
+                                                                <td>{{ congelateur.capacite }}</td>
+                                                                <td>{{ congelateur.dateCtCong|date ('d/m/y à H:i')  }}</td>
+                                                                <td><button type="button" class="btn btn-warning" onclick="window.location.href='/congelateur/{{ congelateur.id }}/edit'"><i class="fas fa-edit"></i> Modifier</button></td>
+                                                            </tr>
+                                                    {% endfor %}
                                                     </tbody>
                             </table>
                             

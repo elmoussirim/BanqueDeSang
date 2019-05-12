@@ -9,7 +9,7 @@
 {% elseif is_granted('ROLE_INFSER') or is_granted('ROLE_MEDSER') or  app.user.poste == "Technicien de laboratoire"  %}
                             <div class="panel panel-default">
                                 <div class="panel-heading ui-draggable-handle">
-                                    <h3 class="panel-title">Les demandes</h3>
+                                    <h3 class="panel-title">Les demandes des poches de sang</h3>
                                     <div class="pull-right">
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@
                                                             {% if malade == demande.Malade %}
                                                                 <td>{{ malade.Malade }}: {{ malade.NumeroCin }}</td>
                                                                 <td>{{ malade.NDossier }}</td>
-                                                            {% endif %}
+                                                            
                                                         
                                                             {% for service in services %}
                                                                 {% if service.id == demande.service.id %}
@@ -88,16 +88,17 @@
                                                     {% endif %}
                                                     {% if is_granted('ROLE_INFSER') and demande.reponse == " " %}
 
-
-                                                        <td><button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/delete'" >Supprimer</button></td>
-                                                        <td><button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/edit/{{ demande.malade.id }}'">Modifier</button></td>
+                                                        <div class="btn-group btn-group-lg">
+                                                            <td><button type="button" class="btn btn-danger" onclick="window.location.href='/demande/{{ demande.id }}/delete'" ><i class="fa fa-trash-o"></i></button>
+                                                            <button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/edit/{{ demande.malade.id }}'"><i class="fa fa-cog"></i></button></td>
+                                                        </div>
                                                     {% elseif is_granted('ROLE_INFSER') and demande.reponse != " " %}
                                                         <td><button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/show'">Voir</button></td>
                                                     {% elseif app.user.poste == "Médecin de service" and  demande.User2 == null and demande.reponse == " " %}
                                                         <td><button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/valide'">Valider</button></td>
                                                     {% elseif app.user.poste == "Médecin de service" and  demande.User2 != null and demande.reponse != " " %}
                                                         <td><button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/feedback'">Commenter</button></td>
-                                                    {% endif %}
+                                                    {% endif %}{% endif %}
                                                     {% endfor %}
                                                 {% endif %}
                                                 {% if app.user.poste == "Technicien de laboratoire" and  demande.User2 != null %} 
@@ -138,8 +139,9 @@
                                                         <td></td>   
                                                     {% endif %}
                                                     {% if demande.reponse == " " %}
-                                                        <td><button type="button" class="btn btn-warning" onclick="window.location.href='demande/{{ demande.id }}/reponse'">Répondre</button></td>
-                                                        <td><button type="button" class="btn btn-warning" onclick="window.location.href='tc/{{ demande.id }}/new'">Test de compatibilité</button></td>
+                                                        <td><button type="button" class="btn btn-primary" onclick="window.location.href='demande/{{ demande.id }}/reponse'"><i class="fa fa-legal"></i></button>
+                                                        <br>
+                                                        <button type="button" class="btn btn-success" onclick="window.location.href='tc/{{ demande.id }}/new'"><i class="fa fa-flask"></i></td>
                                                     {% else %}
                                                         <td><button type="button" class="btn btn-warning" onclick="window.location.href='/demande/{{ demande.id }}/show'">Voir</button></td>
                                                     {% endif %}

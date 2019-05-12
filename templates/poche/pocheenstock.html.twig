@@ -15,7 +15,7 @@
     
                             <div class="panel panel-default">
                                 <div class="panel-heading ui-draggable-handle">
-                                    <h3 class="panel-title">Les poches en stock </h3>
+                                    <h3 class="panel-title">Liste des poches de sang en stock </h3>
                                     <div class="pull-right">
                                         <button class="btn btn-info toggle" onclick="window.location.href='/poche/en/stock/new'"><i class="zmdi zmdi-plus"></i> Ajouter poche</button>
                                     </div>
@@ -24,7 +24,7 @@
                                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">                               
                                         <form role="form"  method="request" action="{{ path('search_poche_enstock') }}">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control"  name="search" placeholder="groupe sanguin ?? Préleveur (cin, nom et prénom)??">
+                                                    <input type="text" class="form-control"  name="search" placeholder="groupe sanguin ?? N°Ordre ?? Préleveur (cin, nom et prénom)??">
                                                     <span class="input-group-addon" type="submit">chercher</span>
                                                 </div>
                                         </form>
@@ -55,7 +55,7 @@
                                                     <tr>
                                                         <td scope="col">{{ poche.Date|date ('d/m/y à H:i')  }}</td>
                                                         <td scope="col">{{ poche.AUtiliserAvant|date ('d/m/y à H:i')  }}</td>
-                                                        <td scope="row">{{ poche.NOrdre }}</td>
+                                                        <td scope="row"><a href="/poche/show/{{ poche.id }}" class="btn btn-link"><i class="fa fa-link"></i> {{ poche.NOrdre }}</a></td>
                                                         {% for cong in congelateur %}
                                                         {% if cong == poche.Congelateur %}
                                                             <td  scope="col">{{ cong.NumCong }}.{{ cong.Type }}</td>

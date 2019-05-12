@@ -7,7 +7,7 @@
 <p>Connectez-vous avec un compte "Technicien de laboratoire" pour effectuer cette opération</p>
 <p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
 {% elseif app.user.poste == "Technicien de laboratoire"  %}
-
+<div class= "col-md-3">
 <div class="timeline timeline-right">
                                 
                                 <!-- START TIMELINE ITEM -->
@@ -18,34 +18,8 @@
                                 
                                 <!-- START TIMELINE ITEM -->
                                 <div class="timeline-item timeline-item-right">
-                                    <div class="timeline-item-info">{{ serologie.DateDeJour|date ('d/m/y à H:i')  }}</div>
-                                    <div class="timeline-item-icon"><span class="fa fa-globe"></span></div>
-                                    <div class="timeline-item-content">
-                                        <div class="timeline-heading">
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p>A utiliser avant: {{ serologie.AUtiliserAvant|date ('d/m/y à H:i') }}</p>
-                                            <p>N°cin du donneur: {{ serologie.CinDonneur }}</p>
-											<p>Nom & Prenom donneur: {{ serologie.NomDonneur }} {{ serologie.PrenomDonneur }}</p>
-											<p>GS: {{ serologie.GroupeSanguin }}</p>
-											{% for user in users %}
-                                                {% if user == serologie.User1 %}
-                                                    <p> Technicien 1 --> Cin {{ user.NUMCIN }} Nom {{ user.Username }}</p>
-                                                {% elseif user == serologie.User2 %}
-                                                    <p>Technicien 2 --> {{ user.NUMCIN }} Nom {{ user.Username }}</p> 
-                                                {% endif %}
-                                            {% endfor %}           
-                                        </div>
-                                        <div class="timeline-body comments">
-                                            <div class="comment-item">
-                                                <p class="comment-head">AGHBR: {{ serologie.AGHBR }}</p>
-												<p class="comment-head">ACHCV: {{ serologie.ACHCV }}</p>
-												<p class="comment-head">TPHA: {{ serologie.TPHA }}</p>
-												<p class="comment-head">HIV: {{ serologie.HIV }}</p>
-                                            </div>
-                                        </div>                                        
-                                        
-                                    </div>
+                                    <br><br><br><br><br><br><br><br><br><br>
+                                    <br><br><br><br><br><br><br><br><br><br><br>
                                 </div>       
                                 <!-- END TIMELINE ITEM -->
                              
@@ -57,5 +31,53 @@
                                 </div>                                
                                 <!-- END TIMELINE ITEM -->
                             </div>
+</div>
+<div class="col-md-9">
+
+
+                            <div class="panel panel-default">                            
+                                <div class="panel-body panel-body-image">
+                                    <img src="{{ asset ('assets/images/bs_12.jpg')}}" alt="Ocean">
+                                    
+                                </div>
+                                <div class="panel-body">
+                                
+											  
+                                            
+                                    <p>{{ serologie.DateDeJour|date ('d/m/y à H:i')  }}
+                                    
+                                            <table class="col-md-12">
+                                                 <tr>   
+                                                    <td><p>A utiliser avant: {{ serologie.AUtiliserAvant|date ('d/m/y à H:i') }}</p></td>
+                                                    <td><p>N°cin du donneur: {{ serologie.CinDonneur }}</p></td>
+                                                </tr>
+                                            
+                                            <tr>   
+                                                    <td><p>Nom & Prenom donneur: {{ serologie.NomDonneur }} {{ serologie.PrenomDonneur }}</p></td>
+											        <td><p>GS: {{ serologie.GroupeSanguin }}</p></td>
+                                            </tr>
+                                            <tr>
+                                                {% for user in users %}
+                                                    {% if user == serologie.User1 %}
+                                                        <td><p> Technicien 1 --> Cin {{ user.NUMCIN }} Nom {{ user.Username }}</p></td>
+                                                    {% elseif user == serologie.User2 %}
+                                                       <td> <p>Technicien 2 --> {{ user.NUMCIN }} Nom {{ user.Username }}</p></td>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </tr>   
+                                        <tr>
+                                            <td><p>AGHBR: {{ serologie.AGHBR }}</p></td>
+                                            <td><p>ACHCV: {{ serologie.ACHCV }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><p>TPHA: {{ serologie.TPHA }}</p></td>
+                                            <td><p>HIV: {{ serologie.HIV }}<p></td>
+                                        </tr>
+                                        </table>
+                                               
+                            </div>
+
+                        
+</div>
 {% endif %}
 {% endblock %}

@@ -9,19 +9,12 @@
         
         <link rel="icon" href="{{ asset ('favicon.ico')}}" type="image/x-icon" />
         <!-- END META SECTION -->
-        
-        <!-- CSS INCLUDE -->        
+                  
         <link rel="stylesheet" type="text/css" id="theme" href="{{ asset ('css/theme-default.css')}}"/>
         <!-- EOF CSS INCLUDE -->                                    
     </head>
-    <script type="text/javascript">
-            window.history.forward();
-            function noBack()
-            {
-                window.history.forward();
-            }
-    </script>
-    <body class="animsition" onLoad="noBack();"  onpageshow="if (event.persisted) noBack();" onUnload="">
+
+    <body class="animsition">
         <!-- START PAGE CONTAINER -->
         <div class="page-container">
             
@@ -30,9 +23,9 @@
                 <!-- START X-NAVIGATION -->
                 <ul class="x-navigation">
                     
-                    <li class="xn-logo">
-                        <a href="/">I.M.K.O</a>
-                        <a href="/" class="x-navigation-control"></a>
+                    <li class="xn-profile">
+                        <img src="{{ asset ('favicon2.png')}}" alt="John Doe"/>
+
                     </li>
                     {% if app.user %}
                         <li class="xn-profile">
@@ -53,9 +46,8 @@
                             </div>                                                                        
                         </li>
                     {% endif %}
-                    <li class="xn-title">Menu</li>
-                    <li class="active">
-                        <a href="/"><span class="fa fa-home"></span> <span class="xn-text">Accueil</span></a>                        
+                    <li>
+                        <a href="/"><span class="fa fa-home"></span><span class="xn-text">Accueil</span></a>                        
                     </li>
                     {% if not app.user %}
                         <li><a href="{{ path ('security_login') }}"><span class="fa fa-users"></span> Connexion </a></li>
@@ -83,8 +75,8 @@
                                     <li><a href="{{path('poches')}}"><span class="fa fa-list-ul"></span> Les poches en stock </a></li>
                                     <li><a href="{{path('poches_en_attente')}}"><span class="fa fa-list-ul"></span> Les poches en attentes</a></li>
                                     <li><a href="{{path('reservee')}}"> <span class="fa fa-list-ul"></span>Les poches réservées </a></li>
-                                    <li><a href="{{path('gestion')}}"><span class="fa fa-cogs"></span> Mise à jour </a></li>
-                                    <li><a href="{{path('alertes-gestion')}}"><span class="fa fa-bell"></span> Les alertes </a></li>
+                                    <li><a href="{{path('gestion')}}"><span class="fa fa-undo"></span> Bilan de stock</a></li>
+                                    <li><a href="{{path('alertes-gestion')}}"><span class="glyphicon glyphicon-bell"></span> Les alertes </a></li>
                                     <li><a href="{{path('historique')}}"><span class="fa fa-archive"></span> L'historique </a></li>
                                     <li><a href="{{path('show_tc')}}"><span class="fa fa-archive"></span> Les tests de compatibilité </a></li>
                                 {% endif %} 
@@ -195,7 +187,8 @@
         
         <script type="text/javascript" src="{{ asset ('js/demo_dashboard.js')}}"></script>
         <!-- END TEMPLATE -->
-    <!-- END SCRIPTS -->         
+
+            
     </body>
 </html>
 

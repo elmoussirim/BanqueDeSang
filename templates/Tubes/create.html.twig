@@ -27,31 +27,32 @@
                         <!-- ============================================================== -->
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="card">
-                                <h5 class="card-header">Enregistrer les tubes</h5>
-                                <div class="card-body">
-                                {{ form_start(formtube) }}
-                                    {{form_row(formtube.N_ordre, {'attr' : {'placeholder' :"N°ordre"}} )}}
-                                    
-                                            <div class="form-row">
+                                <h5 class="card-header">Enregistrer les tubes des analyses biologiques</h5>
+                                <br><br><br><br>
+                                    <div class = "col-md-12">
+                                            {{ form_start(formtube) }}
+                                                {{form_row(formtube.N_ordre, {'attr' : {'placeholder' :"N°ordre"}} )}}
                                                 
-                                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                                      
-                                                    {{form_row(formtube.NomDonneur, {'attr' : {'placeholder' :"Nom du donneur"}} )}}
-                                                </div>
-                                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                                      
-                                                    {{form_row(formtube.PrenomDonneur, {'attr' : {'placeholder' :"Prenom du donneur"}} )}}
-                                                </div>
-                                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                             
-                                                    {{form_row(formtube.CinDonneur, {'attr' : {'placeholder' :"N°cin du donneur"}} )}}
-                                                </div><br><br>   
-                                            </div>
-                                            <br><br><br>
-                                                    <p class="text-right">
-                                                        <button type="reset" value="Reset" class="btn btn-secondary">Vider</button>
-                                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
-                                                    </p>
-                                            </div>
-                                    {{form_end(formtube)}}
-                                       
+                                                        <div class="form-row">
+                                                            
+                                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                                      
+                                                                {{form_row(formtube.NomDonneur, {'attr' : {'placeholder' :"Nom du donneur"}} )}}
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                                      
+                                                                {{form_row(formtube.PrenomDonneur, {'attr' : {'placeholder' :"Prenom du donneur"}} )}}
+                                                            </div>
+                                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                             
+                                                                {{form_row(formtube.CinDonneur, {'attr' : {'placeholder' :"N°cin du donneur"}} )}}
+                                                            </div><br><br>   
+                                                        </div>
+                                                        <br><br><br>
+                                                                <p class="text-right">
+                                                                    <button type="reset" value="Reset" class="btn btn-secondary">Vider</button>
+                                                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                                                </p>
+                                                        </div>
+                                                {{form_end(formtube)}}
+                                    </div>           
                                 </div>
                             </div>
                         </div>

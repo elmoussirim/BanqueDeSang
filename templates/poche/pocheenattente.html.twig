@@ -8,15 +8,30 @@
 
 <!-- Welcome Area Starts -->
 
-                    <form class="form-header"  method="request" action="{{ path('search_pochesenattente') }} ">
-                        <input class="au-input au-input--xl" type="text" name="search" placeholder="N°Ordre ??">
-                        <button class="au-btn--submit" type="submit"><i class="zmdi zmdi-search"></i></button>
-                    </form>
-<br><br><br>
-     <div class="table-responsive m-b-40">
-                            <table class="table table-borderless table-data3">
-                                <thead>
-                                    <tr>
+                    
+<div class="panel panel-default">
+                                <div class="panel-heading ui-draggable-handle">
+                                    <h3 class="panel-title">Liste des poches de sang en stock </h3>
+                                    <div class="pull-right">
+                                        <button class="btn btn-info toggle" onclick="window.location.href='/poche/en/stock/new'"><i class="zmdi zmdi-plus"></i> Ajouter poche</button>
+                                    </div>
+                                </div>
+                                <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer">
+                                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">                               
+                                        <form role="form"  method="request" action="{{ path('search_pochesenattente') }} ">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control"  name="search" placeholder="groupe sanguin ?? Préleveur (cin, nom et prénom)??">
+                                                    <span class="input-group-addon" type="submit">chercher</span>
+                                                </div>
+                                        </form>
+                                    </div>                                 
+                                </div>
+
+                                <div class="panel-body">
+                                    <table id="customers" class="table table-striped">
+                                
+                                        <thead>
+                                            <tr>
                                         
                                             <th scope="col">Date</th>
                                             <th scope="col">N° ordre</th>
@@ -49,7 +64,7 @@
                                                         <td  scope="col">{{ poche.Type }}</td>
                                                         
 
-                                                        <td><button type="button" class="btn btn-danger" onclick="window.location.href='/poche/mettre/a/jour/statut/poche/{{ poche.id }}'">Mettre a jour statut poche</button></td>
+                                                        <td><button type="button" class="btn btn-warning" onclick="window.location.href='/poche/mettre/a/jour/statut/poche/{{ poche.id }}'">Mettre a jour statut poche</button></td>
                                                     </tr>
                                                 {% endif %}    
                                             

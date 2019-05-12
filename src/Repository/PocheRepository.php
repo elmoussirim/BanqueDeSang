@@ -51,7 +51,7 @@ class PocheRepository extends ServiceEntityRepository
         $query = $entityManager->createQuery(
             'SELECT p
             FROM App\Entity\Poche p , App\Entity\User u
-            WHERE p.groupe_sanguin = :val OR u.id = p.user and u.username = :val  OR u.id = p.user and u.NUM_CIN = :val 
+            WHERE p.groupe_sanguin = :val OR p.n_ordre = :val OR u.id = p.user and u.username = :val  OR u.id = p.user and u.NUM_CIN = :val 
             ORDER BY p.type'
         )->setParameter('val', $value);
         // returns an array of Product objects

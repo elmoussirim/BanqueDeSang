@@ -12,13 +12,14 @@
 <p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
 {% elseif app.user.poste == "Technicien de laboratoire"  %}
 
-<br><br><br><br><br><br><br><br>
+<br><br><br><br>
     <!-- ============================================================== -->
                         <!-- horizontal form -->
                         <!-- ============================================================== -->
-                       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        
+                       <div class="col-md-12">
                             <div class="card">
-                                <h5 class="card-header">Sérologie</h5>
+                                <h5 class="card-header">Création du sérologie de poche de sang</h5>
                                     <div class="card-body">
                                             
                                          {{ form_start(formserologie)}}

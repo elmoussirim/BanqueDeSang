@@ -23,14 +23,14 @@
                                 
                                 <!-- START TIMELINE ITEM -->
                                 <div class="timeline-item timeline-main">
-                                    <div class="timeline-date">Demande</div>
+                                    <div class="timeline-date">Demande de sang</div>
                                 </div>
                                 <!-- END TIMELINE ITEM -->
                                 
                                 <!-- START TIMELINE ITEM -->
                                 <div class="timeline-item">
                                     <div class="timeline-item-info">N°:  <span class="float-right">{{ demande.id }}</div>
-                                    <div class="timeline-item-icon"><span class="fa fa-globe"></span></div>
+                                    <div class="timeline-item-icon"><span class="fa fa-truck"></span></div>
                                     <div class="timeline-item-content">
                                         <div class="timeline-heading">
                                         </div>
@@ -74,17 +74,17 @@
                                 <!-- START TIMELINE ITEM -->
                                  <div class="timeline-item timeline-item-right">
                                     <div class="timeline-item-info">Feedbacks</div>
-                                    <div class="timeline-item-icon"><span class="fa fa-map-marker"></span></div>
+                                    <div class="timeline-item-icon"><span class="fa fa-legal"></span></div>
                                     <div class="timeline-item-content"> 
                                     
                                         <div class="timeline-body comments">
                                             {% for fb in feedbacks %} 
                                             <div class="comment-item">
                                                 <p class="comment-head">
-                                                    {% for user in users %} {% if user.id == fb.User.id %}<p>Avec: {{ user.Username }}  Cin --> {{ user.NUMCIN }}</p>{% endif %}{% endfor %}</a> <span class="text-muted">{{ fb.Date|date('d/m/y à H:i')  }}</span>
+                                                    {% for user in users %} {% if fb.demande == demande %}<p>Avec: {{ user.Username }}  Cin --> {{ user.NUMCIN }}</p></a> <span class="text-muted">{{ fb.Date|date('d/m/y à H:i')  }}</span>
                                                 </p>
                                                 <p>{{ fb.Feedback}}</p>
-                                            </div>
+                                            </div>{% endif %}{% endfor %}
                                             {% endfor %}
                                             {% if is_granted('ROLE_MEDSER') %}
                                                 <div class="comment-write">   
@@ -101,10 +101,7 @@
                                 
                                 
                                 
-                                <!-- START TIMELINE ITEM -->
-                                <div class="timeline-item timeline-main">
-                                    <div class="timeline-date">Demande de sang</div>
-                                </div>
+                                
                                 <!-- END TIMELINE ITEM -->
                                 
                             </div>

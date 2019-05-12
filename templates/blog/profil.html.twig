@@ -10,7 +10,28 @@
 <div class="page-content-wrap">
                     
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-3"><br><br><br><br><br><br><br><br><br><br><br>
+                      <div class="panel panel-default">
+                                <div class="panel-body profile" style="background: url('{{asset('favi222con.ico')}}') center center no-repeat;">
+                                    <div class="profile-image">
+                                        <img src="{{ asset ('assets/images/users/no-image.jpg')}}" alt="Nadia Ali">
+                                    </div>
+                                    <div class="profile-data">
+                                        
+                                    </div>
+                                    <div class="profile-controls">
+
+                                    </div>                                    
+                                </div> 
+                                <div class="panel-body list-group border-bottom">
+                                    <a href="#" class="list-group-item"><span class="fa fa-user"></span> Mon N°Cin : {{ u.NUMCIN }}</a>                                
+                                    <a href="#" class="list-group-item"><span class="fa fa-users"></span>  {{ u.username }}</a>
+                                    <a href="#" class="list-group-item"><span class="fa fa-user"></span> Email: {{ u.email }}</a>
+                                    <a href="#" class="list-group-item"><span class="fa fa-user"></span> Mon Poste: {{ u.poste }}</a>
+
+                                </div>
+                                
+                            </div>
                         </div>
                         
                         <div class="col-md-9">
@@ -23,29 +44,7 @@
                                     <div class="timeline-date">Bienvenue</div>
                                 </div>
                                 <!-- END TIMELINE ITEM -->                                                  
-                                <div class="timeline-item timeline-item-right">
-                                    <div class="timeline-item-info">Profil</div>
-                                    <div class="timeline-item-icon"><span class="fa fa-users"></span></div>                                   
-                                    <div class="timeline-item-content">
-                                        <div class="timeline-heading padding-bottom-0">
-                                            
-                                        </div>                                        
-                                        <div class="timeline-body">                                                                                        
-                                            
-                                            <h4>{{ u.username }}</h4>
-                                            <p>Mon N°Cin : {{ u.NUMCIN }}</p>
-                                            <p>Mon Nom & prénom: {{ u.username }}</p>
-                                            <p>Mon Poste: {{ u.poste }}</p>
-                                            <p>Mon Email: {{ u.email }}</p><br><br>
-                                        </div>                
-                                        <div class="timeline-footer">
-                                            <a href="#">Profil</a>
-                                            <div class="pull-right">
-                                                <a href="#"><span class="fa fa-eye"></span> consulter</a>
-                                            </div>
-                                        </div>
-                                    </div>                                    
-                                </div> 
+                                
                                 <!-- START TIMELINE ITEM -->
                                 <div class="timeline-item timeline-item-right">
                                     <div class="timeline-item-info">Modifier</div>
@@ -112,8 +111,6 @@
                     </div>
 
                 </div>
-                <!-- END PAGE CONTENT WRAPPER -->                                                 
-           
 
 {% endif %} 
 {% endblock %}

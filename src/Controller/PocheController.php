@@ -346,10 +346,7 @@ class PocheController extends AbstractController
                 $poche->setPrenomDonneur($tube->getPrenomDonneur());
 
             }
-            if ($poche->getStatut() == "Poche en stock ---> Poche sortie" || $poche->getStatut() == "Poche reservée ---> Poche sortie")
-            {
-                $poche->setCongelateur(null);
-            }
+            
             $poche->setUser($this->getUser());
             $poche->setDateAction(new \DateTime());
             if($poche->getstatut() == "Poche en attente"){
@@ -366,7 +363,6 @@ class PocheController extends AbstractController
                     ->add('congelateur', EntityType::class , [
                         'class' => Congelateur::class,
                         'choice_label' => function ($congelateur) {
-                            if ($congelateur->getExiste ()=="oui")
                             return $congelateur->getType().' '.$congelateur->getNumCong();
                         }
                     ])
@@ -381,7 +377,6 @@ class PocheController extends AbstractController
                 ->add('congelateur', EntityType::class , [
                     'class' => Congelateur::class,
                     'choice_label' => function ($congelateur) {
-                        if ($congelateur->getExiste()=="oui")
                         return $congelateur->getType().' '.$congelateur->getNumCong();
                         }
                     ])
@@ -397,7 +392,6 @@ class PocheController extends AbstractController
                 ->add('congelateur', EntityType::class , [
                     'class' => Congelateur::class,
                     'choice_label' => function ($congelateur) {
-                        if ($congelateur->getExiste()=="oui")
                         return $congelateur->getType().' '.$congelateur->getNumCong();
                         }
                     ])
@@ -421,7 +415,6 @@ class PocheController extends AbstractController
                 ->add('congelateur', EntityType::class , [
                     'class' => Congelateur::class,
                     'choice_label' => function ($congelateur) {
-                        if ($congelateur->getExiste()=="oui")
                         return $congelateur->getType().' '.$congelateur->getNumCong();
                         }
                     ])
@@ -588,7 +581,6 @@ class PocheController extends AbstractController
                 ->add('congelateur', EntityType::class , [
                     'class' => Congelateur::class,
                     'choice_label' => function ($congelateur) {
-                        if ($congelateur->getExiste()=="oui")
                         return $congelateur->getType().' '.$congelateur->getNumCong();
                         }
                     ])

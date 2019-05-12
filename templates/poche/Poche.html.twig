@@ -125,16 +125,17 @@
 
 <div class="row">
         {% if poche %}
-            <div class="col-md-6">
+            <div class="col-md-12">
 
                             <div class="panel panel-default">                            
                                 <div class="panel-body panel-body-image">
-                                    <img src="{{ asset('assets/images/bs_13.jpg')}}" alt="Ocean">
+                                    <img src="{{ asset('assets/images/bs.jpg')}}" alt="Ocean">
                                     <a href="#" class="panel-body-inform">
                                         <span></span>
                                     </a>
                                 </div>
                                 <div class="panel-body">
+                                <div class="col-md-6">
                                     <h3>Poche maintenant: Poche {{ poche.NOrdre }}</h3>
                                     <p>Date de création: {{ poche.Date|date ('d/m/y à H:i')  }}<br>A utiliser avant: {{ poche.AUtiliserAvant|date ('d/m/y à H:i')  }}<br>Type de poche :{{ poche.Type }}<br>
                                        {% for cong in congelateur %}
@@ -148,6 +149,8 @@
                                                 <p>Nom et prénom du préleveur: {{ user.username }}<br>Cin du préleveur: {{ user.NUMCIN }} </p> 
                                             {% endif %}
                                         {% endfor %}
+                                    </div>
+                                    <div class="col-md-6">
                                     <h4>Statut poche: {{ poche.statut }}</h4>
                                     {% if poche.Statut == "Poche en stock ---> Poche reservée" %}
                                         <p>N° test de compatibilité: {{ poche.TestDeCompatibilite }}<br>N° Demande: {{ poche.Demande }}</p>
@@ -159,10 +162,11 @@
                                     {% elseif poche.Statut == "Poche en stock ---> Poche sortie" or poche.Statut == "Poche reservée ---> Poche sortie" or poche.Statut == "Poche sortie ---> Poche en stock" or poche.Statut == "Poche sortie ---> Poche perimée" %}
                                         <p>Session: {{ poche.Session }}<br>Raision: {{ poche.Raison }}<br>Agent de service: {{ poche.AgentService }}</p>
                                     {% endif %}
-                                    <div class="panel-footer text-muted">
+                                    <div >
                                         <button type="button" class="btn btn-primary" onclick="window.location.href='/poche/mettre/a/jour/statut/poche/{{ poche.id }}'">Mettre a jour statut poche</button>
                                         <button type="button" onclick="window.location.href='/poche/show/{{ poche.id }}'" class="btn btn-info" >plus détais</button>
                                     </div>
+                                </div>
                             </div>
 
                         </div>
