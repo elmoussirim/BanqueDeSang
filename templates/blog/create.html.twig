@@ -4,7 +4,7 @@
 
 {% block body %}
 
-{% if is_granted('ROLE_ADMIN') %}
+{% if not is_granted('ROLE_ADMIN') %}
 <p>Vos droits d'utilisateur sont insuffisants pour l'opération demandée!</p>
 <p>Connectez-vous avec un compte pour effectuer cette opération</p>
 {% else %}

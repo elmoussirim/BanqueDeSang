@@ -37,15 +37,12 @@
                                                 <th>GS</th>
                                                 <th>Résultat</th>
                                                 <th></th>
+                                                <th></th>
                                                 
-                                        {% for serologie in serologies %}  
-                                            {% if (serologie.statut == 1) %}
-                                                {% if serologie.ResultatSerologie == " " %}
-                                                    <th></th>
-                                                {% endif %}
                                         </thead>
                                         <tbody>
-                                            
+                                            {% for serologie in serologies %}  
+                                            {% if (serologie.statut == 1) %}
                                                 <tr class="text-danger">
                                             {% else %}
                                                 <tr class = "text-primary">

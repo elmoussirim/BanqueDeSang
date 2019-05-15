@@ -81,10 +81,10 @@
                                             {% for fb in feedbacks %} 
                                             <div class="comment-item">
                                                 <p class="comment-head">
-                                                    {% for user in users %} {% if fb.demande == demande %}<p>Avec: {{ user.Username }}  Cin --> {{ user.NUMCIN }}</p></a> <span class="text-muted">{{ fb.Date|date('d/m/y à H:i')  }}</span>
+                                                     {% if fb.demande == demande %}{% for user in users %}{% if fb.user == user %} <p>Avec: {{ user.Username }}  Cin --> {{ user.NUMCIN }}</p></a> <span class="text-muted">{{ fb.Date|date('d/m/y à H:i')  }}</span>
                                                 </p>
                                                 <p>{{ fb.Feedback}}</p>
-                                            </div>{% endif %}{% endfor %}
+                                            </div>{% endif %}{% endfor %}{% endif %}
                                             {% endfor %}
                                             {% if is_granted('ROLE_MEDSER') %}
                                                 <div class="comment-write">   

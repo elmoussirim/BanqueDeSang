@@ -18,18 +18,19 @@ class SerologieRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Serologie::class);
     }
-    public function ModifierStatut($val1,$val2): ?int
+    public function ModifierStatut($val,$val2): ?int
     {
 
         $entityManager = $this->getEntityManager();
 
        
-        $query = $entityManager->createQuery('UPDATE App\Entity\Serologie s SET s.statut = :val2 WHERE s.N_ordre = :val1')
-            ->setParameter('val1', $val1)
+        $query = $entityManager->createQuery('UPDATE App\Entity\Serologie s SET s.statut = :val2 WHERE s.N_ordre = :val')
+            ->setParameter('val', $val)
             ->setParameter('val2', $val2)
         ;
         $query->execute();
         return 1;
+    ;
     }
     public function findByExampleField($value)
     {

@@ -860,17 +860,17 @@ class PocheController extends AbstractController
      /**
      * @Route("/serologie/termnier/{id}", name="tserologie_terminee") 
      * */
-    public function terminerserologie(Serologie $serologie, Request $request,ObjectManager $manager ){
+    public function terminerserologie($id, Request $request,ObjectManager $manager ){
 
         $request = Request::createFromGlobals();
 
         $em = $this->getDoctrine()->getManager();
-        $s=$em->getRepository(Serologie::class)->ModifierStatut($serologie->getId(),0); 
+        $s=$em->getRepository(Serologie::class)->ModifierStatut($id,0); 
 
         $repo=$this->getDoctrine()->getRepository(User::class);
         $users= $repo->findAll();
 
-        return $this->redirectToRoute('show_serologie',['id'=>$serologie->getId()]);
+        return $this->redirectToRoute('serologies_donneur');
 
             return $this->render('technicienlabo/serologie/serologie.html.twig', [
                 'controller_name' => 'PocheController',
