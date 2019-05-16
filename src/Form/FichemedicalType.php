@@ -22,7 +22,7 @@ class FichemedicalType extends AbstractType
         $builder
         ->add('nom', TextType::class )
         ->add('prenom', TextType::class)
-        ->add('NUMERO_CIN',NumberType::class, ['label' => 'Num CIN'])
+        ->add('NUMERO_CIN',NumberType::class)
         ->add('date_de_naissance',BirthdayType::class)
         ->add('taille',NumberType::class)
         ->add('poids',NumberType::class)

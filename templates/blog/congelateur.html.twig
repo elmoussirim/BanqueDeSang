@@ -11,9 +11,9 @@
 
 <div class="panel panel-default">
                                 <div class="panel-heading ui-draggable-handle">
-                                    <h3 class="panel-title">Les Congélateurs</h3>
+                                    <h3 class="panel-title">Les congélateurs</h3>
                                     <div class="pull-right">
-                                        <button type="button" class="btn btn-primary" onclick="window.location.href='/congelateur/createCong'"><i class="zmdi zmdi-plus"></i> Nouveau Congelateur</button>
+                                        <button type="button" class="btn btn-primary" onclick="window.location.href='/congelateur/createCong'"><i class="fa fa-plus"></i> Nouveau Congelateur</button>
                                     </div>
                                 </div>
                                 <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer"><table class="table datatable_simple dataTable no-footer" id="DataTables_Table_1" role="grid"> 
@@ -48,7 +48,7 @@
                                                                 <td>{{ congelateur.numCong }}</td>
                                                                 <td>{{ congelateur.capacite }}</td>
                                                                 <td>{{ congelateur.dateCtCong|date ('d/m/y à H:i')  }}</td>
-                                                                <td><button type="button" class="btn btn-warning" onclick="window.location.href='/congelateur/{{ congelateur.id }}/edit'"><i class="fas fa-edit"></i> Modifier</button></td>
+                                                                <td><button type="button" class="btn btn-warning" onclick="window.location.href='/congelateur/{{ congelateur.id }}/edit'"><i class="fa fa-edit"></i> Modifier</button></td>
                                                             </tr>
                                                     {% endfor %}
                                                     </tbody>

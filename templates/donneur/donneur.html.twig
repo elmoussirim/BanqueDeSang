@@ -33,7 +33,8 @@
                                                     <th scope="col">Nom </th>
                                                     <th scope="col">Prénom</th>
                                                     <th scope="col">Dernier don à: </th>
-                                                    <th scope="col">Actions</th>
+                                                    <th scope="col"></th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -45,7 +46,8 @@
                                                     <td scope="col">{{ donneur.nom }}</td>
                                                     <td  scope="col">{{ donneur.prenom }}</td>
                                                     <td scope="col">{{ donneur.DateDuDernierDon|date ('d/m/y à H:i')  }}</td>
-                                                    <td><button type="button" class="btn btn-warning"  onclick="window.location.href='/donneur/{{ donneur.id }}/edit'">Modifier </button></td>
+                                                    <td><button type="button" class="btn btn-warning"  onclick="window.location.href='/donneur/{{ donneur.id }}/edit'"><i class="fa fa-edit"></i> Modifier</button></td>
+                                                    <td><button type="button" class="btn btn-warning"  onclick="window.location.href='/donneur/show/{{ donneur.id }}'"><i class="fa fa-eye"></i> Afficher </button></td>
 
                                                 
                                                 </tr>

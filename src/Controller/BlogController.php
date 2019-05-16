@@ -49,9 +49,9 @@ class BlogController extends AbstractController
 
 
     /**  
-     * @Route("/user/create",name="user_create")
-      *@Route("/user/{id}/update",name="user_create")
-    *  */
+     *@Route("/user/create",name="user_create")
+      *@Route("/user/{id}/update",name="user_update")
+    */
 
     public function form (User $user =null ,Request $request ,ObjectManager $manager,UserPasswordEncoderInterface $encoder){
                   

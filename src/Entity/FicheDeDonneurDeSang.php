@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -38,12 +39,18 @@ class FicheDeDonneurDeSang
 
     /**
      * @ORM\Column(type="float")
-     */
+     * @Assert\Type(
+     *     type="float",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )     */
     private $taille;
 
     /**
      * @ORM\Column(type="float")
-     */
+     * @Assert\Type(
+     *     type="float",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )     */
     private $poids;
 
     /**

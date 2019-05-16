@@ -10,7 +10,7 @@
                                 <div class="panel-heading ui-draggable-handle">
                                     <h3 class="panel-title">Les Utilisateurs</h3>
                                     <div class="pull-right">
-                                        <button type="button" class="btn btn-primary" onclick="window.location.href='/user/create'"><i class="zmdi zmdi-plus"></i> Nouveau utilisateur</button>
+                                        <button type="button" class="btn btn-primary" onclick="window.location.href='/user/create'"><i class="fa fa-plus"></i> Nouveau utilisateur</button>
                                     </div>
                                 </div>
                                 <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer"><table class="table datatable_simple dataTable no-footer" id="DataTables_Table_1" role="grid"> 
@@ -45,7 +45,7 @@
                                                 <td>{{ user.username }}</td>
                                                 <td>{{ user.Email }}</td>
                                                 <td>{{ user.Poste }}</td>
-                                                <td><button type="button"class="btn btn-warning" onclick="window.location.href='/user/{{ user.id }}/update'"><i class="fa fa-ban"></i> Modifier</button></td>
+                                                <td><button type="button"class="btn btn-warning" onclick="window.location.href='/user/{{ user.id }}/update'"><i class="fa fa-edit"></i> Modifier</button></td>
                                             </tr>
 
                                         {% endfor %}

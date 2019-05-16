@@ -18,7 +18,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('NUM_CIN',NumberType::class,['attr' => ['maxlength' => 8]])
+            ->add('NUM_CIN')
 
             ->add('username')
             ->add('email')

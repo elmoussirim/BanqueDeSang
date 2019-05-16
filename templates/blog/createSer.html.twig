@@ -3,7 +3,7 @@
 {% form_theme formServ 'bootstrap_4_layout.html.twig'%}
 
 {% block body %}
-<br><br><br><br><br><br><br>
+<br>
 
 {% if not is_granted('ROLE_ADMIN') %}
 <p>Vos droits d'utilisateur Windows sont insuffisants pour l'opération demandée!</p>
@@ -14,7 +14,7 @@
                         <!-- ============================================================== -->
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="card">
-                                <h5 class="card-header">Sercive</h5>
+                                <h5 class="card-header">Sercive</h5><br><br>
                                 <div class="card-body">
                                      {{ form_start(formServ) }}
                                         {{ form_row(formServ.nom_service ,{'attr':{'placeholder':"le nom de service"}} )}}
