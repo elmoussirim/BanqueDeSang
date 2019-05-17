@@ -15,7 +15,7 @@
                                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">                               
                                         <form role="form"  method="request" action="{{ path('search_fiche') }}">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="search" placeholder="N° Ordre ??">
+                                                    <input type="text" class="form-control" name="search" placeholder="N° ordre???">
                                                     <span class="input-group-addon" type="submit">chercher</span>
                                                 </div>
                                         </form>
@@ -54,7 +54,7 @@
                                                                         <td class="table-light">{{ user.NUMCIN }}</td>
                                                                     {% endif %}
                                                                 {% endfor %}
-                                                                <td class="table-light"><button type="button" class="btn btn-primary" onclick="window.location.href='/fiche/{{ fiche.id }}'"><i class="fa fa-eye"></i> Affiche</button></td>
+                                                                <td class="table-light"><button type="button" class="btn btn-warning" onclick="window.location.href='/fiche/{{ fiche.id }}'"><i class="fa fa-eye"></i> Affiche</button></td>
                                                         </tr>
                                                 
                                             {% endfor %}

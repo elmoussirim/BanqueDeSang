@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
-{% if fiche %}
+
 {% block body %}
+  {% if fiche %}
                     <div class="panel panel-success push-up-20">
                                 <div class="panel-body panel-body-pricing">
                                 <div class= "row">
@@ -38,4 +39,5 @@
                             </div>
   {% else %}
   <p> fiche inexiste </p>
+  {% endif %}
  {% endblock %}

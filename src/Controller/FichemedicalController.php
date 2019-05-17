@@ -1,25 +1,43 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\Donneur;
 use App\Entity\User;
+use App\Entity\FicheDeDonneurDeSang;
 
 use App\Form\FichemedicalType;
 use App\Form\FicheMedicaleEditType;
-use App\Repository\UserRepository;
-
-use App\Repository\FicheDeDonneurDeSangRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\FicheDeDonneurDeSang;
+use Doctrine\Common\Persistence\ObjectManager;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class FichemedicalController extends AbstractController
 {
 
+        /**
+        * @Route("/fiche/search", name="search_fiche") 
+        * */
+        public function searchfiche()
+        {
+            $request = Request::createFromGlobals();
+
+            $search = $request->query->get('search');
+    
+    
+            $em = $this->getDoctrine()->getManager();
+            $fiche=$em->getRepository(FicheDeDonneurDeSang::class)->findByExampleField($search);
+            $repo2=$this->getDoctrine()->getRepository(User::class);
+            $user= $repo2->findOne($fiche->getUser());
+
+            return $this->render('fichemedical/show.html.twig', [
+                'controller_name' => 'FichemedicalController',
+                'fiche'=>$fiche,
+                'user' => $user
+            ]);
+        }
 
     /**
     * @Route ("/fiche/medicale/edit" , name="fiche_search")
@@ -119,24 +137,4 @@ class FichemedicalController extends AbstractController
             'users' => $users
         ]);
     }
-
-        /**
-        * @Route("/fiche/search", name="search_fiche") 
-        * */
-        public function searchfiche()
-        {
-            $request = Request::createFromGlobals();
-
-            $search = $request->query->get('search');
-            $em = $this->getDoctrine()->getManager();
-            $fiche=$em->getRepository(FicheDeDonneurDeSang::class)->findByExampleField($search);
-            $repo2=$this->getDoctrine()->getRepository(User::class);
-            $user= $repo2->findOne($fiche->getUser());
-
-            return $this->render('fichemedical/showfiche.html.twig', [
-                'controller_name' => 'FichemedicalController',
-                'fiche'=>$fiche,
-                'user' => $user
-            ]);
-        }
 }

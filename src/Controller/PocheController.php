@@ -581,7 +581,17 @@ class PocheController extends AbstractController
             $formPoche = $this->createFormBuilder($poche)
 
                 ->add('a_utiliser_avant',DateTimeType::class)
-                ->add('groupe_sanguin',TextType::class)
+                ->add('groupe_sanguin',ChoiceType::class, [
+                    'choices' =>[   'A+' => 'A+',
+                                    'A-' => 'A-', 
+                                    'B+' => 'B+',
+                                    'B-' => 'B-', 
+                                    'AB+' => 'AB+',
+                                    'AB-' => 'AB-', 
+                                    'O+' => 'O+',
+                                    'O-' => 'O-'
+                                ],
+                ])
                 ->add('type',ChoiceType::class, [
                     'choices' =>[   'CG' => 'CG',
                                     'ST' => 'ST', 
