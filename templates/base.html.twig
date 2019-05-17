@@ -70,7 +70,7 @@
                                 {% elseif app.user.poste == "Médecin de service" %}
                                     <li><a href="{{path('demandes')}}"><span class="fa fa-list-ul"></span> Les demandes </li>
                                 {% elseif app.user.poste == "Technicien de laboratoire" %}
-                                    <li><a href="{{path('serologies_donneur')}}"><span class="fa fa-list-ul"></span> Les sérologies </a></li>
+                                    <li><a href="{{path('serologies_donneur')}}"><span class="fa fa-flask"></span> Les sérologies </a></li>
                                     <li><a href="{{path('demandes')}}"><span class="fa fa-list-ul"></span> Les demandes </a></li>
                                     <li><a href="{{path('poches')}}"><span class="fa fa-list-ul"></span> Les poches en stock </a></li>
                                     <li><a href="{{path('poches_en_attente')}}"><span class="fa fa-list-ul"></span> Les poches en attentes</a></li>
@@ -78,7 +78,9 @@
                                     <li><a href="{{path('gestion')}}"><span class="fa fa-undo"></span> Bilan de stock</a></li>
                                     <li><a href="{{path('alertes-gestion')}}"><span class="glyphicon glyphicon-bell"></span> Les alertes </a></li>
                                     <li><a href="{{path('historique')}}"><span class="fa fa-archive"></span> L'historique </a></li>
-                                    <li><a href="{{path('show_tc')}}"><span class="fa fa-archive"></span> Les tests de compatibilité </a></li>
+                                    <li><a href="{{path('show_tc')}}"><span class="fa fa-flask"></span> Les tests de compatibilité </a></li>
+                                    <li><a href="{{path('showall_fiche')}}"><span class="fa fa-stethoscope"></span> Les fiches médicales </a></li>
+
                                 {% endif %} 
                                 <li>
                                     <a href="{{ path ('security_logout') }}"><span class="fa fa-power-off"></span>Déconnexion</a>

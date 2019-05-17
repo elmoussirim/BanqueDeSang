@@ -137,7 +137,7 @@
                                 <div class="panel-body">
                                 <div class="col-md-6">
                                     <h3>Poche maintenant: Poche {{ poche.NOrdre }}</h3>
-                                    <p>Date de création: {{ poche.Date|date ('d/m/y à H:i')  }}<br>A utiliser avant: {{ poche.AUtiliserAvant|date ('d/m/y à H:i')  }}<br>Type de poche :{{ poche.Type }}<br>
+                                    <p>Date de création: {{ poche.Date|date ('d/m/y à H:i')  }}<br>A utiliser avant: {{ poche.AUtiliserAvant|date ('d/m/y à H:i')  }}<br>Date d'action: {{ poche.DateAction|date ('d/m/y à H:i')  }}<br>Type de poche :{{ poche.Type }}<br>
                                        {% for cong in congelateur %}
                                             {% if cong == poche.Congelateur %}
                                                 Congélateur: {{ cong.NumCong}}.{{ cong.Type}}<br>

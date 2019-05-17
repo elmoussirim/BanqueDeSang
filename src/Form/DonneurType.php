@@ -51,7 +51,12 @@ class DonneurType extends AbstractType
                             'Non' => 'Non',
                         ],
         ])
-        ->add('DateDuDernierDon',DateType::class, ['label' => 'Date du dernier don'])
+        ->add('DateDuDernierDon', DateType::class, array(
+            'required' => false,
+            'empty_data' => null,
+            'attr' => array(
+                'placeholder' => 'mm/dd/yyyy'
+            )))
 
         ;
     }

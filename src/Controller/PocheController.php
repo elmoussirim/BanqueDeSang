@@ -373,7 +373,17 @@ class PocheController extends AbstractController
                 $formPoche = $this->createFormBuilder($poche)
 
                 ->add('a_utiliser_avant',DateTimeType::class)
-                ->add('groupe_sanguin',TextType::class)
+                ->add('groupe_sanguin',ChoiceType::class, [
+                    'choices' =>[   'A+' => 'A+',
+                                    'A-' => 'A-', 
+                                    'B+' => 'B+',
+                                    'B-' => 'B-', 
+                                    'AB+' => 'AB+',
+                                    'AB-' => 'AB-', 
+                                    'O+' => 'O+',
+                                    'O-' => 'O-'
+                                ],
+                ])
                 ->add('congelateur', EntityType::class , [
                     'class' => Congelateur::class,
                     'choice_label' => function ($congelateur) {
@@ -682,54 +692,56 @@ class PocheController extends AbstractController
             $repo=$this->getDoctrine()->getRepository(HistoriquePoche::class);
             $hpoche= $repo->findAll();
             $i = 0; $e = 0; $s = 0; $t = 0;
-            
+            $eap=0; $sap=0; $ean=0; $san=0; $ebp=0; $sbp=0; $ebn=0; $sbn=0; 
+            $eabp=0; $sabp=0; $eabn=0; $sabn=0; $eop=0; $sop=0; $eon=0; $son=0;
             if ($i == 0){
                 foreach($poche as $p){
                     if ($p->getStatut() == "Poche en attente ---> Poche en stock" || $p->getStatut() == "Poche sortie ---> Poche en stock" || $p->getStatut() == "Poche en stock" || $p->getStatut() == "Poche reservée ---> Poche en stock"){
                         $t = $t + 1 ;
-                        if ($p->getGroupeSanguin() == "A+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEAPositive(1); $e = $e + 1 ;}
-                        if ($p->getGroupeSanguin() == "A-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEANegative(1); $e = $e + 1 ;}
-                        if ($p->getGroupeSanguin() == "B+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEBPositive(1); $e = $e + 1 ;}
-                        if ($p->getGroupeSanguin() == "B-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEBNegative(1); $e = $e+ 1 ;}
-                        if ($p->getGroupeSanguin() == "AB+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEABPositive(1); $e = $e + 1 ;}
-                        if ($p->getGroupeSanguin() == "AB-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEABNegative(1); $e = $e + 1 ;}
-                        if ($p->getGroupeSanguin() == "O+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEOPositive(1); $e = $e + 1 ;}
-                        if ($p->getGroupeSanguin() == "O-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEONegative(1); $e = $e + 1 ;}
+                        if ($p->getGroupeSanguin() == "A+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEAPositive(1); $eap = $eap + 1 ;}
+                        if ($p->getGroupeSanguin() == "A-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEANegative(1); $ean = $ean + 1 ;}
+                        if ($p->getGroupeSanguin() == "B+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEBPositive(1); $ebp = $ebp + 1 ;}
+                        if ($p->getGroupeSanguin() == "B-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEBNegative(1); $ebn = $ebn+ 1 ;}
+                        if ($p->getGroupeSanguin() == "AB+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEABPositive(1); $eabp = $eabp + 1 ;}
+                        if ($p->getGroupeSanguin() == "AB-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEABNegative(1); $eabn = $eabn + 1 ;}
+                        if ($p->getGroupeSanguin() == "O+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEOPositive(1); $eop = $eop + 1 ;}
+                        if ($p->getGroupeSanguin() == "O-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEONegative(1); $eon = $eon + 1 ;}
                     }
                     if ($p->getStatut() == "Poche en stock ---> Poche sortie" || $p->getStatut() == "Poche reservée ---> Poche sortie"){
-                        if ($p->getGroupeSanguin() == "A+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSAPositive(1); $s = $s + 1 ;}
-                        if ($p->getGroupeSanguin() == "A-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSANegative(1); $s = $s + 1 ;}
-                        if ($p->getGroupeSanguin() == "B+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSBPositive(1); $s = $s + 1 ;}
-                        if ($p->getGroupeSanguin() == "B-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSBNegative(1); $s = $s+ 1 ;}
-                        if ($p->getGroupeSanguin() == "AB+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSABPositive(1); $s = $s + 1 ;}
-                        if ($p->getGroupeSanguin() == "AB-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSABNegative(1); $s = $s + 1 ;}
-                        if ($p->getGroupeSanguin() == "O+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSOPositive(1); $se = $s + 1 ;}
-                        if ($p->getGroupeSanguin() == "O-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSONegative(1); $s = $s + 1 ;}
+                        if ($p->getGroupeSanguin() == "A+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSAPositive(1); $sap = $sap + 1 ;}
+                        if ($p->getGroupeSanguin() == "A-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSANegative(1); $san = $san + 1 ;}
+                        if ($p->getGroupeSanguin() == "B+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSBPositive(1); $sbp = $sbp + 1 ;}
+                        if ($p->getGroupeSanguin() == "B-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSBNegative(1); $sbn = $sbn + 1 ;}
+                        if ($p->getGroupeSanguin() == "AB+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSABPositive(1); $sabp = $sabp + 1 ;}
+                        if ($p->getGroupeSanguin() == "AB-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSABNegative(1); $sabn = $sabn + 1 ;}
+                        if ($p->getGroupeSanguin() == "O+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSOPositive(1); $sop = $sop + 1 ;}
+                        if ($p->getGroupeSanguin() == "O-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSONegative(1); $son = $son + 1 ;}
                     }
                }
                 foreach($hpoche as $p){
                     if ($p->getStatut() == "Poche en attente ---> Poche en stock" || $p->getStatut() == "Poche sortie ---> Poche en stock" || $p->getStatut() == "Poche en stock" || $p->getStatut() == "Poche reservée ---> Poche en stock"){
-                        $t = $t + 1 ;
-                        if ($p->getPoche()->getGroupeSanguin() == "A+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEAPositive(1); $e = $e + 1 ;}
-                        if ($p->getPoche()->getGroupeSanguin() == "A-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEANegative(1); $e = $e + 1 ;}
-                        if ($p->getPoche()->getGroupeSanguin() == "B+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEBPositive(1); $e = $e + 1 ;}
-                        if ($p->getPoche()->getGroupeSanguin() == "B-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEBNegative(1); $e = $e+ 1 ;}
-                        if ($p->getPoche()->getGroupeSanguin() == "AB+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEABPositive(1); $e = $e + 1 ;}
-                        if ($p->getPoche()->getGroupeSanguin() == "AB-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEABNegative(1); $e = $e + 1 ;}
-                        if ($p->getPoche()->getGroupeSanguin() == "O+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEOPositive(1); $e = $e + 1 ;}
-                        if ($p->getPoche()->getGroupeSanguin() == "O-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEONegative(1); $e = $e + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "A+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEAPositive(1); $eap = $eap + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "A-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEANegative(1); $ean = $ean + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "B+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEBPositive(1); $ebp = $ebp + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "B-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEBNegative(1); $ebn = $ebn + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "AB+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEABPositive(1); $eabp = $eabp + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "AB-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEABNegative(1); $eabn  = $eabn + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "O+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEOPositive(1); $eop = $eop + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "O-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEONegative(1); $eon = $eon + 1 ;}
                     }
                     if ($p->getStatut() == "Poche en stock ---> Poche sortie" || $p->getStatut() == "Poche reservée ---> Poche sortie"){
-                        if ($p->getPoche()->getGroupeSanguin() == "A+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSAPositive(1); $s = $s + 1 ;}
-                        if ($p->getPoche()->getGroupeSanguin() == "A-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSANegative(1); $s = $s + 1 ;}
-                        if ($p->getPoche()->getGroupeSanguin() == "B+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSBPositive(1); $s = $s + 1 ;}
-                        if ($p->getPoche()->getGroupeSanguin() == "B-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSBNegative(1); $s = $s+ 1 ;}
-                        if ($p->getPoche()->getGroupeSanguin() == "AB+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSABPositive(1); $s = $s + 1 ;}
-                        if ($p->getPoche()->getGroupeSanguin() == "AB-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSABNegative(1); $s = $s + 1 ;}
-                        if ($p->getPoche()->getGroupeSanguin() == "O+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSOPositive(1); $se = $s + 1 ;}
-                        if ($p->getPoche()->getGroupeSanguin() == "O-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSONegative(1); $s = $s + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "A+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSAPositive(1); $sap = $sap + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "A-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSANegative(1); $san = $san + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "B+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSBPositive(1); $sbp = $sbp + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "B-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSBNegative(1); $sbn = $sbn + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "AB+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSABPositive(1); $sabp = $sabp + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "AB-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSABNegative(1); $sabn = $sabn + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "O+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSOPositive(1); $sop = $sop + 1 ;}
+                        if ($p->getPoche()->getGroupeSanguin() == "O-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSONegative(1); $son = $son + 1 ;}
                     }
                 } 
+                $e = $eap + $ean + $ebp + $ebn + $eabp + $eabn + $eop + $ean;
+                $s = $sap + $san + $sbp + $sbn + $sabp + $sabn + $sop + $san;
                 $gestion->setEStock($e);
                 $gestion->setSStock($s);
                 
@@ -771,6 +783,8 @@ class PocheController extends AbstractController
         {
             $repo=$this->getDoctrine()->getRepository(Alertes::class);
             $alertes = $repo->findAllAlertes();
+            $repo=$this->getDoctrine()->getRepository(User::class);
+            $users = $repo->findAll();
             $repo=$this->getDoctrine()->getRepository(Poche::class);
             $poches= $repo->findAll();
             $repo2=$this->getDoctrine()->getRepository(Congelateur::class);
@@ -779,6 +793,7 @@ class PocheController extends AbstractController
                     'controller_name' => 'PocheController',
                     'alertes'=> $alertes,
                     'poches' => $poches,
+                    'users' => $users,
                     'congelateur' => $congelateur
                 ]);
         }
@@ -793,6 +808,7 @@ class PocheController extends AbstractController
             $poches= $repo->findAll();
             $repo=$this->getDoctrine()->getRepository(Alertes::class);
             $alertes= $repo->findAllAlertes();
+           
 
             foreach ($poches as $poche){
                 if ($poche->getStatut() == "Poche en attente ---> Poche en stock" || $poche->getStatut() == "Poche sortie ---> Poche en stock" || $poche->getStatut() == "Poche en stock" || $poche->getStatut() == "Poche reservée ---> Poche en stock"|| $poche->getStatut() == "Poche en stock ---> Poche reservée")
@@ -801,6 +817,7 @@ class PocheController extends AbstractController
                         if ($interval->format('%d jours') == "7 jours" || $interval->format('%d jours') == "6 jours" || $interval->format('%d jours') == "5 jours" || $interval->format('%d jours') == "4 jours" || $interval->format('%d jours') == "3 jours" || $interval->format('%d jours') == "2 jours" || $interval->format('%d jours') == "1 jours" || $interval->format('%d jours') == "0 jours")
                         {   $alerte->setDate(new \DateTime());
                             $alerte->setPoche($poche);
+                            $alerte->setUser($this->getUser());
                             $manager->persist($alerte);
                             $manager->flush();
                         }

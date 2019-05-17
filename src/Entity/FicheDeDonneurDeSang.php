@@ -29,6 +29,8 @@ class FicheDeDonneurDeSang
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Length(min="7",minMessage="N° CIN doit doit être supérieur à 7 chiffres")
+     * @Assert\Length(max="8",maxMessage="N° CIN doit être inférieure à 8 chiffres")
      */
     private $Numero_CIN;
 

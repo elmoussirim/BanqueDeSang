@@ -20,13 +20,18 @@ class Alertes
      * @ORM\Column(type="datetime")
      */
     private $date;
-
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Poche")
      * @ORM\JoinColumn(nullable=false)
      */
     private $poche;
-	
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class Alertes
     public function setPoche(?Poche $poche): self
     {
         $this->poche = $poche;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

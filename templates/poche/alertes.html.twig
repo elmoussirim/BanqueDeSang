@@ -19,6 +19,7 @@
                                             <th>Congelateur</th>
                                             <th>Type</th>
                                             <th>Statut</th>
+                                            <th>Technicien</th>
                                             <th></th>
                                         </tr>                                            
 
@@ -42,6 +43,11 @@
                                                         {% endif %}
                                                         <td  scope="col">{{ poche.Type }}</td>
                                                         <td>{{ poche.Statut }}</td>
+                                                        {% for user in users %}
+                                                            {% if user == alerte.User %}
+                                                                <p>Nom et prénom du technicien: {{ user.username }}<br>Cin du préleveur: {{ user.NUMCIN }} </p> 
+                                                            {% endif %}
+                                                        {% endfor %}
                                                         {% if poche.Statut == "Poche en attente ---> Poche en stock" or poche.Statut == "Poche sortie ---> Poche en stock" or poche.Statut == "Poche en stock" or poche.Statut == "Poche reservée ---> Poche en stock" %}
                                                             <td><button type="button" class="btn btn-warning" onclick="window.location.href='/poche/mettre/a/jour/statut/poche/{{ poche.id }}'">Mettre a jour statut poche</button></td>
                                                         {% else %}<td></td>

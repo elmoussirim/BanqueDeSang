@@ -18,7 +18,7 @@ class TubesType extends AbstractType
         ->add('N_ordre', NumberType::class )
         ->add('NomDonneur',TextType::class, ['label' => 'Nom du donneur'])
         ->add('PrenomDonneur',TextType::class, ['label' => 'Prenom du donneur'])
-        ->add('CinDonneur',NumberType::class, ['label' => 'N°cin du donneur'], ['attr' => ['maxlength' => 8]])
+        ->add('CinDonneur')
         ;
     }
     public function configureOptions(OptionsResolver $resolver)
