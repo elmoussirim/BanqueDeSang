@@ -62,7 +62,7 @@ class FichemedicalController extends AbstractController
             $manager->flush();
 
             
-            return $this->redirectToRoute('fiche_show',['id'=>$fiche->getId()]);
+            return $this->redirectToRoute('tube_new');
         }
       
         return $this->render('fichemedical/editfiche.html.twig',[
