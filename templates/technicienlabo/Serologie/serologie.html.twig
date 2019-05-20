@@ -12,7 +12,7 @@
                                 
                                 <!-- START TIMELINE ITEM -->
                                 <div class="timeline-item timeline-main">
-                                    <div class="timeline-date">{{ serologie.NOrdre }}</div>
+                                    <div class="timeline-date">N° d'ordre {{ serologie.NOrdre }}</div>
                                 </div>
                                 <!-- END TIMELINE ITEM -->
                                 
@@ -56,15 +56,15 @@
                                                     <td><p>Nom & Prenom donneur: {{ serologie.NomDonneur }} {{ serologie.PrenomDonneur }}</p></td>
 											        <td><p>GS: {{ serologie.GroupeSanguin }}</p></td>
                                             </tr>
-                                            <tr>
+                                            
                                                 {% for user in users %}
                                                     {% if user == serologie.User1 %}
-                                                        <td><p> Technicien 1 --> Cin {{ user.NUMCIN }} Nom {{ user.Username }}</p></td>
+                                                       <tr><td><p> Technicien 1: </td><td>N°Cin : {{ user.NUMCIN }}</td><td> Nom & prénom : {{ user.Username }}</p></td></tr>
                                                     {% elseif user == serologie.User2 %}
-                                                       <td> <p>Technicien 2 --> {{ user.NUMCIN }} Nom {{ user.Username }}</p></td>
+                                                       <tr><td><p>Technicien 2 --> {{ user.NUMCIN }} Nom {{ user.Username }}</p></td></tr>
                                                 {% endif %}
                                             {% endfor %}
-                                            </tr>   
+                                               
                                         <tr>
                                             <td><p>AGHBR: {{ serologie.AGHBR }}</p></td>
                                             <td><p>ACHCV: {{ serologie.ACHCV }}</p></td>

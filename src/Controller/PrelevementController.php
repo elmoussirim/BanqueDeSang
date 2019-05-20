@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Donneur;
 
 class PrelevementController extends AbstractController
 {    
@@ -22,39 +23,38 @@ class PrelevementController extends AbstractController
     public function formtube (Request $request ,ObjectManager $manager){
                   
 
-        $tube1= new Tubes();
-        $tube2= new Tubes();
+        $tube= new Tubes();
 
-        $formtube = $this->createForm(TubesType::class, $tube1);
+        $formtube = $this->createForm(TubesType::class, $tube);
 
         $formtube->handleRequest($request);
+        $message = null;         
 
         if($formtube->isSubmitted() && $formtube->isValid() ){
+            $repo1=$this->getDoctrine()->getRepository(Donneur::class);
+            $donneur= $repo1->find($tube->getNumDonneur());
+            if($donneur !=null) {
+                $tube->setCinDonneur($donneur->getNUMCIN());
+                $tube->setNomDonneur($donneur->getNom());
+                $tube->setPrenomDonneur($donneur->getPrenom());
+                $tube->setUser($this->getUser());
 
-            $tube2->setNOrdre($tube1->getNOrdre());
-            $tube2->setCinDonneur($tube1->getCinDonneur());
-            $tube2->setNomDonneur($tube1->getNomDonneur());
-            $tube2->setPrenomDonneur($tube1->getPrenomDonneur());
-            $tube1->setUser($this->getUser());
-            $tube2->setUser($this->getUser());
+                $tube->setDate(new \DateTime());
 
-            $tube1->setDate(new \DateTime());
-            $tube2->setDate(new \DateTime());
+                $tube->setTestee("Non");
 
-            $tube1->setNumTube(1);
-            $tube2->setNumTube(2);
-            $tube1->setTestee("Non");
-            $tube2->setTestee("Non");
+                $manager->persist($tube);
 
-            $manager->persist($tube1);
-            $manager->persist($tube2);
-
-            $manager->flush();
-            return $this->redirectToRoute('index');
-            
+                $manager->flush();
+                return $this->redirectToRoute('tubes');
+            }
+            if($donneur == null){
+                $message = "vérifier le N° de donneur ";
+            }
         }
         return $this->render('Tubes/create.html.twig', [
-            'formtube' => $formtube->createView()
+            'formtube' => $formtube->createView(),
+            'message' => $message
         ]);
     }
 
@@ -66,7 +66,7 @@ class PrelevementController extends AbstractController
         $repo1=$this->getDoctrine()->getRepository(Tubes::class);
         $repo2=$this->getDoctrine()->getRepository(User::class);
 
-        $tubes= $repo1->findAll();
+        $tubes= $repo1->findBySomeField();
         $users= $repo2->findAll();
 
         return $this->render('Tubes/tubes.html.twig', [

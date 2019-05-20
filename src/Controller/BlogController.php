@@ -131,7 +131,6 @@ class BlogController extends AbstractController
                 
                 if (!$service->getId()){
                     $service->setDateCtSer(new \DateTime());
-                    $service->setExiste("oui");
                 }
                 
                 $manager->persist($service);
@@ -197,8 +196,6 @@ class BlogController extends AbstractController
             if($formCong->isSubmitted() && $formCong->isValid() ){
                 if (!$congelateur->getId()){
                     $congelateur->setDateCtCong(new \DateTime());
-                    $congelateur->setExiste("oui");
-
                 }
                 $manager->persist($congelateur);
                 $manager->flush();

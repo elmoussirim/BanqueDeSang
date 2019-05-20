@@ -50,18 +50,28 @@ class TubesRepository extends ServiceEntityRepository
     public function findByExampleField ($value)
     {
         return $this->createQueryBuilder('t')
-            ->andwhere('t.CinDonneur = :val OR t.N_ordre = :val')
+            ->andwhere('t.CinDonneur = :val OR t.id = :val')
             ->setParameter('val',$value)
             ->orderBy('t.id', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
+    public function findBySomeField()
+    {
+        return $this->createQueryBuilder('t')
+            ->orderBy('t.id', 'DESC')
+            ->setMaxResults(100)
+
+            ->getQuery()
+            
+            ->getResult()
+        ;
+    }
     public function findOneBySomeField($value): ?Tubes
     {
         return $this->createQueryBuilder('t')
-            ->Where('t.N_ordre = :val')
-            ->andWhere('t.NumTube = 1')
+            ->Where('t.id = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

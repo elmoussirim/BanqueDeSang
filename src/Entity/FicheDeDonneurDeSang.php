@@ -18,6 +18,11 @@ class FicheDeDonneurDeSang
     private $id;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $num_donneur;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
@@ -152,6 +157,17 @@ class FicheDeDonneurDeSang
         return $this->id;
     }
 
+    public function getNumDonneur(): ?int
+    {
+        return $this->num_donneur;
+    }
+
+    public function setNumDonneur(int $num_donneur): self
+    {
+        $this->num_donneur = $num_donneur;
+        return $this;
+    }
+       
     public function getNom(): ?string
     {
         return $this->nom;
@@ -229,7 +245,7 @@ class FicheDeDonneurDeSang
         return $this->groupe;
     }
 
-    public function setGroupe(string $groupe): self
+    public function setGroupe(?string $groupe): self
     {
         $this->groupe = $groupe;
 

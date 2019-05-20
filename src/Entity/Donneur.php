@@ -315,10 +315,11 @@ class Donneur
         return $this->date_du_dernier_don;
     }
 
-    public function setDateDuDernierDon(\DateTimeInterface $date_du_dernier_don): self
+    public function setDateDuDernierDon(?string $date_du_dernier_don): self
     {
+       
         $this->date_du_dernier_don = $date_du_dernier_don;
-
+       
         return $this;
     }
     public function getDonneurconvocable(): ?string

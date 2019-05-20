@@ -20,8 +20,7 @@ class Tubes
     /**
      * @ORM\Column(type="integer")
      */
-    private $N_ordre;
-
+    private $num_donneur;
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -46,11 +45,6 @@ class Tubes
     private $user;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $NumTube;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $Date;
@@ -64,19 +58,8 @@ class Tubes
     {
         return $this->id;
     }
-
-    public function getNOrdre(): ?int
-    {
-        return $this->N_ordre;
-    }
-
-    public function setNOrdre(int $N_ordre): self
-    {
-        $this->N_ordre = $N_ordre;
-
-        return $this;
-    }
-
+    
+    
     public function getNomDonneur(): ?string
     {
         return $this->NomDonneur;
@@ -135,17 +118,7 @@ class Tubes
 
         return $this;
     }
-    public function getNumTube(): ?int
-    {
-        return $this->NumTube;
-    }
-
-    public function setNumTube(int $NumTube): self
-    {
-        $this->NumTube = $NumTube;
-
-        return $this;
-    }
+    
     public function getTestee(): ?string
     {
         return $this->Testee;
@@ -155,6 +128,16 @@ class Tubes
     {
         $this->Testee = $Testee;
 
+        return $this;
+    }
+    public function getNumDonneur(): ?int
+    {
+        return $this->num_donneur;
+    }
+
+    public function setNumDonneur(int $num_donneur): self
+    {
+        $this->num_donneur = $num_donneur;
         return $this;
     }
 }

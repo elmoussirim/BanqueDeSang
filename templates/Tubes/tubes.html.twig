@@ -56,10 +56,9 @@
                                                         {% else %}
                                                             <tr class = "text-primary">
                                                         {% endif %}
-                                                            {% if tube.NumTube == 1 %}
 
                                                                 <td class="table-light">{{ tube.Date|date ('d/m/y à H:i')  }}</td>
-                                                                <td class="table-light">{{ tube.NOrdre }}</th>
+                                                                <td class="table-light">{{ tube.Id }}</th>
 
                                                                 <th class="table-light">{{ tube.CinDonneur }}</th>
                                                                 <td class="table-light">{{ tube.NomDonneur }} {{ tube.PrenomDonneur }}</td>
@@ -75,7 +74,6 @@
                                                                     <td></td>
                                                                 {% endif %}
 
-                                                            {% endif %}
                                                             </tr>
                                                     {% endif %}
                                                 {% endfor %}

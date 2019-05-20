@@ -14,20 +14,9 @@
                                 <h5 class="card-header">Fiche médicale</h5>
                                 <div class="card-body">
                                      {{ form_start(formficheedit) }}
-                                        <div class="form-row">
+                                                                               
                                             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
-                                                {{form_row(formficheedit.NUMERO_CIN, {'attr' : {'placeholder' :"N°cin du donneur"}}) }}
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
-                                                {{form_row(formficheedit.nom, {'attr' : {'placeholder' :"Nom du donneur"}} )}}
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
-                                                {{form_row(formficheedit.prenom, {'attr' : {'placeholder' :"Prenom du donneur"}} )}}
-                                            </div>
-                                        </div>
-                                        
-                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">
-                                                {{form_row(formficheedit.date_de_naissance)}}
+                                                {{form_row(formficheedit.num_donneur)}}
                                             </div>
                                             
                                         <div class="form-row">

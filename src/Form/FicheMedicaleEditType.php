@@ -20,10 +20,7 @@ class FicheMedicaleEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('nom', TextType::class , ['disabled' => true,])
-        ->add('prenom', TextType::class, ['disabled' => true,])
-        ->add('NUMERO_CIN',NumberType::class, ['label' => 'Num CIN','disabled' => true,])
-        ->add('date_de_naissance',BirthdayType::class, ['disabled' => true,])
+        ->add('num_donneur', TextType::class , ['disabled' => true,])
         ->add('taille',NumberType::class, ['disabled' => true,])
         ->add('poids',NumberType::class, ['disabled' => true,])
         ->add('groupe',TextType::class, ['label' => 'Groupe sanguin', 'disabled' => true,])

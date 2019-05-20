@@ -29,6 +29,7 @@
                                             <tr>
                                                 <th scope="col">Date</th>
                                                 <th scope="col">N°ordre</th>
+                                                <th scope="col">N°Donneur</th>
                                                 <th scope="col">Cin Donneur</th>
                                                 <th scope="col">Donneur</th>
                                                 <th scope="col">Médecin banque de sang</th>
@@ -44,7 +45,7 @@
 
                                                                 <td class="table-light">{{ fiche.Date|date ('d/m/y à H:i')  }}</td>
                                                                 <td class="table-light">{{ fiche.NOrdre }}</th>
-
+                                                                <td class="table-light">{{ fiche.NumDonneur }}</th>
                                                                 <th class="table-light">{{ fiche.NumeroCIN }}</th>
                                                                 <td class="table-light">{{ fiche.Nom }} {{ fiche.Prenom }}</td>
                                                                 {% for user in users %}

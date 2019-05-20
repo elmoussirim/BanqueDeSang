@@ -22,7 +22,7 @@ class Serologie
      */
     private $date_de_jour;
 
-/**
+    /**
      * @ORM\Column(type="integer")
      */
     private $N_ordre;

@@ -17,7 +17,7 @@
                                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">                               
                                         <form role="form"  method="request" action="{{ path('search_donneur') }}">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="search" placeholder="cin ??">
+                                                    <input type="text" class="form-control" name="search" placeholder="cin ?? N°Donneur ??">
                                                     <span class="input-group-addon" type="submit">chercher</span>
                                                 </div>
                                         </form>
@@ -29,7 +29,8 @@
                                 
                                         <thead>
                                             <tr>
-                                                    <th scope="col">N° CIN</th>
+                                                    <th scope="col">Donneur N°</th>
+                                                    <th scope="col">N°CIN</th>
                                                     <th scope="col">Nom </th>
                                                     <th scope="col">Prénom</th>
                                                     <th scope="col">Dernier don à: </th>
@@ -42,6 +43,7 @@
                                                 {% for donneur in donneurs %}
 
                                                 <tr>
+                                                <td>{{ donneur.Id }}</td>
                                                     <td>{{ donneur.NUMCIN }}</td>
                                                     <td scope="col">{{ donneur.nom }}</td>
                                                     <td  scope="col">{{ donneur.prenom }}</td>

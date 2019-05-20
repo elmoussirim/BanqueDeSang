@@ -15,10 +15,7 @@ class TubesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('N_ordre', NumberType::class )
-        ->add('NomDonneur',TextType::class, ['label' => 'Nom du donneur'])
-        ->add('PrenomDonneur',TextType::class, ['label' => 'Prenom du donneur'])
-        ->add('CinDonneur')
+        ->add('num_donneur')
         ;
     }
     public function configureOptions(OptionsResolver $resolver)

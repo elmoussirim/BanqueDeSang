@@ -29,20 +29,20 @@
                             <div class="card">
                                 <h5 class="card-header">Enregistrer les tubes des analyses biologiques</h5>
                                 <br><br><br><br>
+                                {% if message %}
+                                    <div class="alert alert-danger" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                        <strong>Attention!</strong> {{ message }}.
+                                    </div>
+                                {% endif %}
                                     <div class = "col-md-12">
                                             {{ form_start(formtube) }}
-                                                {{form_row(formtube.N_ordre, {'attr' : {'placeholder' :"N°ordre"}} )}}
                                                 
                                                         <div class="form-row">
                                                             
-                                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                                      
-                                                                {{form_row(formtube.NomDonneur, {'attr' : {'placeholder' :"Nom du donneur"}} )}}
-                                                            </div>
-                                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                                      
-                                                                {{form_row(formtube.PrenomDonneur, {'attr' : {'placeholder' :"Prenom du donneur"}} )}}
-                                                            </div>
+                                                            
                                                             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-2">                             
-                                                                {{form_row(formtube.CinDonneur, {'attr' : {'placeholder' :"N°cin du donneur"}} )}}
+                                                                {{form_row(formtube.num_donneur, {'attr' : {'placeholder' :"N° du donneur"}} )}}
                                                             </div><br><br>   
                                                         </div>
                                                         <br><br><br>

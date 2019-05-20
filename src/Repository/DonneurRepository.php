@@ -66,7 +66,7 @@ class DonneurRepository extends ServiceEntityRepository
     {
 
         return $this->createQueryBuilder('d')
-            ->andWhere('d.NUM_CIN = :val')
+            ->andWhere('d.NUM_CIN = :val or d.id = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

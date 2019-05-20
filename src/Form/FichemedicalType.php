@@ -20,10 +20,7 @@ class FichemedicalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('nom', TextType::class )
-        ->add('prenom', TextType::class)
-        ->add('NUMERO_CIN',NumberType::class)
-        ->add('date_de_naissance',BirthdayType::class)
+        ->add('num_donneur')
         ->add('taille',NumberType::class)
         ->add('poids',NumberType::class)
         ->add('groupe',TextType::class, ['label' => 'Groupe sanguin'])

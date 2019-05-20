@@ -6,7 +6,8 @@
                                 <div class="panel-body panel-body-pricing">
                                 <div class= "row">
                                   <div class="col-md-6">
-                                    <h2>N° fiche:<small> {{ fiche.id }}</small></h2>                                
+                                    <h2>N° fiche: {{ fiche.id }}</h2>   
+                                                                        <p><span class="fa fa-caret-right"></span> Donneur N°: {{ fiche.NumDonneur }}</p>                             
                                     <p><span class="fa fa-caret-right"></span> Nom & prénom du donneur:{{ fiche.nom }} {{  fiche.prenom }}</p>
                                     <p><span class="fa fa-caret-right"></span> ApteInapte: {{ fiche.ApteInapte }}</p>
                                     <p><span class="fa fa-caret-right"></span> Numéro carte CIN: {{ fiche.NumeroCIN }}</p>

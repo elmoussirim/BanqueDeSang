@@ -78,16 +78,21 @@ class FichemedicalController extends AbstractController
     public function create(Request $request, ObjectManager $manager){
         $FicheDeDonneurDeSang = new FicheDeDonneurDeSang();
         $form = $this->createForm(FichemedicalType::class, $FicheDeDonneurDeSang);
-                   
+        $message = null;         
                     
         $form->handleRequest($request);
-
         
-        if($form->isSubmitted() && $form->isValid() ){
-            
+        
+        if($form->isSubmitted() && $form->isValid()){
+            $repo1=$this->getDoctrine()->getRepository(Donneur::class);
+            $donneur= $repo1->find($FicheDeDonneurDeSang->getNumDonneur());
+            if($donneur !=null) {
+            $FicheDeDonneurDeSang->setNumeroCIN($donneur->getNUMCIN());
+            $FicheDeDonneurDeSang->setNom($donneur->getNom());
+            $FicheDeDonneurDeSang->setPrenom($donneur->getPrenom());
+            $FicheDeDonneurDeSang->setDateDeNaissance($donneur->getDateDeNaissance());
             $FicheDeDonneurDeSang->setDate(new \DateTime());
             $FicheDeDonneurDeSang->setUser($this->getUser());
-
             
             $manager->persist($FicheDeDonneurDeSang);
             $manager->flush();
@@ -103,9 +108,13 @@ class FichemedicalController extends AbstractController
         
            return $this->redirectToRoute('fiche_show',['id'=>$FicheDeDonneurDeSang->getId()]);
         }
-
+        if($donneur == null){
+            $message = "vérifier le N° de donneur ";
+        }
+    }
         return $this->render('fichemedical/create.html.twig' , [
-            'formfichemedical' => $form->createview()
+            'formfichemedical' => $form->createview(),
+            'message' => $message
         ]); 
     }
 

@@ -219,7 +219,7 @@ class PocheController extends AbstractController
 
         
         if($formserologie->isSubmitted() && $formserologie->isValid() ){
-            $serologie->setNOrdre($tube->getNOrdre());
+            $serologie->setNOrdre($tube->getId());
             $serologie->setCinDonneur($tube->getCinDonneur());
             $serologie->setNomDonneur($tube->getNomDonneur());
             $serologie->setPrenomDonneur($tube->getPrenomDonneur());
@@ -340,7 +340,7 @@ class PocheController extends AbstractController
             }
             if (!$poche->getId()){
                 $poche->setDate(new \DateTime());
-                $poche->setNOrdre($tube->getNOrdre());
+                $poche->setNOrdre($tube->getId());
                 $poche->setCinDonneur($tube->getCinDonneur());
                 $poche->setNomDonneur($tube->getNomDonneur());
                 $poche->setPrenomDonneur($tube->getPrenomDonneur());
