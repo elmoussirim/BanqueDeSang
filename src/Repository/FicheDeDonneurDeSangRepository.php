@@ -40,4 +40,29 @@ class FicheDeDonneurDeSangRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
+
+    public function findBySomeField($value)
+    {
+            return $this->createQueryBuilder('f')
+            ->andWhere('f.num_donneur = :val')
+            ->setParameter('val', $value)
+            ->orderBy('f.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    public function modifier($val,$val2)
+    {
+
+        $entityManager = $this->getEntityManager();
+
+       
+        $query = $entityManager->createQuery('UPDATE App\Entity\FicheDeDonneurDeSang f SET f.N_ordre = :val2 WHERE f.id = :val')
+            ->setParameter('val', $val)
+            ->setParameter('val2', $val2)
+        ;
+        $query->execute();
+    ;
+    }
 }

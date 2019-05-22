@@ -146,4 +146,5 @@ class FichemedicalController extends AbstractController
             'users' => $users
         ]);
     }
+
 }

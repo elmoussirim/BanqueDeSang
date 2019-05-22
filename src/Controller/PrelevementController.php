@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Entity\FicheDeDonneurDeSang;
 
 use App\Entity\User;
 use App\Entity\Congelateur;
@@ -46,6 +47,11 @@ class PrelevementController extends AbstractController
                 $manager->persist($tube);
 
                 $manager->flush();
+                $em = $this->getDoctrine()->getManager();
+                $fiche=$em->getRepository(FicheDeDonneurDeSang::class)->findBySomeField($tube->getNumDonneur());
+                foreach($fiche as $f){
+                    $modifier = $em->getRepository(FicheDeDonneurDeSang::class)->modifier($f->getId(),$tube->getId());
+                }
                 return $this->redirectToRoute('tubes');
             }
             if($donneur == null){
