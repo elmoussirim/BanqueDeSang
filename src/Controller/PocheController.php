@@ -209,7 +209,7 @@ class PocheController extends AbstractController
     public function createserologie (Serologie $serologie=null, Tubes $tube, Request $request,ObjectManager $manager ){
  
         $serologie = new Serologie();
-        
+         
         
         $formserologie = $this->createForm(SerologieType::class, $serologie);
                    
@@ -233,7 +233,8 @@ class PocheController extends AbstractController
             $manager->flush();
             $donneur=$this->getDoctrine()->getRepository(Donneur::class)->ModifierApteInapte($serologie->getCinDonneur(),$serologie->getResultatSerologie());
 
-            
+            $em = $this->getDoctrine()->getManager();
+            $tube=$em->getRepository(Tubes::class)->ModifierTerminer($tube->getId(),"Oui");
             return $this->redirectToRoute('show_serologie',['id'=>$serologie->getId()]);
         }
         return $this->render('technicienlabo/serologie/create.html.twig',[
@@ -443,7 +444,7 @@ class PocheController extends AbstractController
                 }
         
                 else {
-                    return $this->redirectToRoute('poches');
+                    return $this->redirectToRoute('poche',['id' => $poche->getId()]);
                 }
             }            
             return $this->render('poche/create.html.twig',[
@@ -615,7 +616,7 @@ class PocheController extends AbstractController
     
                     $manager->persist($poche);
                     $manager->flush();
-                    return $this->redirectToRoute('poches');
+                    return $this->redirectToRoute('poche',['id' => $poche->getId()]);
                     
                 }
             
@@ -717,7 +718,7 @@ class PocheController extends AbstractController
                         if ($p->getGroupeSanguin() == "O+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEOPositive(1); $eop = $eop + 1 ;}
                         if ($p->getGroupeSanguin() == "O-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEONegative(1); $eon = $eon + 1 ;}
                     }
-                    if ($p->getStatut() == "Poche en stock ---> Poche sortie" || $p->getStatut() == "Poche reservée ---> Poche sortie"){
+                    if ($p->getStatut() == "Poche en stock ---> Poche sortie" ||$p->getStatut() == "Poche en stock ---> Poche perimée" || $p->getStatut() == "Poche reservée ---> Poche sortie"){
                         if ($p->getGroupeSanguin() == "A+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSAPositive(1); $sap = $sap + 1 ;}
                         if ($p->getGroupeSanguin() == "A-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSANegative(1); $san = $san + 1 ;}
                         if ($p->getGroupeSanguin() == "B+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSBPositive(1); $sbp = $sbp + 1 ;}
@@ -739,7 +740,7 @@ class PocheController extends AbstractController
                         if ($p->getPoche()->getGroupeSanguin() == "O+" && $p->getDateAct() == Date('d/m/y')){$gestion->setEOPositive(1); $eop = $eop + 1 ;}
                         if ($p->getPoche()->getGroupeSanguin() == "O-" && $p->getDateAct() == Date('d/m/y')){$gestion->setEONegative(1); $eon = $eon + 1 ;}
                     }
-                    if ($p->getStatut() == "Poche en stock ---> Poche sortie" || $p->getStatut() == "Poche reservée ---> Poche sortie"){
+                    if ($p->getStatut() == "Poche en stock ---> Poche sortie" || $p->getStatut() == "Poche en stock ---> Poche perimée" ||$p->getStatut() == "Poche reservée ---> Poche sortie"){
                         if ($p->getPoche()->getGroupeSanguin() == "A+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSAPositive(1); $sap = $sap + 1 ;}
                         if ($p->getPoche()->getGroupeSanguin() == "A-" && $p->getDateAct() == Date('d/m/y')){$gestion->setSANegative(1); $san = $san + 1 ;}
                         if ($p->getPoche()->getGroupeSanguin() == "B+" && $p->getDateAct() == Date('d/m/y')){$gestion->setSBPositive(1); $sbp = $sbp + 1 ;}

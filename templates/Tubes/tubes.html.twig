@@ -65,9 +65,7 @@
                                                                 <td class="table-light">{{ user.username }}</td>
                                                                 <td class="table-light">{{ user.NUMCIN }}</td>
                                                                 {% if app.user.poste =="Technicien de laboratoire" %}
-                                                                    {% if tube.testee != "Oui" %}
-                                                                        <td class="table-light"><button type="button" class="btn btn-primary" onclick="window.location.href='/tube/testee/{{ tube.id }}'">Terminer</button></td>
-                                                                    {% endif %}
+                                                                    
                                                                     <td class="table-light"><button type="button" class="btn btn-secondary" onclick="window.location.href='/serologie/new/{{ tube.id }}'">Tester</button></td>
                                                                 {% else %}
                                                                     <td></td>

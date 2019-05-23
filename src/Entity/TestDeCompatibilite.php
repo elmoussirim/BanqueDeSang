@@ -29,17 +29,17 @@ class TestDeCompatibilite
     private $demande;
 
     /**
-     * @ORM\Column(type="string", length=255,nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $p_deliverees;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $p_testees;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $reserve;
 
@@ -93,7 +93,7 @@ class TestDeCompatibilite
         return $this->reserve;
     }
 
-    public function setReserve(string $reserve): self
+    public function setReserve(?string $reserve): self
     {
         $this->reserve = $reserve;
 
@@ -105,7 +105,7 @@ class TestDeCompatibilite
         return $this->p_testees;
     }
 
-    public function setPTestees(string $p_testees): self
+    public function setPTestees(?string $p_testees): self
     {
         $this->p_testees = $p_testees;
 
@@ -117,7 +117,7 @@ class TestDeCompatibilite
         return $this->p_deliverees;
     }
 
-    public function setPDeliverees(string $p_deliverees): self
+    public function setPDeliverees(?string $p_deliverees): self
     {
         $this->p_deliverees = $p_deliverees;
 

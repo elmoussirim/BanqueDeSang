@@ -51,7 +51,7 @@ class Serologie
     private $A_utiliser_avant;
 
     /**
-     * @ORM\Column(type="string", length=255,nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $groupe_sanguin;
 

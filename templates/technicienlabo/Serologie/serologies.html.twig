@@ -10,7 +10,7 @@
                                 <div class="panel-heading ui-draggable-handle">
                                     <h3 class="panel-title">Les sérologies des poches de sang</h3>
                                     <div class="pull-right">
-                                        <button class="btn btn-info toggle"  onclick="window.location.href='/tubes/a/tester'" data-toggle="exportTable"><i class="fa fa-bars"></i> Nouvelle sérologie</button>
+                                        <button class="btn btn-info toggle"  onclick="window.location.href='/tubes/a/tester'" data-toggle="exportTable"><i class="fa fa-plus"></i> Nouvelle sérologie</button>
                                     </div>
                                 </div>
                                 <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer"><table class="table datatable_simple dataTable no-footer" id="DataTables_Table_1" role="grid"> 
@@ -42,7 +42,7 @@
                                         </thead>
                                         <tbody>
                                             {% for serologie in serologies %}  
-                                            {% if (serologie.statut == 1) %}
+                                            {% if serologie.ResultatSerologie == " " %}
                                                 <tr class="text-danger">
                                             {% else %}
                                                 <tr class = "text-primary">
@@ -57,9 +57,8 @@
                                                 <td>{{ serologie.GroupeSanguin }}</td>
                                                 <td>{{ serologie.ResultatSerologie }}</td>
                                                 <td><button type="button" class="btn btn-warning" onclick="window.location.href='/serologie/show/{{ serologie.id }}'">Afficher</button></td>
-                                                {% if serologie.statut == 1 %}
-                                                    <td><button type="button" class="btn btn-warning" onclick="window.location.href='/serologie/termnier/{{ serologie.id }}'">Terminer</button></td>
-                                                {% elseif serologie.ResultatSerologie == " " %}
+                                                
+                                                {% if serologie.ResultatSerologie == " " %}
                                                     <td><button type="button" class="btn btn-warning" onclick="window.location.href='/serologie/{{ serologie.id }}/edit'">Modifier </button></td>
                                                 {% endif %}
                                             </tr>
